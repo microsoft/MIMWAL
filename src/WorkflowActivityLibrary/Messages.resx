@@ -1,0 +1,363 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DetermineActor_MultipleResolvedActorsError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied expression resolved to multiple values.</value>
+  </data>
+  <data name="DetermineActor_NullResolvedActorError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied expression resolved to a null value.</value>
+  </data>
+  <data name="DetermineActor_UnresolvedActorError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied expression did not resolve to a valid resource ID.</value>
+  </data>
+  <data name="DetermineActor_NotFoundActorAccountError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied account information is not assigned to a resource.</value>
+  </data>
+  <data name="DetermineActor_MultipleActorAccountsError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied account information is assigned to multiple resources.</value>
+  </data>
+  <data name="FindResources_MissingXPathError" xml:space="preserve">
+    <value>An XPath filter must be supplied for the Find Resources activity.</value>
+  </data>
+  <data name="CreateResource_FailedOnConflictError" xml:space="preserve">
+    <value>The resource to be created is in conflict with another resource.</value>
+  </data>
+  <data name="GenerateUniqueValue_ExceededMaxLoopCountError" xml:space="preserve">
+    <value>Failed to generate unique value. The activity has exceeded the maximum number ({0}) of unique value generation attempts configured. This is most likely due to a problematic conflict filter or unique value generation logic.</value>
+  </data>
+  <data name="GenerateUniqueValue_LDAPError" xml:space="preserve">
+    <value>An error occurred while attempt to verify the uniqueness of a generated value against the LDAP path '{0}': '{1}'.</value>
+  </data>
+  <data name="RunPowerShellActivity_ScriptNotFoundError" xml:space="preserve">
+    <value>PowerShell script was not found at the location '{0}'.</value>
+  </data>
+  <data name="RunPowerShellScript_InvalidReturnTypeError" xml:space="preserve">
+    <value>The PowerShell script returned a collection of values with inconsistent types.</value>
+  </data>
+  <data name="RunPowerShellScript_ScriptExecutionFailedError" xml:space="preserve">
+    <value>PowerShell script execution resulted in {0} error(s):\n</value>
+  </data>
+  <data name="VerifiyRequest_DenialRequestError" xml:space="preserve">
+    <value>The request does not meet the conditions specified by the system administrator.</value>
+  </data>
+  <data name="UnableToGetParentWorkflowError" xml:space="preserve">
+    <value>Unable to load the parent workflow.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterCountError" xml:space="preserve">
+    <value>The function '{0}' expects '{1}' parameters. It was supplied '{2}' parameters.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFirstFunctionParameterTypeError" xml:space="preserve">
+    <value>The function '{0}' expects first parameter to be of type '{1}'. It was supplied a '{2}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_NullFunctionParameterError" xml:space="preserve">
+    <value>The function '{0}' requires the parameter at position '{1}' to be not null.</value>
+  </data>
+  <data name="ExpressionFunction_UnsupportedFunctionError" xml:space="preserve">
+    <value>'{0}' is not recognized as a supported function. Execution mode: '{1}'.</value>
+  </data>
+  <data name="ExpressionFunction_FunctionSyntaxValidationError" xml:space="preserve">
+    <value>The function '{0}' is improperly formatted or is missing a required parameter. Execution mode: {1}.</value>
+  </data>
+  <data name="ExpressionFunction_UnknownFunctionExecutionError" xml:space="preserve">
+    <value>Exception occurred while attempting to '{0}' function '{1}': '{2}'.</value>
+  </data>
+  <data name="RunPowerShellScript_ScriptInvocationError" xml:space="preserve">
+    <value>Error Invoking PowerShell script. Error: '{0}'</value>
+  </data>
+  <data name="RunPowerShellScript_InconsistentScriptReturnTypeError" xml:space="preserve">
+    <value>The PowerShell script returned type: {0} which is inconsistent with the previously returned type: '{1}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFirstFunctionParameterTypeError2" xml:space="preserve">
+    <value>The function '{0}' expects first parameter to be of type '{1}' or '{2}'. It was supplied a '{3}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterCountError2" xml:space="preserve">
+    <value>The function '{0}' expects '{1}' to '{2}' parameters. It was supplied '{3}' parameters.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidSecondFunctionParameterTypeError" xml:space="preserve">
+    <value>The function '{0}' expects second parameter to be of type '{1}'. It was supplied a '{2}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidThirdFunctionParameterTypeError" xml:space="preserve">
+    <value>The function '{0}' expects third parameter to be of type '{1}'. It was supplied a '{2}' parameter.</value>
+  </data>
+  <data name="ExpressionEvaluator_PublishVariableInsertVariableError" xml:space="preserve">
+    <value>Unable to insert value of type '{0}' into cache for variable '{1}' of type '{2}'.</value>
+  </data>
+  <data name="UpdateLookup_InsertVariableError" xml:space="preserve">
+    <value>Unable to insert value of type '{0}' into workflow dictionary key '{1}' of type '{2}'.</value>
+  </data>
+  <data name="ResolveLookups_InconsistentTypeError" xml:space="preserve">
+    <value>Resolution of the following lookup resulted in multiple values of inconsistent types: '{0}'.</value>
+  </data>
+  <data name="DataAccessService_TypeLoadingFailedError" xml:space="preserve">
+    <value>Unable to get type '{0}' from the current assembly.</value>
+  </data>
+  <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
+    <value>The definitions table is null or corrupt</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParameterTypeValidationError" xml:space="preserve">
+    <value>The expression '{0}' is invalid.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParenthesisValidationError" xml:space="preserve">
+    <value>The expression '{0}' contains an unexpected number of '(' or ')' characters and is invalid.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionQuotesValidationError" xml:space="preserve">
+    <value>The expression '{0}' contains an unclosed string and is invalid.</value>
+  </data>
+  <data name="ExpressionEvaluator_FunctionParameterParenthesisValidationError" xml:space="preserve">
+    <value>The parameters for function {0} contain an unexpected number of '(' or ')' characters and are invalid.</value>
+  </data>
+  <data name="ExpressionEvaluator_FunctionParameterQuotesValidationError" xml:space="preserve">
+    <value>The parameters for function {0} contain an unclosed string and are invalid.</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupCacheValidationError" xml:space="preserve">
+    <value>The lookup cache does not contain an entry for '{0}'.</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupParameterExpressionValidationError" xml:space="preserve">
+    <value>The lookup '{0}' contains invalid grammar.</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupParameterValidationError" xml:space="preserve">
+    <value>The lookup '{0}' references an unsupported parameter.</value>
+  </data>
+  <data name="ExpressionEvaluator_StringQuotesValidationError" xml:space="preserve">
+    <value>The value '{0}' is not a valid string.</value>
+  </data>
+  <data name="ExpressionEvaluator_ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
+    <value>Only the last value expression in the list can leverage the [//UniquenessKey] lookup.</value>
+  </data>
+  <data name="ExpressionEvaluator_ValueExpressionValidationError" xml:space="preserve">
+    <value>One or more value expressions are incomplete</value>
+  </data>
+  <data name="ExpressionEvaluator_VariableCacheValidationError" xml:space="preserve">
+    <value>The variable cache does not contain an entry for {0}</value>
+  </data>
+  <data name="RunPowerShellActivity_InvalidUserFormat" xml:space="preserve">
+    <value>Invalid UserName format {0}. Expected format "Domain\UserName".</value>
+  </data>
+  <data name="ProtectedData_EncryptionCertificateNotFoundError" xml:space="preserve">
+    <value>The X.509 encryption certificate with thumbprint '{0}' could not be found.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterError" xml:space="preserve">
+    <value>The function '{0}' expects parameter at position {1} in the format '{2}'. It was supplied a value of '{3}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterMinCountError" xml:space="preserve">
+    <value>The function '{0}' expects '{1} or more' parameters. It was supplied '{2}' parameters.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterTypeError" xml:space="preserve">
+    <value>The function '{0}' expects parameter at position {1} to be of type '{2}'. It was supplied a '{3}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterMinMaxCountError" xml:space="preserve">
+    <value>The function '{0}' expects '{1} to {2}' parameters. It was supplied '{3}' parameters.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParameterTypeUnsupportedTypeError" xml:space="preserve">
+    <value>The expression '{0}' is not supported.</value>
+  </data>
+  <data name="PasswordGenerator_MaxValueLessThanMinValueError" xml:space="preserve">
+    <value>The maxValue must be greater than the minValue.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidSecondFunctionParameterTypeError2" xml:space="preserve">
+    <value>The function '{0}' expects second parameter to be of type '{1}'. It was supplied a '{2}' parameter of value '{3}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidThirdFunctionParameterTypeError2" xml:space="preserve">
+    <value>The function '{0}' expects third parameter to be of type '{1}'. It was supplied a '{2}' parameter of value '{3}'.</value>
+  </data>
+  <data name="AddDelayActivity_TimeoutDurationValidationError" xml:space="preserve">
+    <value>Unable to parse TimeoutDuration value: '{0}'.</value>
+  </data>
+  <data name="GenerateUniqueValue_LoopCountWarning" xml:space="preserve">
+    <value>The GenerateUniqueValue activity attempted {0} of {1} attempts. Consider optimizing your unique value generation logic.</value>
+  </data>
+  <data name="SendEmailNotification_MissingEmailTemplateError" xml:space="preserve">
+    <value>Email template '{0}' not found.</value>
+  </data>
+  <data name="SendEmailNotification_MultipleEmailTemplatesError" xml:space="preserve">
+    <value>More than one email notification templates '{0}' found.</value>
+  </data>
+  <data name="SendEmailNotification_ParseEmailTemplateError" xml:space="preserve">
+    <value>The email template '{0}' is not an XPath filter or a lookup expression or a GUID value.</value>
+  </data>
+  <data name="SendEmailNotification_ParseRecipientError" xml:space="preserve">
+    <value>The email address '{0}' is not a valid email address.</value>
+  </data>
+  <data name="SendEmailNotification_RecipientValidationError" xml:space="preserve">
+    <value>A 'To' email address must be specified.</value>
+  </data>
+  <data name="RequestApproval_MissingApprovalEmailTemplateError" xml:space="preserve">
+    <value>Pending approval email template '{1}' not found.</value>
+  </data>
+  <data name="RequestApproval_MissingEscalationEmailTemplateError" xml:space="preserve">
+    <value>Approval escalation email template '{1}' not found.</value>
+  </data>
+  <data name="RequestApproval_MultipleApprovalEmailTemplatesError" xml:space="preserve">
+    <value>More than one pending approval email templates '{1}' found.</value>
+  </data>
+  <data name="RequestApproval_MultipleEscalationEmailTemplatesError" xml:space="preserve">
+    <value>More than one approval escalation email templates '{1}' found.</value>
+  </data>
+  <data name="SendEmailNotification_InvalidEmailTemplateFormatError" xml:space="preserve">
+    <value>Email template '{0}' is not a GUID value.</value>
+  </data>
+  <data name="RequestApproval_MissingApprovalCompleteEmailTemplateError" xml:space="preserve">
+    <value>Approval complete email template '{1}' not found.</value>
+  </data>
+  <data name="RequestApproval_MissingApprovalDeniedEmailTemplateError" xml:space="preserve">
+    <value>Approval denied email template '{1}' not found.</value>
+  </data>
+  <data name="RequestApproval_MultipleApprovalCompleteEmailTemplatesError" xml:space="preserve">
+    <value>More than one approval complete email templates '{1}' found.</value>
+  </data>
+  <data name="RequestApproval_MultipleApprovalDeniedEmailTemplatesError" xml:space="preserve">
+    <value>More than one approval denied email templates '{1}' found.</value>
+  </data>
+  <data name="RequestApproval_MissingApprovalTimeoutEmailTemplateError" xml:space="preserve">
+    <value>Approval timeout email template '{1}' not found.</value>
+  </data>
+  <data name="RequestApproval_MultipleApprovalTimeoutEmailTemplatesError" xml:space="preserve">
+    <value>More than one approval timeout email templates '{1}' found.</value>
+  </data>
+  <data name="RequestApproval_InvalidEmailTemplateFormatError" xml:space="preserve">
+    <value>Email template '{0}' is not a GUID value.</value>
+  </data>
+  <data name="ReuqestApproval_MissingEmailTemplateError" xml:space="preserve">
+    <value>Email template '{0}' not found.</value>
+  </data>
+  <data name="SendEmailNotification_ToRecipientNotFoundError" xml:space="preserve">
+    <value>No 'To' recipients found. Search filter or lookup expression specified: '{0}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidSecondFunctionParameterTypeError3" xml:space="preserve">
+    <value>The function '{0}' expects second parameter to be of type '{1}' or '{2}'. It was supplied a '{3}' parameter.</value>
+  </data>
+  <data name="PasswordGenerator_LoopCountWarning" xml:space="preserve">
+    <value>The password generator was unable to generate a complex password of length '{0}'. meeting all the complexity criteria (at least one upper case, one lower case, one number and one special char). The current value less complex value will be returned.</value>
+  </data>
+  <data name="ExpressionFunction_ParametersContainDeprecatedParameterWarning" xml:space="preserve">
+    <value>Use of '//{0}/' lookup in ParametersContain function is deprecated. Use '//{1}/{0}' lookup instead.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidParameterValueAddedFunctionUseError" xml:space="preserve">
+    <value>The request is for an update of the singled-valued attribute '{0}'. Functions ParameterValue must be used instead to read the updated value.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidParameterValueFunctionUseError" xml:space="preserve">
+    <value>The request is for an update of the multi-valued attribute '{0}'. Functions ParameterValueAdded() or ParameterValueRemoved() must be used instead to read the updated value.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidParameterValueRemovedFunctionUseError" xml:space="preserve">
+    <value>The request is for an update of the singled-valued attribute '{0}'. Functions ParameterValue must be used instead to read the updated value.</value>
+  </data>
+  <data name="ExpressionFunction_DeprecatedFunctionWarning" xml:space="preserve">
+    <value>The function '{0}' is deprecated. Please use '{1}' instead.</value>
+  </data>
+</root>

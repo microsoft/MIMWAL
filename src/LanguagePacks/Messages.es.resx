@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="DetermineActor_MultipleResolvedActorsError" xml:space="preserve">
+    <value>No ha sido posible determinar el actor de la solicitud. La expresión proporcionada retorna múltiples valores.</value>
+  </data>
+  <data name="DetermineActor_NullResolvedActorError" xml:space="preserve">
+    <value>No ha sido posible determinar el actor de la solicitud.  La expresión proporcionada retorna un valor nulo.</value>
+  </data>
+  <data name="DetermineActor_UnresolvedActorError" xml:space="preserve">
+    <value>No ha sido posible determinar el actor de la solicitud. La expresión proporcionada no retornó ningún ID de recurso válido.</value>
+  </data>
+  <data name="DetermineActor_NotFoundActorAccountError" xml:space="preserve">
+    <value>No ha sido posible determinar el actor de la solicitud. La información de cuenta proporcionada no está asignada a ningún recurso.</value>
+  </data>
+  <data name="DetermineActor_MultipleActorAccountsError" xml:space="preserve">
+    <value>No ha sido posible determinar el actor de la solicitud. La información de cuenta proporcionada está asignada a múltiples recursos.</value>
+  </data>
+  <data name="FindResources_MissingXPathError" xml:space="preserve">
+    <value>Se debe proporcionar un filtro XPath para la actividad Buscar Recursos.</value>
+  </data>
+  <data name="CreateResource_FailedOnConflictError" xml:space="preserve">
+    <value>El recurso a crear está en conflicto con otro recurso.</value>
+  </data>
+  <data name="GenerateUniqueValue_ExceededMaxLoopCountError" xml:space="preserve">
+    <value>Error al generar un valor único. La actividad ha encontrado un bucle infinito que podría resultar en un filtro de conflicto problemático.</value>
+  </data>
+  <data name="GenerateUniqueValue_LDAPError" xml:space="preserve">
+    <value>Se ha producido un error intentando verificar la unicidad de un valor generado contra la ruta LDAP '{0}': '{1}'.</value>
+  </data>
+  <data name="RunPowerShellActivity_ScriptNotFoundError" xml:space="preserve">
+    <value>El script de PowerShell no se ha encontrado en la ubicación '{0}'.</value>
+  </data>
+  <data name="RunPowerShellScript_InvalidReturnTypeError" xml:space="preserve">
+    <value>El script de PowerShell retornó una colleción de valores con tipos inconsistentes.</value>
+  </data>
+  <data name="RunPowerShellScript_ScriptExecutionFailedError" xml:space="preserve">
+    <value>La ejecución del script de PowerShell terminó con {0} error(es):\n</value>
+  </data>
+  <data name="VerifiyRequest_DenialRequestError" xml:space="preserve">
+    <value>La solicitud no cumple las condiciones especificadas por el administrador del sistema.</value>
+  </data>
+  <data name="UnableToGetParentWorkflowError" xml:space="preserve">
+    <value>No ha sido posible cargar el flujo de trabajo padre.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterCountError" xml:space="preserve">
+    <value>La función '{0}' espera '{1}' parámetros. Se proporcionaron '{2}' parameters.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFirstFunctionParameterTypeError" xml:space="preserve">
+    <value>La función '{0}' espera el primer parámetro de tipo '{1}'. Se proporcionó un parámetro de tipo '{2}'.</value>
+  </data>
+  <data name="ExpressionFunction_NullFunctionParameterError" xml:space="preserve">
+    <value>La función '{0}' requiere que el parámetro en la posición '{1}' no sea nulo.</value>
+  </data>
+  <data name="ExpressionFunction_UnsupportedFunctionError" xml:space="preserve">
+    <value>'{0}' no se reconoce como una función soportada. Modo de ejecución: '{1}'.</value>
+  </data>
+  <data name="ExpressionFunction_FunctionSyntaxValidationError" xml:space="preserve">
+    <value>La función '{0}' no está correctamente formateada o le falta un parámetro requerido. Modo de Ejecución: {1}.</value>
+  </data>
+  <data name="ExpressionFunction_UnknownFunctionExecutionError" xml:space="preserve">
+    <value>Se ha producido una excepción intentando '{0}' función '{1}': '{2}'.</value>
+  </data>
+  <data name="RunPowerShellScript_ScriptInvocationError" xml:space="preserve">
+    <value>Error al invocar el script de PowerShell. Error: '{0}'</value>
+  </data>
+  <data name="RunPowerShellScript_InconsistentScriptReturnTypeError" xml:space="preserve">
+    <value>El script de PowerShell retornó el tipo: {0} que es inconsistente con el tipo retornado anteriormente: '{1}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFirstFunctionParameterTypeError2" xml:space="preserve">
+    <value>La función '{0}' espera el primer parámetro de tipo '{1}' or '{2}'. Se proporcionó un parámetro de tipo '{3}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterCountError2" xml:space="preserve">
+    <value>La función '{0}' espera de '{1}' a '{2}' parámetros. Se proporcionaron '{3}' parámetros.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidSecondFunctionParameterTypeError" xml:space="preserve">
+    <value>La función '{0}' espera que el segundo parámetro sea del tipo '{1}'. Se proporcionó un parámetro del tipo '{2}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidThirdFunctionParameterTypeError" xml:space="preserve">
+    <value>La función '{0}' espera que el tercer parámetro sea del tipo '{1}'. Se proporcionó un parámetro del tipo '{2}'.</value>
+  </data>
+  <data name="ExpressionEvaluator_PublishVariableInsertVariableError" xml:space="preserve">
+    <value>No ha sido posible insertar un valor de tipo '{0}' en el caché para la variable '{1}' de tipo '{2}'.</value>
+  </data>
+  <data name="UpdateLookup_InsertVariableError" xml:space="preserve">
+    <value>No ha sido posible insertar un valor de tipo '{0}' en la clave '{1}' de tipo '{2}' del flujo de trabajo.</value>
+  </data>
+  <data name="ResolveLookups_InconsistentTypeError" xml:space="preserve">
+    <value>La resolución de la siguiente búsqueda ha resultado en múltiples valores de tipos inconsistentes: '{0}'.</value>
+  </data>
+  <data name="DataAccessService_TypeLoadingFailedError" xml:space="preserve">
+    <value>No ha sido posible obtener el tipo '{0}' del ensamblado actual.</value>
+  </data>
+  <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
+    <value>La tabla de definiciones está vacía o corrupta</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParameterTypeValidationError" xml:space="preserve">
+    <value>La expresión '{0}' no es válida.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParenthesisValidationError" xml:space="preserve">
+    <value>La expresión contiene un número inesperado de caracteres  '(' o ')' y no es válida.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionQuotesValidationError" xml:space="preserve">
+    <value>La expresión contiene una cadena de texto sin terminar y no es válida.</value>
+  </data>
+  <data name="ExpressionEvaluator_FunctionParameterParenthesisValidationError" xml:space="preserve">
+    <value>Los parámetros para la función {0} contienen un número inesperado de caracteres '(' o ')' y no son válidos.</value>
+  </data>
+  <data name="ExpressionEvaluator_FunctionParameterQuotesValidationError" xml:space="preserve">
+    <value>Los parámetros para la función {0} contienen una cadena de texto sin terminar y no son válidos.</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupCacheValidationError" xml:space="preserve">
+    <value>El caché de búsqueda no contiene una entrada para {0}</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupParameterExpressionValidationError" xml:space="preserve">
+    <value>La siguiente búsqueda contiene gramática no válida: {0}</value>
+  </data>
+  <data name="ExpressionEvaluator_LookupParameterValidationError" xml:space="preserve">
+    <value>La siguiente búsqueda referencia un parámetro no soportado: {0}</value>
+  </data>
+  <data name="ExpressionEvaluator_StringQuotesValidationError" xml:space="preserve">
+    <value>El valor {0} no es una cadena de texto válida.</value>
+  </data>
+  <data name="ExpressionEvaluator_ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
+    <value>Unicamente la última expresión de valor en la lista puede hacer uso de la búsqueda [//UniquenessKey].</value>
+  </data>
+  <data name="ExpressionEvaluator_ValueExpressionValidationError" xml:space="preserve">
+    <value>Una o más expresiones de valor están incompletas</value>
+  </data>
+  <data name="ExpressionEvaluator_VariableCacheValidationError" xml:space="preserve">
+    <value>La caché de variables no contiene una entrada para {0}</value>
+  </data>
+  <data name="RunPowerShellActivity_InvalidUserFormat" xml:space="preserve">
+    <value>Formato no válido de nombre de usuario {0}. El formato esperado es "Dominio\Usuario".</value>
+  </data>
+  <data name="ProtectedData_EncryptionCertificateNotFoundError" xml:space="preserve">
+    <value>El certificado X.509 de cifrado con huella '{0}' no se ha encontrado.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterError" xml:space="preserve">
+    <value>La función '{0}' espera un parámetro en la posición {1} en el formato '{2}'. Se proporcionó un valor de '{3}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterMinCountError" xml:space="preserve">
+    <value>La función '{0}' espera '{1} o más' parámetros. Se proporcionaron '{2}' parámetros.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterTypeError" xml:space="preserve">
+    <value>La función '{0}' espera que el parámetro en la posición {1} sea del tipo '{2}'. Se proporcionó un parámetro del tipo '{3}'.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterMinMaxCountError" xml:space="preserve">
+    <value>La función '{0}' espera de '{1} a {2}' parámetros. Se proporcionaron '{3}' parámetros.</value>
+  </data>
+  <data name="ExpressionEvaluator_ExpressionParameterTypeUnsupportedTypeError" xml:space="preserve">
+    <value>La expresión '{0}' no está soportada.</value>
+  </data>
+  <data name="PasswordGenerator_MaxValueLessThanMinValueError" xml:space="preserve">
+    <value>El valor máximo maxValue debe ser mayor que el valor mínimo minValue.</value>
+  </data>
+</root>

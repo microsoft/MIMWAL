@@ -1,0 +1,140 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI</RootNamespace>
+    <AssemblyName>MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\WAL.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.IdentityManagement.WebUI.Controls">
+      <HintPath>..\ReferencedAssemblies\4.1.3496.0\Microsoft.IdentityManagement.WebUI.Controls.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.IdentityManagement.WFExtensionInterfaces">
+      <HintPath>..\ReferencedAssemblies\4.1.3496.0\Microsoft.IdentityManagement.WFExtensionInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ResourceManagement">
+      <HintPath>..\ReferencedAssemblies\4.1.3496.0\Microsoft.ResourceManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="ActivitySettings.Designer.cs">
+      <DependentUpon>ActivitySettings.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="CssClass.cs" />
+    <Compile Include="Definitions\DefinitionListing.cs" />
+    <Compile Include="Definitions\DefinitionListingState.cs" />
+    <Compile Include="Definitions\DefinitionsController.cs" />
+    <Compile Include="Definitions\DefinitionsConverter.cs" />
+    <Compile Include="Definitions\UpdateLookupDefinition.cs" />
+    <Compile Include="FormController\ActivityCheckBox.cs" />
+    <Compile Include="FormController\ActivityControl.cs" />
+    <Compile Include="FormController\ActivityDropDownList.cs" />
+    <Compile Include="FormController\ActivityFormController.cs" />
+    <Compile Include="FormController\ActivityRadioButtonList.cs" />
+    <Compile Include="FormController\ActivityTextBox.cs" />
+    <Compile Include="FormController\ActivityTextBoxGuid.cs" />
+    <Compile Include="FormController\ActivityTextBoxMultiline.cs" />
+    <Compile Include="FormController\ActivityTextBoxNumeric.cs" />
+    <Compile Include="Forms\CreateResourceForm.cs" />
+    <Compile Include="Forms\AddDelayForm.cs" />
+    <Compile Include="Forms\DeleteResourcesForm.cs" />
+    <Compile Include="Forms\GenerateUniqueValueForm.cs" />
+    <Compile Include="Forms\RequestApprovalForm.cs" />
+    <Compile Include="Forms\RunPowerShellScriptForm.cs" />
+    <Compile Include="Forms\SendEmailNotificationForm.cs" />
+    <Compile Include="Forms\UpdateResourcesForm.cs" />
+    <Compile Include="Forms\VerifyRequestForm.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WorkflowActivityLibrary\WorkflowActivityLibrary.csproj">
+      <Project>{e2f7c594-3e4a-42df-b293-7cb418dab0da}</Project>
+      <Name>WorkflowActivityLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\WAL.snk">
+      <Link>WAL.snk</Link>
+    </None>
+    <None Include="..\Settings.StyleCop">
+      <Link>Settings.StyleCop</Link>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ActivitySettings.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ActivitySettings.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
+      <Link>CodeAnalysisDictionary.xml</Link>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /I /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)SolutionOutput"
+xcopy /I /Y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)SolutionOutput"
+xcopy /I /Y "$(SolutionDir)Scripts\*.*" "$(SolutionDir)SolutionOutput"</PostBuildEvent>
+  </PropertyGroup>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

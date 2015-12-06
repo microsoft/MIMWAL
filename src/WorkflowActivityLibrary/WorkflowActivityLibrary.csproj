@@ -1,0 +1,276 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <ProductVersion>9.0.21107</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>MicrosoftServices.IdentityManagement.WorkflowActivityLibrary</RootNamespace>
+    <AssemblyName>MicrosoftServices.IdentityManagement.WorkflowActivityLibrary</AssemblyName>
+    <ProjectTypeGuids>{14822709-B5A1-4724-98CA-57A101D1B079};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <RunCodeAnalysis>true</RunCodeAnalysis>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <DebugType>pdbonly</DebugType>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>..\WAL.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DelaySign>true</DelaySign>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ResourceManagement, Version=4.1.2273.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferencedAssemblies\4.1.3496.0\Microsoft.ResourceManagement.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ResourceManagement.WorkflowContract">
+      <HintPath>..\ReferencedAssemblies\4.1.3496.0\Microsoft.ResourceManagement.WorkflowContract.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Management.Automation, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\ReferencedAssemblies\System.Management.Automation.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Workflow.Activities" />
+    <Reference Include="System.Workflow.ComponentModel" />
+    <Reference Include="System.Workflow.Runtime" />
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\VersionInfo.cs">
+      <Link>VersionInfo.cs</Link>
+    </Compile>
+    <Compile Include="Activities\AddDelay.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\AddDelay.Designer.cs">
+      <DependentUpon>AddDelay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\CreateResource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\CreateResource.Designer.cs">
+      <DependentUpon>CreateResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\DeleteResources.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\DeleteResources.Designer.cs">
+      <DependentUpon>DeleteResources.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\GenerateUniqueValue.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\GenerateUniqueValue.Designer.cs">
+      <DependentUpon>GenerateUniqueValue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\RequestApproval.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\RequestApproval.Designer.cs">
+      <DependentUpon>RequestApproval.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\RunPowerShellScript.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\RunPowerShellScript.Designer.cs">
+      <DependentUpon>RunPowerShellScript.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\SendEmailNotification.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\SendEmailNotification.Designer.cs">
+      <DependentUpon>SendEmailNotification.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\UpdateResources.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\UpdateResources.Designer.cs">
+      <DependentUpon>UpdateResources.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Activities\VerifyRequest.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Activities\VerifyRequest.Designer.cs">
+      <DependentUpon>VerifyRequest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Common\ContextItems.cs" />
+    <Compile Include="Common\EventIdentifier.cs" />
+    <Compile Include="Common\Logger.cs" />
+    <Compile Include="Common\LogonUser.cs" />
+    <Compile Include="Common\NativeMethods.cs" />
+    <Compile Include="Common\ProtectedData.cs" />
+    <Compile Include="Common\SafeRegistryHandle.cs" />
+    <Compile Include="Common\SafeTokenHandle.cs" />
+    <Compile Include="Common\WellKnownGuids.cs" />
+    <Compile Include="Definitions\DefinitionsConverter.cs" />
+    <Compile Include="Enumerations\LogOnProvider.cs" />
+    <Compile Include="Enumerations\LogOnType.cs" />
+    <Compile Include="Enumerations\PasswordCharType.cs" />
+    <Compile Include="Enumerations\LookupParameter.cs" />
+    <Compile Include="Enumerations\ActorType.cs" />
+    <Compile Include="Enumerations\DeleteResourcesTargetType.cs" />
+    <Compile Include="Enumerations\EvaluationMode.cs" />
+    <Compile Include="Exceptions\CryptographicException.cs" />
+    <Compile Include="Exceptions\InvalidExpressionException.cs" />
+    <Compile Include="Exceptions\InvalidFunctionFormatException.cs" />
+    <Compile Include="Exceptions\InvalidFunctionOperationException.cs" />
+    <Compile Include="Exceptions\NotSupportedLookupParameterException.cs" />
+    <Compile Include="Exceptions\InvalidLookupParameterExpressionException.cs" />
+    <Compile Include="Exceptions\NotSupportedFunctionException.cs" />
+    <Compile Include="Common\InsertedValuesCollection.cs" />
+    <Compile Include="Common\LookupEvaluator.cs" />
+    <Compile Include="Enumerations\ParameterType.cs" />
+    <Compile Include="Common\PasswordGenerator.cs" />
+    <Compile Include="Enumerations\PowerShellInputType.cs" />
+    <Compile Include="Enumerations\PowerShellReturnType.cs" />
+    <Compile Include="Enumerations\PowerShellScriptLocation.cs" />
+    <Compile Include="Common\RemovedValuesCollection.cs" />
+    <Compile Include="ComponentActivities\AsynchronousCreateResource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\AsynchronousCreateResource.Designer.cs">
+      <DependentUpon>AsynchronousCreateResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\AsynchronousDeleteResource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\AsynchronousDeleteResource.Designer.cs">
+      <DependentUpon>AsynchronousDeleteResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\AsynchronousUpdateResource.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\AsynchronousUpdateResource.Designer.cs">
+      <DependentUpon>AsynchronousUpdateResource.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\DetermineActor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\DetermineActor.Designer.cs">
+      <DependentUpon>DetermineActor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\FindRequestConflict.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\FindRequestConflict.Designer.cs">
+      <DependentUpon>FindRequestConflict.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\FindResources.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\FindResources.Designer.cs">
+      <DependentUpon>FindResources.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveLookups.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveLookups.Designer.cs">
+      <DependentUpon>ResolveLookups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveLookupString.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveLookupString.Designer.cs">
+      <DependentUpon>ResolveLookupString.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveQueries.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\ResolveQueries.Designer.cs">
+      <DependentUpon>ResolveQueries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentActivities\UpdateLookups.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ComponentActivities\UpdateLookups.Designer.cs">
+      <DependentUpon>UpdateLookups.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Definitions\UpdateLookupDefinition.cs" />
+    <Compile Include="Exceptions\InvalidActorTypeException.cs" />
+    <Compile Include="Exceptions\InvalidPowerShellInputTypeException.cs" />
+    <Compile Include="Exceptions\InvalidPowerShellReturnTypeException.cs" />
+    <Compile Include="Exceptions\InvalidPowerShellScriptLocationException.cs" />
+    <Compile Include="Exceptions\WorkflowActivityLibraryException.cs" />
+    <Compile Include="Common\ExpressionEvaluator.cs" />
+    <Compile Include="Common\ExpressionFunction.cs" />
+    <Compile Include="Definitions\Definition.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Messages.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Messages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <None Include="..\WAL.snk">
+      <Link>WAL.snk</Link>
+    </None>
+    <None Include="..\Settings.StyleCop">
+      <Link>Settings.StyleCop</Link>
+    </None>
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Messages.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Messages.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="..\CodeAnalysisDictionary.xml">
+      <Link>CodeAnalysisDictionary.xml</Link>
+      <SubType>Designer</SubType>
+    </CodeAnalysisDictionary>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.Targets" />
+  <Import Project="$(MSBuildToolsPath)\Workflow.Targets" />
+  <PropertyGroup>
+    <PostBuildEvent>xcopy /I /Y "$(TargetDir)$(TargetName).dll" "$(SolutionDir)SolutionOutput"
+xcopy /I /Y "$(TargetDir)$(TargetName).pdb" "$(SolutionDir)SolutionOutput"
+xcopy /I /Y "$(SolutionDir)Scripts\*.*" "$(SolutionDir)SolutionOutput"</PostBuildEvent>
+  </PropertyGroup>
+</Project>

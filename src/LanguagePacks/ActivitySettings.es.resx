@@ -1,0 +1,678 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActivityDisplayName" xml:space="preserve">
+    <value>Nombre para mostrar de la actividad</value>
+  </data>
+  <data name="ResourceType" xml:space="preserve">
+    <value>Tipo de Recurso</value>
+  </data>
+  <data name="ResourceTypeHelpText" xml:space="preserve">
+    <value>Especifique el tipo de recurso a ser creado por la actividad.</value>
+  </data>
+  <data name="AdvancedFeatures" xml:space="preserve">
+    <value>Características Avanzadas</value>
+  </data>
+  <data name="AdvancedFeaturesHelpText" xml:space="preserve">
+    <value>Seleccione esta opción para configurar el comportamiento avanzado de la actividad.</value>
+  </data>
+  <data name="QueryResources" xml:space="preserve">
+    <value>Consultar Recursos</value>
+  </data>
+  <data name="QueryResourcesHelpText" xml:space="preserve">
+    <value>Esta actividad puede configurarse para consultar recursos que pueden utilizarse en definiciones de actualización.</value>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>Consultas</value>
+  </data>
+  <data name="QueriesHelpText" xml:space="preserve">
+    <value>Especifique una o más consultas XPath que la actividad debe ejecutar. Las consultas pueden ser referenciadas en expresiones utilizando búsquedas con la gramática [//Queries/Key/...].</value>
+  </data>
+  <data name="QueriesLeftHeader" xml:space="preserve">
+    <value>Clave</value>
+  </data>
+  <data name="QueriesRightHeader" xml:space="preserve">
+    <value>Filtro XPath</value>
+  </data>
+  <data name="ActivityExecutionCondition" xml:space="preserve">
+    <value>Condición de Ejecución de la Actividad</value>
+  </data>
+  <data name="ConditionHelpText" xml:space="preserve">
+    <value>Opcionalmente especifique una condición que debe cumplirse para la ejecución de la actividad.</value>
+  </data>
+  <data name="Iteration" xml:space="preserve">
+    <value>Iteración</value>
+  </data>
+  <data name="IterationHelpText" xml:space="preserve">
+    <value>Opcionalmente configure la actividad para recorrer una colección de valores indicando una búsqueda o expresión. El valor de la instancia puede referenciarse en las definiciones de actualización utilizando búsquedas con la gramática [//Value/...]. Nota: Iteración desactivará la publicación de IDs de recursos creados o en conflicto.</value>
+  </data>
+  <data name="RequestActor" xml:space="preserve">
+    <value>Actor de la Solicitud</value>
+  </data>
+  <data name="ServiceAccount" xml:space="preserve">
+    <value>Cuenta de Servicio</value>
+  </data>
+  <data name="Requestor" xml:space="preserve">
+    <value>Solicitante</value>
+  </data>
+  <data name="ResolveFromExpression" xml:space="preserve">
+    <value>Resolver de Expresión</value>
+  </data>
+  <data name="SearchByAccountName" xml:space="preserve">
+    <value>Buscar por Nombre de Cuenta</value>
+  </data>
+  <data name="ActorString" xml:space="preserve">
+    <value>Cadena del Actor</value>
+  </data>
+  <data name="ApplyAuthorizationPolicy" xml:space="preserve">
+    <value>Aplicar Directiva de Autorización</value>
+  </data>
+  <data name="ApplyAuthorizationPolicyHelpText" xml:space="preserve">
+    <value>La actividad puede configurarse para aplicar la directiva de autorización a solicitudes hijas. Nota: La Directiva de Autorización desactivará la publicación del ID de creación del recurso.</value>
+  </data>
+  <data name="TargetForCreatedResourceID" xml:space="preserve">
+    <value>Destino para ID de Recurso Creado</value>
+  </data>
+  <data name="TargetForCreatedResourceIDHelpText" xml:space="preserve">
+    <value>Esta actividad puede configurarse para publicar el ID de un nuevo recurso, tras ser creado, en un atributo o clave de diccionario de flujo de trabajo. El destino debe expresarse como una búsqueda.</value>
+  </data>
+  <data name="CheckForConflict" xml:space="preserve">
+    <value>Verificación de Conflicto</value>
+  </data>
+  <data name="CheckForConflictHelpText" xml:space="preserve">
+    <value>La actividad puede configurarse para verificar un conflicto antes de crear un nuevo recurso.</value>
+  </data>
+  <data name="ConflictingResourceSearchFilter" xml:space="preserve">
+    <value>Filtro de Búsqueda de Recursos en Conflicto</value>
+  </data>
+  <data name="ConflictingResourceSearchFilterHelpText" xml:space="preserve">
+    <value>Proporcione el filtro de búsqueda XPath que devolverá cualquier recurso en conflicto. Ejemplo: /Group[DisplayName = 'DL_Location_[//Target/OfficeLocation]']</value>
+  </data>
+  <data name="TargetForConflictingResourceID" xml:space="preserve">
+    <value>Destino para ID de Recurso en Conflicto</value>
+  </data>
+  <data name="TargetForConflictingResourceIDHelpText" xml:space="preserve">
+    <value>Esta actividad puede configurarse para publicar el ID del recurso identificado como conflicto en un atributo o clave de diccionario de flujo de trabajo. El destino debe expresarse como una búsqueda.</value>
+  </data>
+  <data name="FailOnConflict" xml:space="preserve">
+    <value>Fallo ante Conflicto</value>
+  </data>
+  <data name="FailOnConflictHelpText" xml:space="preserve">
+    <value>Especifique si la actividad debe o no generar un error cuando se identifique un conflicto.</value>
+  </data>
+  <data name="AttributesPopulation" xml:space="preserve">
+    <value>Poblado de atributos</value>
+  </data>
+  <data name="AttributesPopulationHelpText" xml:space="preserve">
+    <value>Especifique qué atributos son poblados en el nuevo recurso. Puede utilizar búsquedas en las expresiones de valor, pero debe especificar un nombre de atributo como destino. También pueden especificarse variables como un destino y luego utilizarlas en la expresión de valor de definiciones posteriores.</value>
+  </data>
+  <data name="AttributesPopulationLeftHeader" xml:space="preserve">
+    <value>Expresión de Valor</value>
+  </data>
+  <data name="AttributesPopulationRightHeader" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="CreateResource" xml:space="preserve">
+    <value>Crear Recurso</value>
+  </data>
+  <data name="ActorTypeExpression" xml:space="preserve">
+    <value>Expresión de Actor</value>
+  </data>
+  <data name="ActorTypeExpressionHelpText" xml:space="preserve">
+    <value>Especifique la búsqueda o expresión que se resolverá al actor deseado.</value>
+  </data>
+  <data name="ActorTypeAccountName" xml:space="preserve">
+    <value>Nombre de Cuenta del Actor</value>
+  </data>
+  <data name="ActorTypeAccountNameHelpText" xml:space="preserve">
+    <value>Especifique el nombre de la cuenta del actor deseado. El dominio se puede especificar opcionalmente utilizando la sintaxis Dominio\Cuenta.</value>
+  </data>
+  <data name="InvalidActorType" xml:space="preserve">
+    <value>El valor proporcionado podría no coincidir con un valor de la enumeración ActorType.</value>
+  </data>
+  <data name="ResourceTypeValidationError" xml:space="preserve">
+    <value>El tipo de recurso '{0}' no es válido</value>
+  </data>
+  <data name="QueryDefintionLeftValidationError" xml:space="preserve">
+    <value>La clave de consulta '{0}' no es válida</value>
+  </data>
+  <data name="QueryDefintionRightValidationError" xml:space="preserve">
+    <value>El filtro XPath proporcionado para la clave '{0}' no es válido</value>
+  </data>
+  <data name="ConflictResourceSearchFilterValidationError" xml:space="preserve">
+    <value>El filtro proporcionado de búsqueda de recursos en conflicto no es válido</value>
+  </data>
+  <data name="DeleteResources" xml:space="preserve">
+    <value>Borrar Recursos</value>
+  </data>
+  <data name="TargetForDeletion" xml:space="preserve">
+    <value>Destino a Eliminar</value>
+  </data>
+  <data name="TargetForDeletionHelpText" xml:space="preserve">
+    <value>Especifica cómo la actividad identificará el destino(s) a eliminar.</value>
+  </data>
+  <data name="TargetExpression" xml:space="preserve">
+    <value>Expresión de Destino</value>
+  </data>
+  <data name="UseWorkflowTarget" xml:space="preserve">
+    <value>Utilizar Destino de Flujo de Trabajo</value>
+  </data>
+  <data name="ResolveTargets" xml:space="preserve">
+    <value>Resolver Destino(s)</value>
+  </data>
+  <data name="SearchForTargets" xml:space="preserve">
+    <value>Buscar Destino(s)</value>
+  </data>
+  <data name="TargetLookup" xml:space="preserve">
+    <value>Búsqueda de Destino</value>
+  </data>
+  <data name="TargetLookupHelpText" xml:space="preserve">
+    <value>Proporcione la búsqueda que identificará el(los) destino(s) a eliminar.  Ejemplo: [//Target/OwnedAccounts]</value>
+  </data>
+  <data name="TargetSearchFilter" xml:space="preserve">
+    <value>Filtro de Búsqueda de Destino</value>
+  </data>
+  <data name="TargetSearchFilterHelpText" xml:space="preserve">
+    <value>Proporcione el filtro de búsqueda resoluble XPath que retornará el(los) destino(s) a eliminar. Ejemplo: /Account[AccountOwner = '[//Target/ObjectID]']</value>
+  </data>
+  <data name="GenerateUniqueValue" xml:space="preserve">
+    <value>Generar Valor Unico</value>
+  </data>
+  <data name="TargetForGeneratedValue" xml:space="preserve">
+    <value>Destino para Valor Generado</value>
+  </data>
+  <data name="TargetForGeneratedValueHelpText" xml:space="preserve">
+    <value>Especifique el atributo o clave de diccionario de flujo de trabajo en la que se publicará el valor generado. El destino debe ser expresado como una búsqueda.</value>
+  </data>
+  <data name="ConflictFilter" xml:space="preserve">
+    <value>Filtro de Conflicto</value>
+  </data>
+  <data name="ConflictFilterHelpText" xml:space="preserve">
+    <value>Proporcione el filtro XPath que identificará conflictos para el valor generado.  La búsqueda de [//Value] debe utilizarse en el filtro para representar el valor utilizado para evaluar la unicidad. Ejemplo: /Person[AccountName = '[//Value]'].</value>
+  </data>
+  <data name="QueryLdapForConflicts" xml:space="preserve">
+    <value>Consulta LDAP de Conflictos</value>
+  </data>
+  <data name="QueryLdapForConflictsHelpText" xml:space="preserve">
+    <value>La actividad puede configurarse para consultar uno o más directorios LDAP para identificar conflictos para el valor generado.</value>
+  </data>
+  <data name="LdapQueries" xml:space="preserve">
+    <value>Consultas LDAP</value>
+  </data>
+  <data name="LdapQueriesHelpText" xml:space="preserve">
+    <value>Especifique una o más consultas LDAP que la actividad debe ejecutar para identificar conflictos. La búsqueda [//Value] debe usarse en cada filtro LDAP para representar el valor utilizado para evaluar la unicidad. Todas las consultas se ejecutarán en el contexto de la cuenta de servicio de FIM Service.</value>
+  </data>
+  <data name="LdapQueriesLeftHeader" xml:space="preserve">
+    <value>Ruta de Entrada del Directorio</value>
+  </data>
+  <data name="LdapQueriesRightHeader" xml:space="preserve">
+    <value>Filtro LDAP</value>
+  </data>
+  <data name="UniquenessKeySeed" xml:space="preserve">
+    <value>Semilla de Clave de Unica</value>
+  </data>
+  <data name="UniquenessKeySeedHelpText" xml:space="preserve">
+    <value>Especifique el primer número que debe incluirse en el valor cuando el resto de expresiones resultan en conflicto.</value>
+  </data>
+  <data name="ValueExpressions" xml:space="preserve">
+    <value>Expresiones de Valor</value>
+  </data>
+  <data name="ValueExpressionsHelpText" xml:space="preserve">
+    <value>Proporcione expresiones que se utilizarán para generar un valor único. La primera expresión que resulte en un valor único será utilizada para obtener el valor. La última expresión en la lista debe contener la búsqueda [//UniquenessKey] para asegurar que puede generarse un valor único. Como último recurso, esta búsqueda será reemplazada por un entero que será incrementado hasta identificar un valor único.</value>
+  </data>
+  <data name="ValueExpressionsLeftHeader" xml:space="preserve">
+    <value>Expresión de Valor</value>
+  </data>
+  <data name="QueryDefinitionValidationError" xml:space="preserve">
+    <value>Una o más definiciones de consulta están incompletas</value>
+  </data>
+  <data name="TargetLookupValidationError" xml:space="preserve">
+    <value>{0} no es una búsqueda de destino válida</value>
+  </data>
+  <data name="AttributeDefinitionValidationError" xml:space="preserve">
+    <value>Una o más definiciones de asignación de atributos están incompletas</value>
+  </data>
+  <data name="TargetValidationError" xml:space="preserve">
+    <value>El destino '{0}' no es válido</value>
+  </data>
+  <data name="QueryResourcesValidationError" xml:space="preserve">
+    <value>La actividad no está configurada para consultar recursos. No pueden utilizarse expresiones con sintaxis [//Query/Key/...].</value>
+  </data>
+  <data name="IterationValidationError" xml:space="preserve">
+    <value>La actividad no está configurada para iteración. No se pueden utilizar expresiones con la sintaxis [//Value/...].</value>
+  </data>
+  <data name="ConflictFilterValidationError" xml:space="preserve">
+    <value>El filtro de conflicto proporcionado no es válido</value>
+  </data>
+  <data name="ConflictFilterValueLookupValidationError" xml:space="preserve">
+    <value>El filtro de conflicto debe contener la búsqueda [//Value]</value>
+  </data>
+  <data name="LdapQueryDefinitionValidationError" xml:space="preserve">
+    <value>Una o más consultas LDAP definidas están incompletas</value>
+  </data>
+  <data name="LdapQueryDefinitionValueLookupValidationError" xml:space="preserve">
+    <value>Todos los filtros de LDAP deben contener la búsqueda [//Value]</value>
+  </data>
+  <data name="ValueExpressionMissingUniquenessKeyValidationError" xml:space="preserve">
+    <value>La última expresión de valor en la lista debe contener la búsqueda [//UniquenessKey].</value>
+  </data>
+  <data name="RunPowerShellScript" xml:space="preserve">
+    <value>Ejecutar Script de PowerShell</value>
+  </data>
+  <data name="PowerShellScriptLocation" xml:space="preserve">
+    <value>Ubicación del Script</value>
+  </data>
+  <data name="PowerShellScriptLocationHelpText" xml:space="preserve">
+    <value>Indique cómo la actividad localizará el script para su ejecución.</value>
+  </data>
+  <data name="PowerShellScript" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="PowerShellScriptHelpText" xml:space="preserve">
+    <value>Proporcione el script de PowerShell que será ejecutado por la actividad. El script se almacenará en la definición de flujo de trabajo como una propiedad de configuración de la actividad.</value>
+  </data>
+  <data name="FailOnMissingScript" xml:space="preserve">
+    <value>Fallo Cuando Falte Script</value>
+  </data>
+  <data name="FailOnMissingScriptHelpText" xml:space="preserve">
+    <value>Especifique si la actividad debe o no generar un error cuando la búsqueda de script devuelve un valor nulo.</value>
+  </data>
+  <data name="PowerShellScriptInputType" xml:space="preserve">
+    <value>Tipo de Entrada</value>
+  </data>
+  <data name="PowerShellScriptInputTypeHelpText" xml:space="preserve">
+    <value>Si se requiere de entrada, especifique cómo debe proporcionarse al script de PowerShell.</value>
+  </data>
+  <data name="NamedParameters" xml:space="preserve">
+    <value>Parámetros con Nombre</value>
+  </data>
+  <data name="NamedParametersHelpText" xml:space="preserve">
+    <value>Indique uno o más parámetros con nombre para suministrar al script a ejecutar. Las expresiones de valor pueden incluir funciones, búsquedas y concatenación.</value>
+  </data>
+  <data name="NamedParametersLeftHeader" xml:space="preserve">
+    <value>Parámetro</value>
+  </data>
+  <data name="NamedParametersRightHeader" xml:space="preserve">
+    <value>Expresión de Valor</value>
+  </data>
+  <data name="ScriptArguments" xml:space="preserve">
+    <value>Argumentos</value>
+  </data>
+  <data name="ScriptArgumentsHelpText" xml:space="preserve">
+    <value>Especifique uno o más argumentos para suministrar al script al ejecutarse. Se proporcionarán argumentos, sin nombres de parámetro, en el orden en que se enumeran. Las expresiones de valor pueden incluir funciones, búsquedas y concatenación.</value>
+  </data>
+  <data name="ScriptArgumentsLeftHeader" xml:space="preserve">
+    <value>Expresión de Valor</value>
+  </data>
+  <data name="ScriptReturnType" xml:space="preserve">
+    <value>Tipo de Retorno de Script</value>
+  </data>
+  <data name="ScriptReturnTypeHelpText" xml:space="preserve">
+    <value>Esta actividad puede capturar el valor de retorno del script de PowerShell y publicarlo en una búsqueda. Alternativamente, el script de PowerShell podría devolver una tabla de valores con nombre que puede publicarse en el diccionario del flujo de trabajo utilizando los correspondientes nombres de clave.</value>
+  </data>
+  <data name="ScriptReturnValueLookup" xml:space="preserve">
+    <value>Búsqueda de Valor de Retorno</value>
+  </data>
+  <data name="ScriptReturnValueLookupHelpText" xml:space="preserve">
+    <value>Especifique la búsqueda en la que el valor de retorno debe publicarse.</value>
+  </data>
+  <data name="ScriptLocationWorkflowDefinition" xml:space="preserve">
+    <value>Incluir en la Definición de Flujo de Trabajo</value>
+  </data>
+  <data name="ScriptLocationDisk" xml:space="preserve">
+    <value>Leer desde archivo</value>
+  </data>
+  <data name="ScriptLocationResolveLookup" xml:space="preserve">
+    <value>Resolver desde búsqueda</value>
+  </data>
+  <data name="PowerShellInputTypeNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="PowerShellInputTypeNamedParameters" xml:space="preserve">
+    <value>Parámetros con Nombre</value>
+  </data>
+  <data name="PowerShellInputTypeArguments" xml:space="preserve">
+    <value>Argumentos</value>
+  </data>
+  <data name="PowerShellReturnTypeNone" xml:space="preserve">
+    <value>Ninguno</value>
+  </data>
+  <data name="PowerShellReturnTypeSingleValue" xml:space="preserve">
+    <value>Valor sencillo</value>
+  </data>
+  <data name="PowerShellReturnTypeTable" xml:space="preserve">
+    <value>Tabla de Valores</value>
+  </data>
+  <data name="ScriptParameterDefintionValidationError" xml:space="preserve">
+    <value>Una o más definiciones de parámetro están incompletas</value>
+  </data>
+  <data name="ScriptArgumentValidationError" xml:space="preserve">
+    <value>Uno o más argumentos están incompletos</value>
+  </data>
+  <data name="PowerShellScriptPath" xml:space="preserve">
+    <value>Ruta del Script</value>
+  </data>
+  <data name="PowerShellScriptPathHelpText" xml:space="preserve">
+    <value>Especifique la ruta completa del fichero de script de PowerShell. Esta ruta debe ser accesible desde todas las instancias de FIM Service.</value>
+  </data>
+  <data name="PowerShellScriptLookup" xml:space="preserve">
+    <value>Búsqueda de Script de PowerShell</value>
+  </data>
+  <data name="PowerShellScriptLookupHelpText" xml:space="preserve">
+    <value>Especifique la búsqueda que representa el script de PowerShell que ejecutará la actividad.</value>
+  </data>
+  <data name="InvalidPowerShellScriptLocation" xml:space="preserve">
+    <value>El valor proporcionado podría no coincidir con un valor de la enumeración PowerShellScriptLocation.</value>
+  </data>
+  <data name="InvalidPowerShellInputType" xml:space="preserve">
+    <value>El valor proporcionado podría no coincidir con un valor de la enumeración PowerShellInputType.</value>
+  </data>
+  <data name="InvalidPowerShellReturnType" xml:space="preserve">
+    <value>El valor proporcionado podría no coincidir con un valor de la enumeración PowerShellReturnType.</value>
+  </data>
+  <data name="UpdateResources" xml:space="preserve">
+    <value>Actualizar Recursos</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Actualizaciones</value>
+  </data>
+  <data name="UpdatesHelpText" xml:space="preserve">
+    <value>Especifique las actualizaciones que realizará la actividad. Las búsquedas se utilizan en expresiones de valor y también pueden utilizarse para representar recursos y atributos destino. También pueden especificarse variables como destino y utilizarlas posteriormente en expresiones de valor de definiciones de actualización subsiguientes.. La opción \"Permitir Nulos\" fuerza el borrado de los valores destino cuando el origen resuelve a un valor nulo.</value>
+  </data>
+  <data name="UpdatesLeftHeader" xml:space="preserve">
+    <value>Expresión de Valor</value>
+  </data>
+  <data name="UpdatesRightHeader" xml:space="preserve">
+    <value>Destino</value>
+  </data>
+  <data name="UpdatesCheckHeader" xml:space="preserve">
+    <value>Permitir Nulos</value>
+  </data>
+  <data name="UpdateDefinitionValidationError" xml:space="preserve">
+    <value>Una o más definiciones de actualización están incompletas</value>
+  </data>
+  <data name="VerifyResourceUniqueness" xml:space="preserve">
+    <value>Verificar el Recurso como Unico</value>
+  </data>
+  <data name="VerifyResourceUniquenessHelpText" xml:space="preserve">
+    <value>Especifique si debe o no realizarse una verificación de unicidad para el recurso destino.</value>
+  </data>
+  <data name="ConflictingResourceSearchFilterHelpText2" xml:space="preserve">
+    <value>Proporcione el filtro de búsqueda XPath que devolverá cualquier recurso en conflicto. Ejemplo:  /Person[EmployeeID = '[//Effective/EmployeeID]']</value>
+  </data>
+  <data name="ConflictDenialMessage" xml:space="preserve">
+    <value>Mensaje de Rechazo por Conflicto</value>
+  </data>
+  <data name="ConflictDenialMessageHelpText" xml:space="preserve">
+    <value>Proporcione el mensaje de rechazo resoluble que se devolverá al usuario cuando se encuentre un recurso en conflicto.</value>
+  </data>
+  <data name="VerifyRequestUniqueness" xml:space="preserve">
+    <value>Verificar la Solicitud como Unica</value>
+  </data>
+  <data name="VerifyRequestUniquenessHelpText" xml:space="preserve">
+    <value>Especifique si debe o no realizarse verificación de unicidad para la solicitud contra otras solicitudes de autorización.</value>
+  </data>
+  <data name="AdvancedRequestSearchFilter" xml:space="preserve">
+    <value>Filtro de Búsqueda Avanzada de Solicitud</value>
+  </data>
+  <data name="AdvancedRequestSearchFilterHelpText" xml:space="preserve">
+    <value>Opcionalmente proporcione el filtro de búsqueda XPath que retornará las solicitudes que deben ser evaluadas como conflictos potenciales. Si no se proporciona, la actividad evaluará todas las solicitudes en estado 'Autorizando' cuyo destino coincida en tipo de recurso y operación.</value>
+  </data>
+  <data name="RequestConflictMatchCondition" xml:space="preserve">
+    <value>Condición de coincidencia identificando una solicitud en conflicto.</value>
+  </data>
+  <data name="RequestConflictMatchConditionHelpText" xml:space="preserve">
+    <value>Proporcionar la condición booleana que identifica una solicitud evaluada como conflicto. Ejemplo: And(Eq(AccountName, [//Target/AccountName]), Eq(Domain, [//Target/Domain]))</value>
+  </data>
+  <data name="RequestConflictDenialMessage" xml:space="preserve">
+    <value>Mensaje de Rechazo de Solicitud por Conflicto</value>
+  </data>
+  <data name="RequestConflictDenialMessageHelpText" xml:space="preserve">
+    <value>Proporcione el mensaje resoluble de rechazo de que debe devolverse al usuario cuando se encuentra una solicitud en conflicto.</value>
+  </data>
+  <data name="RequiredRequestConditions" xml:space="preserve">
+    <value>Condiciones Requeridas para la Solicitud</value>
+  </data>
+  <data name="RequiredRequestConditionsHelpText" xml:space="preserve">
+    <value>Especificar las condiciones que deben cumplirse para que la solicitud sea considerada válida. La actividad es compatible con la especificación de condiciones basadas en funciones que referencian expresiones resolubles. Si cualquier condición no evalúa como verdadera, se rechazará la solicitud con el mensaje de error asociado.</value>
+  </data>
+  <data name="RequiredRequestConditionsLeftHeader" xml:space="preserve">
+    <value>Condición Requerida para la Solicitud</value>
+  </data>
+  <data name="RequiredRequestConditionsRightHeader" xml:space="preserve">
+    <value>Mensaje de Rechazo si no se Satisface la Condición</value>
+  </data>
+  <data name="ConditionDefinitionValidationError" xml:space="preserve">
+    <value>Una o más definiciones de condición están incompletas</value>
+  </data>
+  <data name="ConditionEvaluationValidationError" xml:space="preserve">
+    <value>Todas las condiciones deben resolver en un valor booleano</value>
+  </data>
+  <data name="RequiredIndicator" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="RequiredFieldValidationError" xml:space="preserve">
+    <value>Debe proporcionarse un valor para {0}</value>
+  </data>
+  <data name="NumericFieldValidationError" xml:space="preserve">
+    <value>Debe proporcionarse un valor entero para {0}</value>
+  </data>
+  <data name="GuidFieldValidationError" xml:space="preserve">
+    <value>Debe proporcionarse un Guid válido para {0}</value>
+  </data>
+  <data name="NullDefinitionListingsError" xml:space="preserve">
+    <value>La lista de listados de definición tiene un valor nulo</value>
+  </data>
+  <data name="LinkButtonAdd" xml:space="preserve">
+    <value>Agregar</value>
+  </data>
+  <data name="LinkButtonDelete" xml:space="preserve">
+    <value>Eliminar</value>
+  </data>
+  <data name="LinkButtonMoveUp" xml:space="preserve">
+    <value>Subir</value>
+  </data>
+  <data name="LinkButtonMoveDown" xml:space="preserve">
+    <value>Bajar</value>
+  </data>
+  <data name="FormControlInitializationError" xml:space="preserve">
+    <value>El control debe ser inicializado antes de que se pueda agregar al controlador de formulario</value>
+  </data>
+  <data name="VerifyRequest" xml:space="preserve">
+    <value>Verificar Solicitud</value>
+  </data>
+  <data name="ActivityDisplayNameControlValidationError" xml:space="preserve">
+    <value>Ya se ha agregado al controlador un control de cuadro de texto de nombre para mostrar de la actividad</value>
+  </data>
+  <data name="UnnamedField" xml:space="preserve">
+    <value>un campo sin nombre</value>
+  </data>
+  <data name="TargetLookupExpressionMissingValidationError" xml:space="preserve">
+    <value>Debe proporcionarse una expresión de Búsqueda de Destino(s)</value>
+  </data>
+  <data name="TargetXPathExpressionMissingValidationError" xml:space="preserve">
+    <value>Debe proporcionarse una búsqueda XPath de Destino</value>
+  </data>
+  <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
+    <value>La tabla de definiciones está vacía o corrupta</value>
+  </data>
+  <data name="ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
+    <value>Unicamente la última expresión de valor en la lista puede utilizar la búsqueda [//UniquenessKey].</value>
+  </data>
+  <data name="ValueExpressionValidationError" xml:space="preserve">
+    <value>Una o más expresiones de valor están incompletas.</value>
+  </data>
+  <data name="ImpersonatePowerShellUser" xml:space="preserve">
+    <value>Impersonar usuario PowerShell</value>
+  </data>
+  <data name="ImpersonatePowerShellUserHelpText" xml:space="preserve">
+    <value>Impersonar el usuario PowerShell indicado cuando se ejecute el script de PowerShell.</value>
+  </data>
+  <data name="ImpersonationLogOnType" xml:space="preserve">
+    <value>Tipo de Inicio de Sesión</value>
+  </data>
+  <data name="ImpersonationLogonTypeHelpText" xml:space="preserve">
+    <value>Tipo de inicio de sesión al impersonar el usuario PowerShell.</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnBatch" xml:space="preserve">
+    <value>Iniciar sesión como proceso por lotes</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnInteractive" xml:space="preserve">
+    <value>Inicio de sesión interactivo</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnNetwork" xml:space="preserve">
+    <value>Inicio de sesión desde la red</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnNetworkClearText" xml:space="preserve">
+    <value>Inicio de sesión desde la red en texto plano</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnService" xml:space="preserve">
+    <value>Inicio de sesión como servicio</value>
+  </data>
+  <data name="InvalidLogOnType" xml:space="preserve">
+    <value>El valor proporcionado podría no coincidir con un valor de la enumeración LogOnType.</value>
+  </data>
+  <data name="LoadUserProfile" xml:space="preserve">
+    <value>Cargar perfil de usuario</value>
+  </data>
+  <data name="LoadUserProfileHelpText" xml:space="preserve">
+    <value>Cargar perfil de usuario al impersonar el usuario de PowerShell</value>
+  </data>
+  <data name="PowerShellUser" xml:space="preserve">
+    <value>Nombre de Usuario de Script PowerShell</value>
+  </data>
+  <data name="PowerShellUserHelpText" xml:space="preserve">
+    <value>Especifique el usuario en formato Dominio\Usuario que se utilizará para construir el objecto Credential de PowerShell.</value>
+  </data>
+  <data name="PowerShellUserPassword" xml:space="preserve">
+    <value>Contraseña del Usuario de Script de PowerShell</value>
+  </data>
+  <data name="PowerShellUserPasswordHelpText" xml:space="preserve">
+    <value>Indique la contraseña que se utilizará para construir el objeto Credential de PowerShell. El formato esperado es: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]]</value>
+  </data>
+  <data name="PowerShellImpersonationSettingsValidationError" xml:space="preserve">
+    <value>Especifique el usuario y contraseña del usuario impersonado.</value>
+  </data>
+  <data name="PowerShellUserFormatValidationError" xml:space="preserve">
+    <value>Especifique el nombre de usuario de PowerShell en formato Dominio\Usuario.</value>
+  </data>
+  <data name="RequestActorValidationError" xml:space="preserve">
+    <value>El actor de la solicitud no es válido</value>
+  </data>
+</root>

@@ -1,0 +1,36 @@
+<StyleCopSettings Version="105">
+  <GlobalSettings>
+    <CollectionProperty Name="RecognizedWords">
+      <Value>css</Value>
+      <Value>enum</Value>
+      <Value>Eq</Value>
+      <Value>Guid</Value>
+      <Value>Hashtable</Value>
+      <Value>Ldap</Value>
+      <Value>Num</Value>
+      <Value>xoml</Value>
+      <Value>Advapi</Value>
+      <Value>logon</Value>
+      <Value>hkcu</Value>
+      <Value>hklm</Value>
+      <Value>lookup</Value>
+      <Value>Utc</Value>
+    </CollectionProperty>
+  </GlobalSettings>
+  <Parsers>
+    <Parser ParserId="StyleCop.CSharp.CsParser">
+      <ParserSettings>
+        <BooleanProperty Name="AnalyzeDesignerFiles">False</BooleanProperty>
+      </ParserSettings>
+    </Parser>
+  </Parsers>
+  <Analyzers>
+    <Analyzer AnalyzerId="StyleCop.CSharp.NamingRules">
+      <AnalyzerSettings>
+        <CollectionProperty Name="Hungarian">
+          <Value>dn</Value>
+        </CollectionProperty>
+      </AnalyzerSettings>
+    </Analyzer>
+  </Analyzers>
+</StyleCopSettings>

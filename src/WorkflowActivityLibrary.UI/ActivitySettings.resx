@@ -1,0 +1,801 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ActivityDisplayName" xml:space="preserve">
+    <value>Activity Display Name</value>
+  </data>
+  <data name="ResourceType" xml:space="preserve">
+    <value>Resource Type</value>
+  </data>
+  <data name="ResourceTypeHelpText" xml:space="preserve">
+    <value>Specify the type of resource to be created by the activity.</value>
+  </data>
+  <data name="AdvancedFeatures" xml:space="preserve">
+    <value>Advanced Features</value>
+  </data>
+  <data name="AdvancedFeaturesHelpText" xml:space="preserve">
+    <value>Select this option to configure advanced behavior for the activity.</value>
+  </data>
+  <data name="QueryResources" xml:space="preserve">
+    <value>Query Resources</value>
+  </data>
+  <data name="QueryResourcesHelpText" xml:space="preserve">
+    <value>The activity can be configured to query resources which can be used in update definitions.</value>
+  </data>
+  <data name="Queries" xml:space="preserve">
+    <value>Queries</value>
+  </data>
+  <data name="QueriesHelpText" xml:space="preserve">
+    <value>Specify one or more XPath queries which should be run by the activity. Queries can be referenced in expressions using lookups with the [//Queries/Key/...] grammar.</value>
+  </data>
+  <data name="QueriesLeftHeader" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="QueriesRightHeader" xml:space="preserve">
+    <value>XPath Filter</value>
+  </data>
+  <data name="ActivityExecutionCondition" xml:space="preserve">
+    <value>Activity Execution Condition</value>
+  </data>
+  <data name="ConditionHelpText" xml:space="preserve">
+    <value>Optionally specify a condition which must be satisfied for execution of the activity's core task. This can be any WAL function expression resolving to a boolean value.</value>
+  </data>
+  <data name="Iteration" xml:space="preserve">
+    <value>Iteration</value>
+  </data>
+  <data name="IterationHelpText" xml:space="preserve">
+    <value>Optionally configure the activity to iterate through a collection of values by specifying a lookup or expression. The instance value can be referenced in update definitions using lookups with the [//Value/…] grammar. Note: Iteration will disable publication of created and conflicting resource IDs.</value>
+  </data>
+  <data name="RequestActor" xml:space="preserve">
+    <value>Request Actor</value>
+  </data>
+  <data name="ServiceAccount" xml:space="preserve">
+    <value>Service Account</value>
+  </data>
+  <data name="Requestor" xml:space="preserve">
+    <value>Requestor</value>
+  </data>
+  <data name="ResolveFromExpression" xml:space="preserve">
+    <value>Resolve From Expression</value>
+  </data>
+  <data name="SearchByAccountName" xml:space="preserve">
+    <value>Search by Account Name</value>
+  </data>
+  <data name="ActorString" xml:space="preserve">
+    <value>Actor String</value>
+  </data>
+  <data name="ApplyAuthorizationPolicy" xml:space="preserve">
+    <value>Apply Authorization Policy</value>
+  </data>
+  <data name="ApplyAuthorizationPolicyHelpText" xml:space="preserve">
+    <value>The activity can be configured to apply authorization policy to child requests. Note: Authorization policy will disable publication of the create resource ID.</value>
+  </data>
+  <data name="TargetForCreatedResourceID" xml:space="preserve">
+    <value>Target for Created Resource ID</value>
+  </data>
+  <data name="TargetForCreatedResourceIDHelpText" xml:space="preserve">
+    <value>The activity can be configured to publish the ID of the new resource to an attribute or workflow dictionary key after creation. The target must be expressed as a lookup.</value>
+  </data>
+  <data name="CheckForConflict" xml:space="preserve">
+    <value>Check for Conflict</value>
+  </data>
+  <data name="CheckForConflictHelpText" xml:space="preserve">
+    <value>The activity can be configured to check for a conflict before creating the new resource.</value>
+  </data>
+  <data name="ConflictingResourceSearchFilter" xml:space="preserve">
+    <value>Conflicting Resource Search Filter</value>
+  </data>
+  <data name="ConflictingResourceSearchFilterHelpText" xml:space="preserve">
+    <value>Supply the resolvable XPath search filter which will return any conflicting resource. Example: /Group[DisplayName = 'DL_Location_[//Target/OfficeLocation]']</value>
+  </data>
+  <data name="TargetForConflictingResourceID" xml:space="preserve">
+    <value>Target for Conflicting Resource ID</value>
+  </data>
+  <data name="TargetForConflictingResourceIDHelpText" xml:space="preserve">
+    <value>The activity can be configured to publish the ID of the identified conflicting resource to an attribute or workflow dictionary key. The target must be expressed as a lookup.</value>
+  </data>
+  <data name="FailOnConflict" xml:space="preserve">
+    <value>Fail on Conflict</value>
+  </data>
+  <data name="FailOnConflictHelpText" xml:space="preserve">
+    <value>Specify whether or not the activity should generate an error when a conflict is identified.</value>
+  </data>
+  <data name="AttributesPopulation" xml:space="preserve">
+    <value>Attribute Population</value>
+  </data>
+  <data name="AttributesPopulationHelpText" xml:space="preserve">
+    <value>Specify how attributes are to be populated on the new resource. Lookups are used in value expressions, but an attribute name must be specified as the target. Variables may also be specified as a target and then used in the value expression for subsequent definitions.</value>
+  </data>
+  <data name="AttributesPopulationLeftHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="AttributesPopulationRightHeader" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="CreateResource" xml:space="preserve">
+    <value>Create Resource</value>
+  </data>
+  <data name="ActorTypeExpression" xml:space="preserve">
+    <value>Actor Expression</value>
+  </data>
+  <data name="ActorTypeExpressionHelpText" xml:space="preserve">
+    <value>Specify the lookup or expression which will resolve to the desired actor.</value>
+  </data>
+  <data name="ActorTypeAccountName" xml:space="preserve">
+    <value>Actor Account Name</value>
+  </data>
+  <data name="ActorTypeAccountNameHelpText" xml:space="preserve">
+    <value>Specify the account name of the desired actor. The domain can optionally be specified using the Domain\AccountName syntax.</value>
+  </data>
+  <data name="InvalidActorType" xml:space="preserve">
+    <value>The supplied value could not be matched to a value for the ActorType enumeration</value>
+  </data>
+  <data name="ResourceTypeValidationError" xml:space="preserve">
+    <value>The resource type '{0}' is invalid</value>
+  </data>
+  <data name="QueryDefintionLeftValidationError" xml:space="preserve">
+    <value>The query key '{0}' is invalid</value>
+  </data>
+  <data name="QueryDefintionRightValidationError" xml:space="preserve">
+    <value>The XPath filter supplied for key '{0}' is invalid</value>
+  </data>
+  <data name="ConflictResourceSearchFilterValidationError" xml:space="preserve">
+    <value>The supplied conflicting resource search filter is invalid</value>
+  </data>
+  <data name="DeleteResources" xml:space="preserve">
+    <value>Delete Resources</value>
+  </data>
+  <data name="TargetForDeletion" xml:space="preserve">
+    <value>Target for Deletion</value>
+  </data>
+  <data name="TargetForDeletionHelpText" xml:space="preserve">
+    <value>Specify how the activity will identify the target(s) for deletion.</value>
+  </data>
+  <data name="TargetExpression" xml:space="preserve">
+    <value>Target Expression</value>
+  </data>
+  <data name="UseWorkflowTarget" xml:space="preserve">
+    <value>Use Workflow Target</value>
+  </data>
+  <data name="ResolveTargets" xml:space="preserve">
+    <value>Resolve Target(s)</value>
+  </data>
+  <data name="SearchForTargets" xml:space="preserve">
+    <value>Search for Target(s)</value>
+  </data>
+  <data name="TargetLookup" xml:space="preserve">
+    <value>Target Lookup</value>
+  </data>
+  <data name="TargetLookupHelpText" xml:space="preserve">
+    <value>Supply the lookup which will identify the target(s) for deletion. Example: [//Target/OwnedAccounts]</value>
+  </data>
+  <data name="TargetSearchFilter" xml:space="preserve">
+    <value>Target Search Filter</value>
+  </data>
+  <data name="TargetSearchFilterHelpText" xml:space="preserve">
+    <value>Supply the resolvable XPath search filter which will return the target(s) for deletion. Example: /Account[AccountOwner = '[//Target/ObjectID]']</value>
+  </data>
+  <data name="GenerateUniqueValue" xml:space="preserve">
+    <value>Generate Unique Value</value>
+  </data>
+  <data name="TargetForGeneratedValue" xml:space="preserve">
+    <value>Target for Generated Value</value>
+  </data>
+  <data name="TargetForGeneratedValueHelpText" xml:space="preserve">
+    <value>Specify the attribute or workflow dictionary key to which the generated value should be published. The target must be expressed as a lookup.</value>
+  </data>
+  <data name="ConflictFilter" xml:space="preserve">
+    <value>Conflict Filter</value>
+  </data>
+  <data name="ConflictFilterHelpText" xml:space="preserve">
+    <value>Supply the XPath filter which will identify conflicts for the generated value. The [//Value] lookup should be used in the filter to represent the value being evaluated for uniqueness. Example: /Person[AccountName = '[//Value]'].</value>
+  </data>
+  <data name="QueryLdapForConflicts" xml:space="preserve">
+    <value>Query LDAP for Conflicts</value>
+  </data>
+  <data name="QueryLdapForConflictsHelpText" xml:space="preserve">
+    <value>The activity can be configured to query one or more LDAP directories to identify conflicts for the generated value.</value>
+  </data>
+  <data name="LdapQueries" xml:space="preserve">
+    <value>LDAP Queries</value>
+  </data>
+  <data name="LdapQueriesHelpText" xml:space="preserve">
+    <value>Specify one or more LDAP queries which should be run by the activity to identify conflicts. The [//Value] lookup should be used in each LDAP filter to represent the value being evaluated for uniqueness. All queries will be executed under the context of the FIM Service account.</value>
+  </data>
+  <data name="LdapQueriesLeftHeader" xml:space="preserve">
+    <value>Directory Entry Path</value>
+  </data>
+  <data name="LdapQueriesRightHeader" xml:space="preserve">
+    <value>LDAP Filter</value>
+  </data>
+  <data name="UniquenessKeySeed" xml:space="preserve">
+    <value>Uniqueness Key Seed</value>
+  </data>
+  <data name="UniquenessKeySeedHelpText" xml:space="preserve">
+    <value>Specify the first number which should be included in the value when all other expressions result in a conflict.</value>
+  </data>
+  <data name="ValueExpressions" xml:space="preserve">
+    <value>Value Expressions</value>
+  </data>
+  <data name="ValueExpressionsHelpText" xml:space="preserve">
+    <value>Supply the expressions which will be used to generate the unique value. The first expression which results in a unique value will be used. The last expression in the list must contain the [//UniquenessKey] lookup to ensure a unique value can be generated. As a last resort, this lookup will be replaced with an integer which will be incremented until a unique value is identified.</value>
+  </data>
+  <data name="ValueExpressionsLeftHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="QueryDefinitionValidationError" xml:space="preserve">
+    <value>One or more query definitions are incomplete</value>
+  </data>
+  <data name="TargetLookupValidationError" xml:space="preserve">
+    <value>{0} is not a valid target lookup</value>
+  </data>
+  <data name="AttributeDefinitionValidationError" xml:space="preserve">
+    <value>One or more attribute assignment definitions are incomplete</value>
+  </data>
+  <data name="TargetValidationError" xml:space="preserve">
+    <value>The target '{0}' is invalid</value>
+  </data>
+  <data name="QueryResourcesValidationError" xml:space="preserve">
+    <value>The activity is not configured to query resources. Expressions using the [//Query/Key/...] syntax cannot be used.</value>
+  </data>
+  <data name="IterationValidationError" xml:space="preserve">
+    <value>The activity is not configured for iteration. Expressions using the [//Value/...] syntax cannot be used.</value>
+  </data>
+  <data name="ConflictFilterValidationError" xml:space="preserve">
+    <value>The supplied conflict filter is invalid</value>
+  </data>
+  <data name="ConflictFilterValueLookupValidationError" xml:space="preserve">
+    <value>The conflict filter must contain the [//Value] lookup</value>
+  </data>
+  <data name="LdapQueryDefinitionValidationError" xml:space="preserve">
+    <value>One or more LDAP query definitions are incomplete</value>
+  </data>
+  <data name="LdapQueryDefinitionValueLookupValidationError" xml:space="preserve">
+    <value>All LDAP filters must contain the [//Value] lookup</value>
+  </data>
+  <data name="ValueExpressionMissingUniquenessKeyValidationError" xml:space="preserve">
+    <value>The last value expression in the list must contain the [//UniquenessKey] lookup.</value>
+  </data>
+  <data name="RunPowerShellScript" xml:space="preserve">
+    <value>Run PowerShell Script</value>
+  </data>
+  <data name="PowerShellScriptLocation" xml:space="preserve">
+    <value>Script Location</value>
+  </data>
+  <data name="PowerShellScriptLocationHelpText" xml:space="preserve">
+    <value>Specify how the activity will locate the script for execution.</value>
+  </data>
+  <data name="PowerShellScript" xml:space="preserve">
+    <value>Script</value>
+  </data>
+  <data name="PowerShellScriptHelpText" xml:space="preserve">
+    <value>Supply the PowerShell script that will be executed by the activity. The script will be stored in the workflow definition as an activity configuration property.</value>
+  </data>
+  <data name="FailOnMissingScript" xml:space="preserve">
+    <value>Fail When Script is Missing</value>
+  </data>
+  <data name="FailOnMissingScriptHelpText" xml:space="preserve">
+    <value>Specify whether or not the activity should generate an error when the script lookup resolves to a null value.</value>
+  </data>
+  <data name="PowerShellScriptInputType" xml:space="preserve">
+    <value>Input Type</value>
+  </data>
+  <data name="PowerShellScriptInputTypeHelpText" xml:space="preserve">
+    <value>If input is required, specify how it should be provided to the PowerShell script.</value>
+  </data>
+  <data name="NamedParameters" xml:space="preserve">
+    <value>Named Parameters</value>
+  </data>
+  <data name="NamedParametersHelpText" xml:space="preserve">
+    <value>Specify one or more named parameters to be supplied to the script upon execution. Value expressions may include functions, lookups, and concatenation.</value>
+  </data>
+  <data name="NamedParametersLeftHeader" xml:space="preserve">
+    <value>Parameter</value>
+  </data>
+  <data name="NamedParametersRightHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="ScriptArguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="ScriptArgumentsHelpText" xml:space="preserve">
+    <value>Specify one or more arguments to be supplied to the script upon execution. Arguments will be provided, without parameter names, in the order in which they are listed. Value expressions may include functions, lookups, and concatenation.</value>
+  </data>
+  <data name="ScriptArgumentsLeftHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="ScriptReturnType" xml:space="preserve">
+    <value>Script Return Type</value>
+  </data>
+  <data name="ScriptReturnTypeHelpText" xml:space="preserve">
+    <value>The activity can capture a return value from the PowerShell script and publish it to a lookup. Alternatively, the PowerShell script may return a table of named values which can be published to the workflow dictionary using corresponding key names.</value>
+  </data>
+  <data name="ScriptReturnValueLookup" xml:space="preserve">
+    <value>Return Value Lookup</value>
+  </data>
+  <data name="ScriptReturnValueLookupHelpText" xml:space="preserve">
+    <value>Specify the lookup to which the return value should be published.</value>
+  </data>
+  <data name="ScriptLocationWorkflowDefinition" xml:space="preserve">
+    <value>Include in Workflow Definition</value>
+  </data>
+  <data name="ScriptLocationDisk" xml:space="preserve">
+    <value>Read from File</value>
+  </data>
+  <data name="ScriptLocationResolveLookup" xml:space="preserve">
+    <value>Resolve from Lookup</value>
+  </data>
+  <data name="PowerShellInputTypeNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PowerShellInputTypeNamedParameters" xml:space="preserve">
+    <value>Named Parameters</value>
+  </data>
+  <data name="PowerShellInputTypeArguments" xml:space="preserve">
+    <value>Arguments</value>
+  </data>
+  <data name="PowerShellReturnTypeNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PowerShellReturnTypeSingleValue" xml:space="preserve">
+    <value>Single Value</value>
+  </data>
+  <data name="PowerShellReturnTypeTable" xml:space="preserve">
+    <value>Table of Values</value>
+  </data>
+  <data name="ScriptParameterDefintionValidationError" xml:space="preserve">
+    <value>One or more parameter definitions are incomplete</value>
+  </data>
+  <data name="ScriptArgumentValidationError" xml:space="preserve">
+    <value>One or more arguments are incomplete</value>
+  </data>
+  <data name="PowerShellScriptPath" xml:space="preserve">
+    <value>Script Path</value>
+  </data>
+  <data name="PowerShellScriptPathHelpText" xml:space="preserve">
+    <value>Specify the full path to the PowerShell script file. This path must be accessible from all instances of the FIM Service.</value>
+  </data>
+  <data name="PowerShellScriptLookup" xml:space="preserve">
+    <value>Script Lookup</value>
+  </data>
+  <data name="PowerShellScriptLookupHelpText" xml:space="preserve">
+    <value>Specify the lookup which represents the script to be executed by the activity.</value>
+  </data>
+  <data name="InvalidPowerShellScriptLocation" xml:space="preserve">
+    <value>The supplied value could not be matched to a value for the PowerShellScriptLocation enumeration</value>
+  </data>
+  <data name="InvalidPowerShellInputType" xml:space="preserve">
+    <value>The supplied value could not be matched to a value for the PowerShellInputType enumeration</value>
+  </data>
+  <data name="InvalidPowerShellReturnType" xml:space="preserve">
+    <value>The supplied value could not be matched to a value for the PowerShellReturnType enumeration</value>
+  </data>
+  <data name="UpdateResources" xml:space="preserve">
+    <value>Update Resources</value>
+  </data>
+  <data name="Updates" xml:space="preserve">
+    <value>Updates</value>
+  </data>
+  <data name="UpdatesHelpText" xml:space="preserve">
+    <value>Specify the updates to be performed by the activity. Lookups are used in value expressions and are also used to represent target resources and attributes. Variables may also be specified as a target and then used in the value expression for subsequent update definitions. The \"Allow Null\" option enforces the deletion of target values when the source resolves to null.</value>
+  </data>
+  <data name="UpdatesLeftHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="UpdatesRightHeader" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="UpdatesCheckHeader" xml:space="preserve">
+    <value>Allow Null</value>
+  </data>
+  <data name="UpdateDefinitionValidationError" xml:space="preserve">
+    <value>One or more update definitions are incomplete</value>
+  </data>
+  <data name="VerifyResourceUniqueness" xml:space="preserve">
+    <value>Verify the Resource as Unique</value>
+  </data>
+  <data name="VerifyResourceUniquenessHelpText" xml:space="preserve">
+    <value>Specify whether or not a uniqueness validation should be performed for the target resource.</value>
+  </data>
+  <data name="ConflictingResourceSearchFilterHelpText2" xml:space="preserve">
+    <value>Supply the resolvable XPath search filter which will return any conflicting resource. Example: /Person[EmployeeID = '[//Effective/EmployeeID]']</value>
+  </data>
+  <data name="ConflictDenialMessage" xml:space="preserve">
+    <value>Conflict Denial Message</value>
+  </data>
+  <data name="ConflictDenialMessageHelpText" xml:space="preserve">
+    <value>Supply the resolvable denial message to be returned to the user when a conflicting resource is found.</value>
+  </data>
+  <data name="VerifyRequestUniqueness" xml:space="preserve">
+    <value>Verify the Request as Unique</value>
+  </data>
+  <data name="VerifyRequestUniquenessHelpText" xml:space="preserve">
+    <value>Specify whether or not a uniqueness validation should be performed for the request against other authorizing requests.</value>
+  </data>
+  <data name="AdvancedRequestSearchFilter" xml:space="preserve">
+    <value>Advanced Request Search Filter</value>
+  </data>
+  <data name="AdvancedRequestSearchFilterHelpText" xml:space="preserve">
+    <value>Optionally supply the resolvable XPath search filter which will return requests that should be evaluated as potential conflicts. If not supplied, the activity will evaluate all requests with a status of 'Authorizing' and a matching target resource type and operation.</value>
+  </data>
+  <data name="RequestConflictMatchCondition" xml:space="preserve">
+    <value>Match Condition Identifying a Conflicting Request</value>
+  </data>
+  <data name="RequestConflictMatchConditionHelpText" xml:space="preserve">
+    <value>Supply the Boolean condition which identifies an evaluated request as a conflict. Example: And(Eq([//Delta/AccountName], [//Target/AccountName]), Eq([//Delta/Domain], [//Target/Domain]))</value>
+  </data>
+  <data name="RequestConflictDenialMessage" xml:space="preserve">
+    <value>Conflicting Request Denial Message</value>
+  </data>
+  <data name="RequestConflictDenialMessageHelpText" xml:space="preserve">
+    <value>Supply the resolvable denial message to be returned to the user when a conflicting request is found.</value>
+  </data>
+  <data name="RequiredRequestConditions" xml:space="preserve">
+    <value>Required Request Conditions</value>
+  </data>
+  <data name="RequiredRequestConditionsHelpText" xml:space="preserve">
+    <value>Specify the conditions which must be satisfied for the request to be considered valid. The activity supports the specification of function-based conditions which reference resolvable expressions. If any condition does not evaluate to true, the request will be denied with the associated error message.</value>
+  </data>
+  <data name="RequiredRequestConditionsLeftHeader" xml:space="preserve">
+    <value>Required Condition for the Request</value>
+  </data>
+  <data name="RequiredRequestConditionsRightHeader" xml:space="preserve">
+    <value>Denial Message if Condition is not Satisfied</value>
+  </data>
+  <data name="ConditionDefinitionValidationError" xml:space="preserve">
+    <value>One or more condition definitions are incomplete</value>
+  </data>
+  <data name="ConditionEvaluationValidationError" xml:space="preserve">
+    <value>All conditions must resolve to a Boolean value</value>
+  </data>
+  <data name="RequiredIndicator" xml:space="preserve">
+    <value>*</value>
+  </data>
+  <data name="RequiredFieldValidationError" xml:space="preserve">
+    <value>A value must be supplied for {0}</value>
+  </data>
+  <data name="NumericFieldValidationError" xml:space="preserve">
+    <value>A valid integer must be supplied for {0}</value>
+  </data>
+  <data name="GuidFieldValidationError" xml:space="preserve">
+    <value>A valid Guid must be supplied for {0}</value>
+  </data>
+  <data name="NullDefinitionListingsError" xml:space="preserve">
+    <value>The list of definition listings is null</value>
+  </data>
+  <data name="LinkButtonAdd" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="LinkButtonDelete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="LinkButtonMoveUp" xml:space="preserve">
+    <value>Move Up</value>
+  </data>
+  <data name="LinkButtonMoveDown" xml:space="preserve">
+    <value>Move Down</value>
+  </data>
+  <data name="FormControlInitializationError" xml:space="preserve">
+    <value>The control must be initialized before it can be added to the form controller</value>
+  </data>
+  <data name="VerifyRequest" xml:space="preserve">
+    <value>Verify Request</value>
+  </data>
+  <data name="ActivityDisplayNameControlValidationError" xml:space="preserve">
+    <value>An activity display name text box control has already been added to the controller</value>
+  </data>
+  <data name="UnnamedField" xml:space="preserve">
+    <value>an unnamed field</value>
+  </data>
+  <data name="TargetLookupExpressionMissingValidationError" xml:space="preserve">
+    <value>A Target Lookup must be supplied.</value>
+  </data>
+  <data name="TargetXPathExpressionMissingValidationError" xml:space="preserve">
+    <value>A Search Target XPath must be supplied.</value>
+  </data>
+  <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
+    <value>The definitions table is null or corrupt</value>
+  </data>
+  <data name="ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
+    <value>Only the last value expression in the list can leverage the [//UniquenessKey] lookup.</value>
+  </data>
+  <data name="ValueExpressionValidationError" xml:space="preserve">
+    <value>One or more value expressions are incomplete.</value>
+  </data>
+  <data name="ImpersonatePowerShellUser" xml:space="preserve">
+    <value>Impersonate PowerShell user</value>
+  </data>
+  <data name="ImpersonatePowerShellUserHelpText" xml:space="preserve">
+    <value>Impersonate the specified PowerShell user while running the PowerShell script.</value>
+  </data>
+  <data name="ImpersonationLogOnType" xml:space="preserve">
+    <value>Log on type</value>
+  </data>
+  <data name="ImpersonationLogonTypeHelpText" xml:space="preserve">
+    <value>Log on type to use when impersonating the PowerShell user.</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnBatch" xml:space="preserve">
+    <value>Log on as a batch job</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnInteractive" xml:space="preserve">
+    <value>Interactive log on</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnNetwork" xml:space="preserve">
+    <value>Network log on</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnNetworkClearText" xml:space="preserve">
+    <value>Network log on with plain text</value>
+  </data>
+  <data name="ImpersonationLogOnTypeLogOnService" xml:space="preserve">
+    <value>Log on as a service</value>
+  </data>
+  <data name="InvalidLogOnType" xml:space="preserve">
+    <value>The supplied value could not be matched to a value for the LogOnType enumeration.</value>
+  </data>
+  <data name="LoadUserProfile" xml:space="preserve">
+    <value>Load user profile</value>
+  </data>
+  <data name="LoadUserProfileHelpText" xml:space="preserve">
+    <value>Load user profile when impersonating the PowerShell user.</value>
+  </data>
+  <data name="PowerShellUser" xml:space="preserve">
+    <value>PowerShell Script User</value>
+  </data>
+  <data name="PowerShellUserHelpText" xml:space="preserve">
+    <value>Specify the user in the format domain\userName to be used to construct PowerShell Credential object.</value>
+  </data>
+  <data name="PowerShellUserPassword" xml:space="preserve">
+    <value>PowerShell Script User Password</value>
+  </data>
+  <data name="PowerShellUserPasswordHelpText" xml:space="preserve">
+    <value>Specify the password to be used to construct PowerShell Credential object. The expected format is: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]]</value>
+  </data>
+  <data name="PowerShellImpersonationSettingsValidationError" xml:space="preserve">
+    <value>Specify UserName and Password of the impersonated user.</value>
+  </data>
+  <data name="PowerShellUserFormatValidationError" xml:space="preserve">
+    <value>Specify the PowerShell user in the format domain\userName.</value>
+  </data>
+  <data name="RequestActorValidationError" xml:space="preserve">
+    <value>Authorization Policy cannot be applied when Request Actor is Service Account</value>
+  </data>
+  <data name="AddDelay" xml:space="preserve">
+    <value>Add Delay</value>
+  </data>
+  <data name="AddDelayTimeoutDuration" xml:space="preserve">
+    <value>Timeout Duration</value>
+  </data>
+  <data name="AddDelayTimeoutDurationHelpText" xml:space="preserve">
+    <value>Specify a TimeSpan value or expression in "hours:minutes:seconds" format (e.g. "00:30:00" for 30 minutes)</value>
+  </data>
+  <data name="SendEmailNotification" xml:space="preserve">
+    <value>Send Email Notification</value>
+  </data>
+  <data name="SendEmailNotificationBcc" xml:space="preserve">
+    <value>'Bcc' recipients</value>
+  </data>
+  <data name="SendEmailNotificationBccHelpText" xml:space="preserve">
+    <value>Specify a search filter, a lookup expression or a ';' delimited list of email addresses.</value>
+  </data>
+  <data name="SendEmailNotificationCC" xml:space="preserve">
+    <value>'CC' recipients</value>
+  </data>
+  <data name="SendEmailNotificationCCHelpText" xml:space="preserve">
+    <value>Specify a search filter, a lookup expression or a ';' delimited list of email addresses.</value>
+  </data>
+  <data name="SendEmailNotificationEmailTemplate" xml:space="preserve">
+    <value>Email Template</value>
+  </data>
+  <data name="SendEmailNotificationEmailTemplateHelpText" xml:space="preserve">
+    <value>Specify an XPath to an EmailTemplate resource or a lookup expression resolving to an EmailTemplate resource.</value>
+  </data>
+  <data name="SendEmailNotificationEmailTemplateValidationError" xml:space="preserve">
+    <value>If the supplied Email Template value is not an XPath filter or a lookup expression, it must be a valid GUID value.</value>
+  </data>
+  <data name="SendEmailNotificationRecipientFieldValidationError" xml:space="preserve">
+    <value>'To' recipients must be specified.</value>
+  </data>
+  <data name="SendEmailNotificationTo" xml:space="preserve">
+    <value>'To' recipients</value>
+  </data>
+  <data name="SendEmailNotificationToHelpText" xml:space="preserve">
+    <value>Specify a search filter, a lookup expression or a ';' delimited list of email addresses.</value>
+  </data>
+  <data name="SendEmailNotificationRecipientFieldValidationError2" xml:space="preserve">
+    <value>Specify a valid email address.</value>
+  </data>
+  <data name="SendEmailNotificationSuppressException" xml:space="preserve">
+    <value>Suppress Exception</value>
+  </data>
+  <data name="SendEmailNotificationSuppressExceptionHelpText" xml:space="preserve">
+    <value>Suppresses notification failure from the EmailNotification Activity.</value>
+  </data>
+  <data name="RequestApproval" xml:space="preserve">
+    <value>Request Approval</value>
+  </data>
+  <data name="RequestApprovalApprovers" xml:space="preserve">
+    <value>Approvers</value>
+  </data>
+  <data name="RequestApprovalApproversFieldValidationError" xml:space="preserve">
+    <value>Specify a valid email address.</value>
+  </data>
+  <data name="RequestApprovalApproversHelpText" xml:space="preserve">
+    <value>User and groups who can approve this request. Specify a search filter, a lookup expression or a ';' delimited list of email addresses.</value>
+  </data>
+  <data name="RequestApprovalCompleteEmailTemplate" xml:space="preserve">
+    <value>Completed Approval Email Template</value>
+  </data>
+  <data name="RequestApprovalCompleteEmailTemplateHelpText" xml:space="preserve">
+    <value>This email is sent to approvers. Specify a search filter or a lookup expression.</value>
+  </data>
+  <data name="RequestApprovalDeniedEmailTemplate" xml:space="preserve">
+    <value>Rejected Request Email Template</value>
+  </data>
+  <data name="RequestApprovalDeniedEmailTemplateHelpText" xml:space="preserve">
+    <value>This email is sent to requestor. Specify a search filter or a lookup expression.</value>
+  </data>
+  <data name="RequestApprovalDuration" xml:space="preserve">
+    <value>Duration.</value>
+  </data>
+  <data name="RequestApprovalDurationHelpText" xml:space="preserve">
+    <value>Number of days before escalation and time out. Specify a lookup expression or a number.</value>
+  </data>
+  <data name="RequestApprovalEmailTemplate" xml:space="preserve">
+    <value>Pending Approval Email Template</value>
+  </data>
+  <data name="RequestApprovalEmailTemplateHelpText" xml:space="preserve">
+    <value>This email is sent to approvers. Specify a search filter or a lookup expression.</value>
+  </data>
+  <data name="RequestApprovalEmailTemplateValidationError" xml:space="preserve">
+    <value>If the supplied Email Template value is not an XPath filter or a lookup expression, it must be a valid GUID value.</value>
+  </data>
+  <data name="RequestApprovalEscalation" xml:space="preserve">
+    <value>Escalated Approvers</value>
+  </data>
+  <data name="RequestApprovalEscalationEmailTemplate" xml:space="preserve">
+    <value>Pending Approval Escalation Email Template</value>
+  </data>
+  <data name="RequestApprovalEscalationEmailTemplateHelpText" xml:space="preserve">
+    <value>This email is sent to escalated approvers. Specify a search filter or a lookup expression.</value>
+  </data>
+  <data name="RequestApprovalEscalationHelpText" xml:space="preserve">
+    <value>User and groups who can approve this request after it has been escalated. Specify a search filter, a lookup expression or a ';' delimited list of email addresses.</value>
+  </data>
+  <data name="RequestApprovalThreshold" xml:space="preserve">
+    <value>Approval Threshold</value>
+  </data>
+  <data name="RequestApprovalThresholdFieldValidationError" xml:space="preserve">
+    <value>Threshold field must be a lookup expression or a number.</value>
+  </data>
+  <data name="RequestApprovalThresholdHelpText" xml:space="preserve">
+    <value>Number of approvers required. Specify a lookup expression or a number.</value>
+  </data>
+  <data name="RequestApprovalTimeoutEmailTemplate" xml:space="preserve">
+    <value>Timed out Request Email Template</value>
+  </data>
+  <data name="RequestApprovalTimeoutEmailTemplateHelpText" xml:space="preserve">
+    <value>This email is sent to requestor. Specify a search filter or a lookup expression.</value>
+  </data>
+  <data name="RequestApprovalDurationFieldValidationError" xml:space="preserve">
+    <value>Specify a lookup expression or a number for the approval duration.</value>
+  </data>
+  <data name="RequestApprovalEscalationEmailTemplateFieldValidationError" xml:space="preserve">
+    <value>Escalation email template is required when escalated approvers are specified.</value>
+  </data>
+</root>

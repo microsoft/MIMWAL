@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowActivityLibrary", "WorkflowActivityLibrary\WorkflowActivityLibrary.csproj", "{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowActivityLibrary.UI", "WorkflowActivityLibrary.UI\WorkflowActivityLibrary.UI.csproj", "{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9B89C43C-1EA6-4128-95B7-F56401152246}"
+	ProjectSection(SolutionItems) = preProject
+		Scripts\CaptureTrace.cmd = Scripts\CaptureTrace.cmd
+		Scripts\CompileLanguagePack.cmd = Scripts\CompileLanguagePack.cmd
+		Scripts\EncryptData.ps1 = Scripts\EncryptData.ps1
+		Scripts\Register.ps1 = Scripts\Register.ps1
+		Scripts\RunPSLoggingSample.ps1 = Scripts\RunPSLoggingSample.ps1
+		Scripts\Sign.cmd = Scripts\Sign.cmd
+		Scripts\UpdateWorkflowXoml.ps1 = Scripts\UpdateWorkflowXoml.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{2B90D189-D995-4304-8525-17D75B4C9907}"
+	ProjectSection(SolutionItems) = preProject
+		CodeAnalysisDictionary.xml = CodeAnalysisDictionary.xml
+		Settings.StyleCop = Settings.StyleCop
+		VersionInfo.cs = VersionInfo.cs
+		WAL.snk = WAL.snk
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LanguagePacks", "LanguagePacks", "{1829DEFF-5553-4E93-9A9B-08118F3D2225}"
+	ProjectSection(SolutionItems) = preProject
+		LanguagePacks\ActivitySettings.es.resx = LanguagePacks\ActivitySettings.es.resx
+		LanguagePacks\Messages.es.resx = LanguagePacks\Messages.es.resx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9B89C43C-1EA6-4128-95B7-F56401152246} = {2B90D189-D995-4304-8525-17D75B4C9907}
+		{1829DEFF-5553-4E93-9A9B-08118F3D2225} = {2B90D189-D995-4304-8525-17D75B4C9907}
+	EndGlobalSection
+EndGlobal

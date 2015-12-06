@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+http://msdn.microsoft.com/en-us/library/bb514188.aspx
+
+Add words that should not cause a violation under the Dictionary/Words/Recognized path. 
+Add words that should cause a violation under the Dictionary/Words/Unrecognized path. 
+Add words that should be flagged as obsolete under the Dictionary/Words/Deprecated path. See the related rule topic "Use preferred terms" for more information. 
+Add exceptions to the acronym casing rules to the Dictionary/Acronyms/CasingExceptions path. 
+-->
+<Dictionary>
+  <Words>
+    <Unrecognized>
+      <Word>XPath</Word>
+      <Word>LowerCase</Word>
+      <Word>UpperCase</Word>
+      <Word>FunctionLess</Word>
+      <Word>Logon</Word>
+    </Unrecognized>
+    <Recognized>
+      <Word>Eq</Word>
+      <Word>Num</Word>
+      <Word>Crlf</Word>
+    </Recognized>
+    <Deprecated>
+      <Term PreferredAlternate=""></Term>
+    </Deprecated>
+    <Compound>
+      <Term CompoundAlternate=""></Term>
+    </Compound>
+    <DiscreteExceptions>
+      <Term>Logon</Term>
+    </DiscreteExceptions>
+  </Words>
+  <Acronyms>
+    <CasingExceptions>
+      <Acronym>MCS</Acronym>
+      <Acronym>FIM</Acronym>
+      <Acronym>IIF</Acronym>
+      <Acronym>DN</Acronym>
+    </CasingExceptions>
+  </Acronyms>
+</Dictionary>
