@@ -7,10 +7,14 @@
 
     To avoid reusing the previous versions of the assemblies that might be already loaded in the PowerShell session,
     you are required start on a fresh PowerShell prompt.
+
+	On the latest version of the WAL is deployed, you are strongly recommended to update the assembly version in workflow XOMLs
+	(by using UpdateWorkflowXoml.ps1 script). Once all the FIM Service requests are processed, you can then optionally unregister
+	older version from GAC.
 #>
 
 param (
-	[string] $PortalSiteName = "MIM Portal"
+	[string] $PortalSiteName = $(throw "Parameter PortalSiteName is mandatory. Please specify the name of the MIM / FIM Portal site in IIS.")
 )
 
 Set-StrictMode -version 2.0
