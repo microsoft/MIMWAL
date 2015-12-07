@@ -1,17 +1,18 @@
 # MIMWAL
-The MIMWAL is a Workflow Activity Library (WAL) solution for configuring complex Workflows in the Microsoft Identity Manager (MIM) 2016 and Forefront Identity Manager (FIM) 2010 R2 solution.
+The MIMWAL is a Workflow Activity Library (WAL) for building complex workflows in the Microsoft Identity Manager (MIM) 2016 and Forefront Identity Manager (FIM) 2010 R2 solution.
 
-The WAL provides foundational activities which can be combined to create complex workflows to implement business process within a MIM solution by configuration instead of coding.
+The WAL is a powerful solution accelerator for MIM / FIM that provides foundational activities which can be combined to create complex workflows to implement business processes within a MIM / FIM solution simply by configuration instead of coding for days and months.
 
 # Features
- * Workflow Activities
- * Advanced Activity Features
- * Workflow Functions
- * Activity Tracing and Logging
+ * Building-block Workflow Activities
+ * Conditional Execution Capability for Building-block Activities
+ * Deep Resolution Capability for FIM Lookup Grammar
+ * Rich Library of Workflow Functions
+ * UI Framework for Building Additional Custom Workflow Activities
  
-# Supported MIM Service Versions
- * ForeFront Identity Manager (FIM) 2010 R2 - 4.1.3496+
- * Microsoft Identity Manager (MIM) 2016 - 4.3.1935+
+# Supported Product Versions
+ * Forefront Identity Manager (FIM) 2010 R2 - 4.1.3496 and above.
+ * Microsoft Identity Manager (MIM) 2016 - 4.3.1935 and above.
 
 # Documentation
 For more details and information on utilizing the MIMWAL please refer to the documentation in the [MIMWAL Wiki](https://github.com/Microsoft/MIMWAL/wiki)
