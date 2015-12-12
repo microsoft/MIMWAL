@@ -9,6 +9,7 @@ The WAL is a powerful solution accelerator for MIM / FIM that provides foundatio
  * Deep Resolution Capability for FIM Lookup Grammar
  * Rich Library of Workflow Functions
  * UI Framework for Building Additional Custom Workflow Activities
+ * Support for ETW Event Tracing
  
 # Supported Product Versions
  * Forefront Identity Manager (FIM) 2010 R2 - 4.1.3496 and above.
