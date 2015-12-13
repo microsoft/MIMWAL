@@ -88,6 +88,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The activity execution condition must be a boolean function. Consider wrapping your current condition inside a ConverToBoolean() function..
+        /// </summary>
+        internal static string ActivityExecutionConditionValidationError {
+            get {
+                return ResourceManager.GetString("ActivityExecutionConditionValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Actor String.
         /// </summary>
         internal static string ActorString {

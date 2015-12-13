@@ -798,4 +798,7 @@
   <data name="RequestApprovalEscalationEmailTemplateFieldValidationError" xml:space="preserve">
     <value>Escalation email template is required when escalated approvers are specified.</value>
   </data>
+  <data name="ActivityExecutionConditionValidationError" xml:space="preserve">
+    <value>The activity execution condition must be a boolean function. Consider wrapping your current condition inside a ConverToBoolean() function.</value>
+  </data>
 </root>

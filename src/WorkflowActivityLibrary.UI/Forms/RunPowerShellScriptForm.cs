@@ -526,7 +526,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 {
                     if (!string.IsNullOrEmpty(this.activityExecutionCondition.Value))
                     {
-                        evaluator.ParseExpression(this.activityExecutionCondition.Value);
+                        // Verify that the activity execution condition resolves to a Boolean value
+                        if (!evaluator.IsBooleanExpression(this.activityExecutionCondition.Value))
+                        {
+                            this.controller.ValidationError = ActivitySettings.ActivityExecutionConditionValidationError;
+                            return false;
+                        }
                     }
                 }
                 catch (WorkflowActivityLibraryException ex)
