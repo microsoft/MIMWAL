@@ -88,7 +88,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The activity execution condition must be a boolean function. Consider wrapping your current condition inside a ConverToBoolean() function..
+        ///   Looks up a localized string similar to The activity execution condition must be a boolean function. Consider wrapping your current condition inside a ConvertToBoolean() function..
         /// </summary>
         internal static string ActivityExecutionConditionValidationError {
             get {
