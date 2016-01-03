@@ -17,3 +17,6 @@ The WAL is a powerful solution accelerator for MIM / FIM that provides foundatio
 
 # Documentation
 For more details and information on utilizing the MIMWAL please refer to the documentation in the [MIMWAL Wiki](https://github.com/Microsoft/MIMWAL/wiki)
+
+# Discussion
+For questions and conversations focused on MIMWAL, please visit the MIMWAL Project TechNet Forum: [http://aka.ms/MIMWAL/Forum](http://aka.ms/MIMWAL/Forum)
