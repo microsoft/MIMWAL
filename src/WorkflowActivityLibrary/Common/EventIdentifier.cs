@@ -114,6 +114,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int CreateResourceAuthorizationCondition = 10112;
 
         /// <summary>
+        /// The event identifier for CreateResource ForEachIteration_ChildCompleted events
+        /// </summary>
+        public const int CreateResourceForEachIterationChildCompleted = 10113;
+
+        /// <summary>
+        /// The event identifier for CreateResource ForEachIteration_UntilCondition events
+        /// </summary>
+        public const int CreateResourceForEachIterationUntilCondition = 10114;
+
+        /// <summary>
         /// The event identifier for DeleteResources Constructor events
         /// </summary>
         public const int DeleteResourcesConstructor = 10201;
@@ -312,6 +322,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for UpdateResources PrepareUpdate_ExecuteCode events
         /// </summary>
         public const int UpdateResourcesPrepareUpdateExecuteCode = 10506;
+
+        /// <summary>
+        /// The event identifier for UpdateResources ForEachIteration_ChildCompleted events
+        /// </summary>
+        public const int UpdateResourcesForEachIterationChildCompleted = 10507;
+
+        /// <summary>
+        /// The event identifier for UpdateResources ForEachIteration_UntilCondition events
+        /// </summary>
+        public const int UpdateResourcesForEachIterationUntilCondition = 10508;
 
         /// <summary>
         /// The event identifier for VerifyRequest Constructor events

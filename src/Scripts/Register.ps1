@@ -191,7 +191,7 @@ function UpdateAssemblyBindings
             
             if ($portalSite -eq $null)
             {
-                Write-Warning "WebSite '$portalSiteName' is not found. Please update the assembly binding manually in the FIM / MIM Portal web.config file."
+                Write-Warning "Error updating FIM / MIM Portal web.config. WebSite '$portalSiteName' is not found. You can safely ignore this warning if the FIM / MIM Portal is not installed on this server."
                 return
             }
             
@@ -199,7 +199,7 @@ function UpdateAssemblyBindings
         }
         catch
         {
-            Write-Warning "Error updating FIM / MIM Portal web.config. Error $_ Please update the assembly binding manually in the FIM / MIM Portal web.config file."
+            Write-Warning "Error updating FIM / MIM Portal web.config. Error $_ You can safely ignore this error if IIS is not installed on this server."
             
             $Error.Clear()
             

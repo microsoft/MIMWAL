@@ -1978,7 +1978,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify the updates to be performed by the activity. Lookups are used in value expressions and are also used to represent target resources and attributes. Variables may also be specified as a target and then used in the value expression for subsequent update definitions. The \&quot;Allow Null\&quot; option enforces the deletion of target values when the source resolves to null..
+        ///   Looks up a localized string similar to Specify the updates to be performed by the activity. Lookups are used in value expressions and are also used to represent target resources and attributes. Variables may also be specified as a target and then used in the value expression for subsequent update definitions. The &quot;Allow Null&quot; option enforces the deletion of target values when the source resolves to null..
         /// </summary>
         internal static string UpdatesHelpText {
             get {

@@ -6,6 +6,7 @@ The WAL is a powerful solution accelerator for MIM / FIM that provides foundatio
 # Features
  * Building-block Workflow Activities
  * Conditional Execution Capability for Building-block Activities
+ * Support for Iteration Over a Collection of Values in Building-block Activities
  * Deep Resolution Capability for FIM Lookup Grammar
  * Rich Library of Workflow Functions
  * UI Framework for Building Additional Custom Workflow Activities

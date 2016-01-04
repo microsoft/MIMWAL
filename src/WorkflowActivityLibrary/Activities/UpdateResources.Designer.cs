@@ -33,6 +33,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.ComponentModel.ActivityBind activitybind5 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind6 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind7 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind8 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind9 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind10 = new System.Workflow.ComponentModel.ActivityBind();
@@ -99,7 +100,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ForEachIteration.Activities.Add(this.Submit);
             this.ForEachIteration.ExecutionType = System.Workflow.Activities.ExecutionType.Sequence;
             this.ForEachIteration.Name = "ForEachIteration";
+            codecondition1.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
+            this.ForEachIteration.UntilCondition = codecondition1;
             this.ForEachIteration.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildInitialized);
+            this.ForEachIteration.ChildCompleted += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildCompleted);
             // 
             // PrepareIteration
             // 
@@ -158,107 +162,97 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
         private ComponentActivities.ResolveLookups ResolveForValue;
-
         private CodeActivity PrepareUpdate;
-
         private SequenceActivity Submit;
-
         private ReplicatorActivity ForEachIteration;
-
         private ComponentActivities.DetermineActor GetActor;
-
         private ComponentActivities.ResolveLookups Resolve;
-
         private ComponentActivities.UpdateLookups Update;
-
         private ComponentActivities.ResolveQueries RunQueries;
-
         private CodeActivity Prepare;
-
         private CodeActivity PrepareIteration;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

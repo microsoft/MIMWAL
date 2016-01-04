@@ -493,7 +493,7 @@
     <value>Updates</value>
   </data>
   <data name="UpdatesHelpText" xml:space="preserve">
-    <value>Specify the updates to be performed by the activity. Lookups are used in value expressions and are also used to represent target resources and attributes. Variables may also be specified as a target and then used in the value expression for subsequent update definitions. The \"Allow Null\" option enforces the deletion of target values when the source resolves to null.</value>
+    <value>Specify the updates to be performed by the activity. Lookups are used in value expressions and are also used to represent target resources and attributes. Variables may also be specified as a target and then used in the value expression for subsequent update definitions. The "Allow Null" option enforces the deletion of target values when the source resolves to null.</value>
   </data>
   <data name="UpdatesLeftHeader" xml:space="preserve">
     <value>Value Expression</value>

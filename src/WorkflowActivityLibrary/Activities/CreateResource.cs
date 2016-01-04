@@ -177,6 +177,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         private bool conflict;
 
+        /// <summary>
+        /// The number of iterations preformed so far
+        /// </summary>
+        private int iterations;
+
+        /// <summary>
+        /// Break iteration if true
+        /// </summary>
+        private bool breakIteration;
+
         #endregion
 
         /// <summary>
@@ -723,10 +733,55 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 // Get the instance value so it can be used to resolve associated expressions
                 // and clear previous resolutions
                 this.Value = e.InstanceData;
+
+                // Increment current iteration count
+                this.iterations += 1;
             }
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.CreateResourceForEachIterationChildInitialized, "Current Iteration Value: '{0}'.", e.InstanceData);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildCompleted event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_ChildCompleted(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.CreateResourceForEachIterationChildCompleted, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData.Count);
+
+            try
+            {
+                var variableCache = this.ActivityExpressionEvaluator.VariableCache;
+                this.breakIteration = Convert.ToBoolean(variableCache[ExpressionEvaluator.ReservedVariableBreakIteration]);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.CreateResourceForEachIterationChildCompleted, "Iteration: '{0}' of '{1}'. Break Iteration '{2}'.", this.iterations, this.ForEachIteration.InitialChildData.Count, this.breakIteration);
+            }
+        }
+
+        /// <summary>
+        /// Handles the UntilCondition event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_UntilCondition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData.Count);
+
+            try
+            {
+                if (this.iterations == this.ForEachIteration.InitialChildData.Count || this.breakIteration)
+                {
+                    e.Result = true;
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, this.ForEachIteration.InitialChildData.Count, e.Result);
             }
         }
 

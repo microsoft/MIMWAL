@@ -43,6 +43,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
@@ -86,6 +87,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind1.Name = "GetActor";
             activitybind1.Path = "Actor";
             this.Create.ApplyAuthorizationPolicy = false;
+            this.Create.AuthorizationWaitTimeInSeconds = -1;
             activitybind2.Name = "CreateResource";
             activitybind2.Path = "CreatedResourceId";
             activitybind3.Name = "CreateResource";
@@ -232,7 +234,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ForEachIteration.Activities.Add(this.ProcessCreate);
             this.ForEachIteration.ExecutionType = System.Workflow.Activities.ExecutionType.Sequence;
             this.ForEachIteration.Name = "ForEachIteration";
+            codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
+            this.ForEachIteration.UntilCondition = codecondition5;
             this.ForEachIteration.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildInitialized);
+            this.ForEachIteration.ChildCompleted += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildCompleted);
             // 
             // PrepareIteration
             // 
@@ -292,161 +297,136 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
         private ComponentActivities.ResolveLookups ResolveForValue;
-
         private IfElseBranchActivity Standard;
-
         private IfElseBranchActivity Authorization;
-
         private IfElseActivity SwitchSubmissionType;
-
         private ComponentActivities.AsynchronousCreateResource AsyncCreate;
-
         private SequenceActivity ProcessCreate;
-
         private ReplicatorActivity ForEachIteration;
-
         private ComponentActivities.DetermineActor GetActor;
-
         private CodeActivity PrepareIteration;
-
         private ComponentActivities.ResolveLookups Resolve;
-
         private CodeActivity Finish;
-
         private IfElseBranchActivity ContentToPublish;
-
         private IfElseActivity IfContentToPublish;
-
         private CodeActivity PublishCreated;
-
         private ComponentActivities.UpdateLookups Publish;
-
         private ComponentActivities.ResolveQueries RunQueries;
-
         private ComponentActivities.FindResources FindConflict;
-
         private CodeActivity EvaluateResults;
-
         private IfElseBranchActivity CheckConflict;
-
         private IfElseActivity IfCheckConflict;
-
         private IfElseBranchActivity Unique;
-
         private IfElseActivity IfUnique;
-
         private CodeActivity ParseDefinitions;
-
         private CodeActivity PrepareCreate;
-
         private Microsoft.ResourceManagement.Workflow.Activities.CreateResourceActivity Create;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

@@ -35,6 +35,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         #region Declarations
 
         /// <summary>
+        /// The reserved variable break iteration
+        /// </summary>
+        public const string ReservedVariableBreakIteration = "$__BREAK_ITERATION__";
+
+        /// <summary>
         /// The lookup cache
         /// </summary>
         private readonly Dictionary<string, object> lookupCache = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
@@ -42,7 +47,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <summary>
         /// The variable cache
         /// </summary>
-        private readonly Dictionary<string, object> variableCache = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+        private readonly Dictionary<string, object> variableCache = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase) { { ExpressionEvaluator.ReservedVariableBreakIteration, false } };
 
         #endregion
 
