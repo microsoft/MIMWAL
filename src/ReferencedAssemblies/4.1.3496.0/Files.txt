@@ -1,0 +1,5 @@
+Following files from FIM hotfix build v4.1.3496.0  (https://support.microsoft.com/en-us/kb/2906832)
+1. Microsoft.IdentityManagement.WebUI.Controls.dll
+2. Microsoft.IdentityManagement.WFExtensionInterfaces.dll
+3. Microsoft.ResourceManagement.dll
+4. Microsoft.ResourceManagement.WorkflowContract.dll
