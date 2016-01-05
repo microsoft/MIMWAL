@@ -248,18 +248,22 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ResolveLookupStringGenerateLookupKey, "Lookup: '{0}'.", lookup);
 
+            string lookupKey = lookup;
+
             try
             {
                 // Generate a lookup key which will replace the lookup in the working string
                 // To make the string identifiable, the lookup will be made upper case and the "[//...]" syntax will be replaced with "~//...~"
                 // This will ensure the while loop condition does not find the string and attempt to reprocess it
                 // For example, "[//Delta/ExplicitMember/Added/DisplayName]" becomes "~//DELTA/EXLICITMEMBER/ADDED/DISPLAYNAME~"
-                return lookup.ToUpperInvariant().Replace("[", "~").Replace("]", "~");
+                lookupKey = lookup.ToUpperInvariant().Replace("[", "~").Replace("]", "~");
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupStringGenerateLookupKey, "Returning: '{0}'.", lookup);
+                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupStringGenerateLookupKey, "Returning: '{0}'.", lookupKey);
             }
+
+            return lookupKey;
         }
 
         /// <summary>

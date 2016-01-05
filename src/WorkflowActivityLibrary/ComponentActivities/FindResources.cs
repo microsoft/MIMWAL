@@ -55,6 +55,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         public static DependencyProperty FoundIdsProperty =
             DependencyProperty.Register("FoundIds", typeof(List<Guid>), typeof(FindResources));
 
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty QueryResultsProperty =
+            DependencyProperty.Register("QueryResults", typeof(Dictionary<string, List<Guid>>), typeof(FindResources));
+
         #endregion
 
         #region Declarations
@@ -214,7 +218,30 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 this.SetValue(FoundIdsProperty, value);
             }
         }
-        
+
+        /// <summary>
+        /// Gets or sets the results for any queries which should be used for [//Queries/...] lookup resolution.
+        /// </summary>
+        /// <value>
+        /// The query results.
+        /// </value>
+        [Description("The results for any queries which should be used for [//Queries/...] lookup resolution.")]
+        [Category("Input")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Dictionary<string, List<Guid>> QueryResults
+        {
+            get
+            {
+                return (Dictionary<string, List<Guid>>)this.GetValue(QueryResultsProperty);
+            }
+
+            set
+            {
+                this.SetValue(QueryResultsProperty, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -291,7 +318,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesPrepareExecuteCode);
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesPrepareExecuteCode, "XPathFilter to Resolve: '{0}'. Attributes to Read: '{1}'.", this.XPathFilter, string.Join(",", this.Find.Selection));
             }
         }
 

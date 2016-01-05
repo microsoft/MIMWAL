@@ -162,6 +162,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
                 queryXPathFilter = definition.Right;
                 runQuery.XPathFilter = queryXPathFilter;
+
+                // Also add results from any previous queries
+                // so that the first query could also be used in the filter criteria for the second query
+                // providing for the ability to further refine the result set.
+                runQuery.QueryResults = this.QueryResults;
             }
             finally
             {

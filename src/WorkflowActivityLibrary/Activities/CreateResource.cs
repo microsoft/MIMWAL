@@ -17,6 +17,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Linq;
     using System.Workflow.Activities;
     using System.Workflow.ComponentModel;
@@ -755,7 +756,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             try
             {
                 var variableCache = this.ActivityExpressionEvaluator.VariableCache;
-                this.breakIteration = Convert.ToBoolean(variableCache[ExpressionEvaluator.ReservedVariableBreakIteration]);
+                this.breakIteration = Convert.ToBoolean(variableCache[ExpressionEvaluator.ReservedVariableBreakIteration], CultureInfo.InvariantCulture);
             }
             finally
             {

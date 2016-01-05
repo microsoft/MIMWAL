@@ -30,6 +30,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             System.Workflow.ComponentModel.ActivityBind activitybind2 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind3 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind4 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind5 = new System.Workflow.ComponentModel.ActivityBind();
             this.ReadFoundResource = new System.Workflow.Activities.CodeActivity();
             this.Find = new Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity();
             this.ResolveFilter = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString();
@@ -65,8 +66,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             activitybind3.Path = "XPathFilter";
             activitybind4.Name = "FindResources";
             activitybind4.Path = "Value";
+            activitybind5.Name = "FindResources";
+            activitybind5.Path = "QueryResults";
             this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.StringForResolutionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind3)));
             this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind4)));
+            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind5)));
             // 
             // Prepare
             // 

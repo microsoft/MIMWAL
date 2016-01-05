@@ -481,11 +481,18 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
                 // If necessary, add the supplied query results to the resource dictionary
                 // to support resolution of [//Queries/...] lookups
-                if (this.parameters.Contains(LookupParameter.Queries) && this.QueryResults != null)
+                if (this.parameters.Contains(LookupParameter.Queries))
                 {
-                    foreach (string query in this.QueryResults.Keys)
+                    if (this.QueryResults != null)
                     {
-                        this.Publish(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", LookupParameter.Queries, query), this.QueryResults[query]);
+                        foreach (string query in this.QueryResults.Keys)
+                        {
+                            this.Publish(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", LookupParameter.Queries, query), this.QueryResults[query]);
+                        }
+                    }
+                    else
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ResolveLookupsPrepareExecuteCode, "The [//Queries/...] lookup(s) don't have any supplied results.");
                     }
                 }
 
