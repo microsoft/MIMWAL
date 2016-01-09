@@ -22,7 +22,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary
         ///      Build Number (MMDD)
         ///      Revision (if any on the same day)
         /// </summary>
-        internal const string Version = "2.15.0105.0";
+        internal const string Version = "2.15.0109.0";
 
         /// <summary>
         /// File Version information for the assembly consists of the following four values:
@@ -31,6 +31,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary
         ///      Build Number (MMDD)
         ///      Revision (if any on the same day)
         /// </summary>
-        internal const string FileVersion = "2.15.0105.0";
+        internal const string FileVersion = "2.15.0109.0";
     }
 }

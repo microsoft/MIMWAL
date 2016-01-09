@@ -1597,22 +1597,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(long);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
@@ -1657,22 +1647,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(long);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
@@ -2816,14 +2796,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
             try
             {
-                if (this.parameters.Count != 2)
+                if (this.parameters.Count < 1 || this.parameters.Count > 2)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionNormalizeStringInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
-                }
-
-                if (this.parameters[1] == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionNormalizeStringNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionNormalizeStringInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinMaxCountError, this.function, 1, 2, this.parameters.Count));
                 }
 
                 string result;
@@ -2831,11 +2806,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     string input = this.parameters[0] as string;
-                    string substitutions = this.parameters[1] as string;
+                    string substitutions = this.parameters.Count > 1 ? this.parameters[1] as string : string.Empty;
 
                     if (string.IsNullOrEmpty(input))
                     {
-                        return input;
+                        result = input;
+                        return result;
                     }
 
                     // First do substitutions
@@ -2867,13 +2843,27 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                         if (ch > 128)
                         {
-                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}', '{1}'). Character '{2}' is not a 7-bit ASCII Character.", this.parameters[0], this.parameters[1], ch);
+                            if (this.parameters.Count == 1)
+                            {
+                                Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}'). Character '{1}' is not a 7-bit ASCII Character.", this.parameters[0], ch);
+                            }
+                            else
+                            {
+                                Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}', '{1}'). Character '{2}' is not a 7-bit ASCII Character.", this.parameters[0], this.parameters[1], ch);
+                            }
                         }
                     }
 
                     result = normalizedString.ToString();
 
-                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}', '{1}') evaluated '{2}'.", this.parameters[0], this.parameters[1], result);
+                    if (this.parameters.Count == 1)
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}') evaluated '{1}'.", this.parameters[0], result);
+                    }
+                    else
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionNormalizeString, "NormalizeString('{0}', '{1}') evaluated '{2}'.", this.parameters[0], this.parameters[1], result);
+                    }
                 }
                 else
                 {
@@ -3528,7 +3518,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[1];
                 if (parameter == null)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByIndexNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByIndexNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
                 }
 
                 if (!this.VerifyType(parameter, parameterType))
@@ -3605,6 +3595,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.parameters.Count != 1)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueTypeInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 1, this.parameters.Count));
+                }
+
+                object parameter = this.parameters[0];
+                if (parameter == null)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueTypeNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
                 }
 
                 string result;

@@ -2379,6 +2379,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionValueTypeInvalidFunctionParameterCountError = 41646;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction ValueType events
+        /// </summary>
+        public const int ExpressionFunctionValueTypeNullFunctionParameterError = 41646;
+
+        /// <summary>
         /// The event identifier for ExpressionFunction Word events
         /// </summary>
         public const int ExpressionFunctionWordInvalidFunctionParameterCountError = 41647;

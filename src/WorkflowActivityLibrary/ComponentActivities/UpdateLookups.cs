@@ -462,6 +462,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 {
                     this.ForEachPending.InitialChildData = this.PendingRequests.Keys.ToList();
                 }
+
+                Logger.Instance.WriteVerbose(EventIdentifier.UpdateLookupsBuildRequestsExecuteCode, "The number of requests that need to be submitted to fulfill the updates: '{0}'.", this.PendingRequests.Count);
             }
             finally
             {
