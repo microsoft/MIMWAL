@@ -4,6 +4,10 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ### Version [Unreleased]
 
+Under planning.
+
+### Version 2.16.0110.0
+
 #### Added
 
 * Re-branded of FIMWAL "2" version 2.15.1016.0 as MIMWAL.
