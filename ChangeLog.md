@@ -12,7 +12,7 @@ Under planning.
 
 * Re-branded of FIMWAL "2" version 2.15.1016.0 as MIMWAL.
 	* AICs are updated to a "WAL: " prefix instead of "FIMWAL: ".
-	* The event log  ane changed from "FIMWAL" to "WAL".
+	* The event log  name changed from "FIMWAL" to "WAL".
 * Added design time check for the Activity Execution Condition to be a boolean function expression.
 	* If in FIMWAL "2" you were using an `IIF` function expression as an Activity Execution Condition, you'll need to wrap it around a `ConvertToBoolean` for UI validation to succeed when making any changes to the activity in future.
 * Added support to break iteration loop in `UpdateResources` and `CreateResource` activities.
