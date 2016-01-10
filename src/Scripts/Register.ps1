@@ -427,3 +427,5 @@ net stop FIMService
 net start FIMService
 
 iisreset
+
+Write-Host -ForegroundColor green "Review script console output for any errors. Once the deployment is successful on all the servers, update the assembly version in MIMWAL XOMLs by executing UpdateWorkflowXoml.ps1 script."
