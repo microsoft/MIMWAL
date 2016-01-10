@@ -1,10 +1,10 @@
-# MIMWAL Change Log
+## MIMWAL Change Log
 
 All notable changes to MIMWAL project will be documented in this file. The "Unreleased" section at the top is for keeping track of important changes that might make it to upcoming releases.
 
-## [Unreleased]
+### Version [Unreleased]
 
-### Added
+#### Added
 
 * Re-branded of FIMWAL "2" version 2.15.1016.0 as MIMWAL.
 	* AICs are updated to a "WAL: " prefix instead of "FIMWAL: ".
@@ -15,16 +15,16 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 	* Reserved `$__BREAK_ITERATION__` for the name of the boolean variable that needs to be set to true to break the loop.
 * Added support for cascaded queries lookup so that data from the first query can be used in the XPath search filter expression of the second query.
 
-### Changed
+#### Changed
 
 * Updated `Add` and `Subtract` function to treat null input values as zero instead of throwing exception
 * Made substitutions parameter optional in `NormalizeString` function.
 
-### Removed
+#### Removed
 
 * Deleted compiled referenced DLLs and EXEs until LCA provides a split licence.
 	* Build and Deployment Wiki documents how to gather these files for building the solution.
 
-### Fixed
+#### Fixed
 
 * There are no bug fixes in this release.

@@ -22,6 +22,12 @@ The MIMWAL is a powerful solution accelerator for MIM / FIM that provides founda
  * Forefront Identity Manager (FIM) 2010 R2 - 4.1.3496 and above.
  * Microsoft Identity Manager (MIM) 2016 - 4.3.1935 and above.
 
+
+# Release Notes
+
+The MIMWAL releases can be downloaded from the [releases](https://github.com/Microsoft/MIMWAL/releases) tab under the Code tab. The release notes of each release can be found at [ChangeLog.md](https://github.com/Microsoft/MIMWAL/blob/master/ChangeLog.md)
+
+
 # Documentation
 
 For more details and information on utilizing the MIMWAL please refer to the documentation in the [MIMWAL Wiki](https://github.com/Microsoft/MIMWAL/wiki).
@@ -29,3 +35,7 @@ For more details and information on utilizing the MIMWAL please refer to the doc
 # Discussion
 
 For questions and conversations focused on MIMWAL, please visit the MIMWAL Project TechNet Forum: [http://aka.ms/MIMWAL/Forum](http://aka.ms/MIMWAL/Forum).
+
+# Contributing to MIMWAL
+
+For details on how you can contribute, please check [CONTRIBUTING.md](https://github.com/Microsoft/MIMWAL/blob/master/CONTRIBUTING.md)
