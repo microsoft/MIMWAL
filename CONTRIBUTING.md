@@ -16,7 +16,7 @@ As for the coding style, it's simple. Download and install [StyleCop](http://sty
 
 While code acceptance for a bug fix or a minor enhancement like adding a new function is likely to be very straightforward, the code for a major new feature such as a new activity will only be accepted only if there is consensus among ALL project admins. Any proposal for a new feature that requires extension of MIM schema will be rejected. Any proposal that has serious backward compatibility considerations is unlikely to get accepted. A classic example of this is that contrary to specification of FIM string functions such as `Mid`, all WAL string functions expect a zero-based index.
 
-The MIMWAL is intended to be a set of building block activities that can be used to configure multiple complex scenarios.   This means that any function or activity considered to be added to the core library should be applicable in multiple workflow scenarios, and not limited to a very specific workflow use case.
+The MIMWAL is intended to be a set of building block activities that has a broad use to configure multiple complex scenarios.   This means that any function or activity considered to be added to the core library should be applicable in multiple workflow scenarios, and not limited to a very specific or narrow workflow use case.
 
 ### Submit an Issue.
 
