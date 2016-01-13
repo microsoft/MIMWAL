@@ -4,8 +4,8 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ### Version [Unreleased]
 
-Support for "/" as a Null Query.
-Support for executing a collection of Queries
+* Support for "/" as a Null Query.
+* Support for executing a collection of Queries.
 
 ### Version 2.16.0110.0
 
