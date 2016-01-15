@@ -549,6 +549,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int FindResourcesReadFoundResourceExecuteCode = 11204;
 
         /// <summary>
+        /// The event identifier for FindResources ResolvedFilterIsNotNull_Condition events
+        /// </summary>
+        public const int FindResourcesResolvedFilterIsNotNullCondition = 11205;
+
+        /// <summary>
         /// The event identifier for ResolveLookups Constructor events
         /// </summary>
         public const int ResolveLookupsConstructor = 11301;

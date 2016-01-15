@@ -771,18 +771,20 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
         private void ForEachIteration_UntilCondition(object sender, ConditionalEventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData.Count);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count);
 
+            int maxIterations = 0;
             try
             {
-                if (this.iterations == this.ForEachIteration.InitialChildData.Count || this.breakIteration)
+                maxIterations = this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count;
+                if (this.iterations == maxIterations || this.breakIteration)
                 {
                     e.Result = true;
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, this.ForEachIteration.InitialChildData.Count, e.Result);
+                Logger.Instance.WriteMethodExit(EventIdentifier.CreateResourceForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, maxIterations, e.Result);
             }
         }
 
