@@ -23,7 +23,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common;
 
     #endregion
-    
+
     /// <summary>
     /// Finds resources
     /// </summary>
@@ -117,7 +117,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 this.SetValue(XPathFilterProperty, value);
             }
         }
-        
+
         /// <summary>
         /// Gets or sets the value which should be used for [//Value/...] lookup resolution.
         /// </summary>
@@ -364,7 +364,29 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "XPathFilter: '{0}'.", this.XPathFilter);
             }
         }
-    
+
+        /// <summary>
+        /// Handles the Condition event of the ResolvedFilterIsNotNull condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ResolvedFilterIsNotNull_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesResolvedFilterIsNotNullCondition);
+
+            string resolvedFilter = null;
+            try
+            {
+                resolvedFilter = this.ResolveFilter.Resolved;
+
+                // Since we are supporting resolution, treat "/" as a null search filter.
+                e.Result = !string.IsNullOrEmpty(resolvedFilter) && resolvedFilter != "/";
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesResolvedFilterIsNotNullCondition, "Resolved Filter : '{0}', Condition evaluated '{1}'.", resolvedFilter, e.Result);
+            }
+        }
         #endregion
     }
 }
