@@ -4,8 +4,18 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ### Version [Unreleased]
 
-* Support for "/" as a Null Query.
 * Support for executing a collection of Queries.
+
+### Version 2.16.0115.0
+
+#### Added
+
+* Support for "/" as a Null Query.
+
+#### Fixed
+
+* Added null check in the ForEachIteration_UntilCondition function of UpdateResources and CreateResource activities to prevent crash when AEC is defined, but Iteration not.
+
 
 ### Version 2.16.0110.0
 
