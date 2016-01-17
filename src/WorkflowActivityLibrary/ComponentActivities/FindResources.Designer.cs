@@ -32,10 +32,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             System.Workflow.ComponentModel.ActivityBind activitybind3 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind4 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind5 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind6 = new System.Workflow.ComponentModel.ActivityBind();
             this.ReadFoundResource = new System.Workflow.Activities.CodeActivity();
             this.Find = new Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity();
             this.ResolvedFilterIsNotNull = new System.Workflow.Activities.IfElseBranchActivity();
             this.IfResolvedFilterIsNotNull = new System.Workflow.Activities.IfElseActivity();
+            this.ForEachResolvedFilter = new System.Workflow.Activities.ReplicatorActivity();
+            this.PrepareResolvedFilterList = new System.Workflow.Activities.CodeActivity();
             this.ResolveFilter = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString();
             this.Prepare = new System.Workflow.Activities.CodeActivity();
             // 
@@ -54,8 +57,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             this.Find.Selection = null;
             this.Find.SortingAttributes = null;
             this.Find.TotalResultsCount = 0;
-            activitybind2.Name = "ResolveFilter";
-            activitybind2.Path = "Resolved";
+            activitybind2.Name = "FindResources";
+            activitybind2.Path = "ResolvedFilter";
             this.Find.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.ActorIdProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind1)));
             this.Find.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EnumerateResourcesActivity.XPathFilterProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind2)));
             // 
@@ -70,21 +73,37 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             // 
             this.IfResolvedFilterIsNotNull.Activities.Add(this.ResolvedFilterIsNotNull);
             this.IfResolvedFilterIsNotNull.Name = "IfResolvedFilterIsNotNull";
+            activitybind3.Name = "FindResources";
+            activitybind3.Path = "ResolvedFilterList";
+            // 
+            // ForEachResolvedFilter
+            // 
+            this.ForEachResolvedFilter.Activities.Add(this.IfResolvedFilterIsNotNull);
+            this.ForEachResolvedFilter.ExecutionType = System.Workflow.Activities.ExecutionType.Sequence;
+            this.ForEachResolvedFilter.Name = "ForEachResolvedFilter";
+            this.ForEachResolvedFilter.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachResolvedFilter_ChildInitialized);
+            this.ForEachResolvedFilter.SetBinding(System.Workflow.Activities.ReplicatorActivity.InitialChildDataProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind3)));
+            // 
+            // PrepareResolvedFilterList
+            // 
+            this.PrepareResolvedFilterList.Name = "PrepareResolvedFilterList";
+            this.PrepareResolvedFilterList.ExecuteCode += new System.EventHandler(this.PrepareResolvedFilterList_ExecuteCode);
             // 
             // ResolveFilter
             // 
             this.ResolveFilter.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
             this.ResolveFilter.Name = "ResolveFilter";
-            activitybind3.Name = "FindResources";
-            activitybind3.Path = "QueryResults";
-            this.ResolveFilter.Resolved = null;
             activitybind4.Name = "FindResources";
-            activitybind4.Path = "XPathFilter";
+            activitybind4.Path = "QueryResults";
+            this.ResolveFilter.Resolved = null;
+            this.ResolveFilter.ResolvedList = null;
             activitybind5.Name = "FindResources";
-            activitybind5.Path = "Value";
-            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.StringForResolutionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind4)));
-            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind5)));
-            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind3)));
+            activitybind5.Path = "XPathFilter";
+            activitybind6.Name = "FindResources";
+            activitybind6.Path = "Value";
+            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.StringForResolutionProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind5)));
+            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind6)));
+            this.ResolveFilter.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookupString.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind4)));
             // 
             // Prepare
             // 
@@ -95,7 +114,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             // 
             this.Activities.Add(this.Prepare);
             this.Activities.Add(this.ResolveFilter);
-            this.Activities.Add(this.IfResolvedFilterIsNotNull);
+            this.Activities.Add(this.PrepareResolvedFilterList);
+            this.Activities.Add(this.ForEachResolvedFilter);
             this.Name = "FindResources";
             this.CanModifyActivities = false;
 
@@ -120,6 +140,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
         #endregion
 
+        private CodeActivity PrepareResolvedFilterList;
+        private ReplicatorActivity ForEachResolvedFilter;
         private IfElseBranchActivity ResolvedFilterIsNotNull;
         private IfElseActivity IfResolvedFilterIsNotNull;
         private ResolveLookupString ResolveFilter;

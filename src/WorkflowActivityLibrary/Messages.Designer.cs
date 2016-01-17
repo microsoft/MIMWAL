@@ -637,6 +637,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to StringForResolution: &apos;{0}&apos; did not resolved to a string or List&lt;string&gt;. It resolved to a &apos;{1}&apos; instead..
+        /// </summary>
+        internal static string ResolveLookupString_InvalidResolvedFilterError {
+            get {
+                return ResourceManager.GetString("ResolveLookupString_InvalidResolvedFilterError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email template &apos;{0}&apos; not found..
         /// </summary>
         internal static string ReuqestApproval_MissingEmailTemplateError {

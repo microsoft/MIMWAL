@@ -71,6 +71,20 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         public Guid ServiceActor;
 
         /// <summary>
+        /// The resolved filter list
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<string> ResolvedFilterList;
+
+        /// <summary>
+        /// The current resolved filter being processed
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public string ResolvedFilter;
+
+        /// <summary>
         /// The workflow target
         /// </summary>
         private Guid workflowTarget;
@@ -329,7 +343,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void ReadFoundResource_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "XPathFilter: '{0}'.", this.XPathFilter);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "XPathFilter: '{0}'. ResolvedFilter: '{1}'.", this.XPathFilter, this.ResolvedFilter);
 
             try
             {
@@ -338,7 +352,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 ResourceType resource = EnumerateResourcesActivity.GetCurrentIterationItem((CodeActivity)sender) as ResourceType;
                 if (resource == null)
                 {
-                    Logger.Instance.WriteVerbose(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "No resource found matching XPath filter '{0}'.", this.XPathFilter);
+                    Logger.Instance.WriteVerbose(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "No resource found matching XPath filter '{0}'. ResolvedFilter: '{1}'.", this.XPathFilter, this.ResolvedFilter);
                     return;
                 }
 
@@ -361,7 +375,62 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "XPathFilter: '{0}'.", this.XPathFilter);
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesReadFoundResourceExecuteCode, "XPathFilter: '{0}'. ResolvedFilter: '{1}'.", this.XPathFilter, this.ResolvedFilter);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ExecuteCode event of the PrepareResolvedFilterList CodeActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void PrepareResolvedFilterList_ExecuteCode(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesPrepareResolvedFilterListExecuteCode);
+
+            try
+            {
+                string resolvedFilter = this.ResolveFilter.Resolved;
+
+                this.ResolvedFilterList = new List<string>();
+
+                if (!string.IsNullOrEmpty(resolvedFilter))
+                {
+                    this.ResolvedFilterList.Add(resolvedFilter);
+                }
+                else if (this.ResolveFilter.ResolvedList != null)
+                {
+                    this.ResolvedFilterList = this.ResolveFilter.ResolvedList;
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesPrepareResolvedFilterListExecuteCode, "XPathFilter: '{0}'. ResolvedFilter list item count: '{1}'.", this.XPathFilter, this.ResolvedFilterList.Count);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildInitialized event of the ForEachResolvedFilter activity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachResolvedFilter_ChildInitialized(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesForEachResolvedFilterChildInitialized);
+
+            try
+            {
+                this.ResolvedFilter = e.InstanceData as string;
+
+                if (!string.IsNullOrEmpty(this.ResolvedFilter))
+                {
+                    // If there are more than "/" at the start of the search filter, keep only one.
+                    this.ResolvedFilter = "/" + this.ResolvedFilter.Trim().TrimStart('/');
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesForEachResolvedFilterChildInitialized, "XPathFilter: '{0}'. ResolvedFilter: '{1}'.", this.XPathFilter, this.ResolvedFilter);
             }
         }
 
@@ -374,19 +443,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.FindResourcesResolvedFilterIsNotNullCondition);
 
-            string resolvedFilter = null;
             try
             {
-                resolvedFilter = this.ResolveFilter.Resolved;
-
                 // Since we are supporting resolution, treat "/" as a null search filter.
-                e.Result = !string.IsNullOrEmpty(resolvedFilter) && resolvedFilter != "/";
+                e.Result = !string.IsNullOrEmpty(this.ResolvedFilter) && this.ResolvedFilter != "/";
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesResolvedFilterIsNotNullCondition, "Resolved Filter : '{0}', Condition evaluated '{1}'.", resolvedFilter, e.Result);
+                Logger.Instance.WriteMethodExit(EventIdentifier.FindResourcesResolvedFilterIsNotNullCondition, "Resolved Filter : '{0}', Condition evaluated '{1}'.", this.ResolvedFilter, e.Result);
             }
         }
+
         #endregion
     }
 }

@@ -184,6 +184,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "FIRST":
                         return this.First();
 
+                    case "FORMATMULTIVALUEDLIST":
+                        return this.FormatMultivaluedList();
+
                     case "GENERATERANDOMPASSWORD":
                         return this.GenerateRandomPassword();
 
@@ -1748,6 +1751,84 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionConcatenateMultivaluedString, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// Formats the multivalued list as per the specified format.
+        /// Function Syntax: FormatMultivaluedString(format:string, list1:List of strings)
+        /// </summary>
+        /// <returns>The formatted list.</returns>
+        private object FormatMultivaluedList()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionFormatMultivaluedList, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                object parameter = this.parameters[0];
+                if (parameter == null)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
+                }
+
+                parameter = this.parameters[1];
+                if (parameter == null)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                }
+
+                Type parameterType = typeof(List<string>);
+                Type parameterType2 = typeof(string);
+                parameter = this.parameters[1];
+                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError3, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
+                }
+
+                object result;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    if (this.parameters[1] is string)
+                    {
+                        if (string.IsNullOrEmpty(this.parameters[1] as string))
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                        }
+
+                        result = string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), this.parameters[1].ToString());
+                    }
+                    else if (((List<string>)this.parameters[1]).Count == 0)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                    }
+                    else
+                    {
+                        result = new List<string>(((List<string>)this.parameters[1]).Count);
+
+                        foreach (string s in (List<string>)this.parameters[1])
+                        {
+                            ((List<string>)result).Add(string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), s));
+                        }
+                    }
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConcatenateMultivaluedString, "FormatMultivaluedList() returned '{0}'.", result);
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionFormatMultivaluedList, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
