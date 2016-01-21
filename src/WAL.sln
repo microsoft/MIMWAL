@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowActivityLibrary", "WorkflowActivityLibrary\WorkflowActivityLibrary.csproj", "{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}"
 EndProject
@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LanguagePacks", "LanguagePa
 		LanguagePacks\Messages.es.resx = LanguagePacks\Messages.es.resx
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowActivityLibrary.Tests", "WorkflowActivityLibrary.Tests\WorkflowActivityLibrary.Tests.csproj", "{CBBF2DFC-B69C-47C8-B33F-7D32E0DC08E5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -46,6 +48,10 @@ Global
 		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5ECC33F8-D920-47EC-AF5F-F4A11FD0A4FC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CBBF2DFC-B69C-47C8-B33F-7D32E0DC08E5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CBBF2DFC-B69C-47C8-B33F-7D32E0DC08E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CBBF2DFC-B69C-47C8-B33F-7D32E0DC08E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CBBF2DFC-B69C-47C8-B33F-7D32E0DC08E5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
