@@ -12,7 +12,7 @@ namespace WorkflowActivityLibrary.Tests
     /// <remarks>
     /// If this doesn't work for you then you may have to add a public key verification entry to your system with the following commands (replace [xxx] with real values):
     /// C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\sn.exe -T [path to solution]MIMWAL\src\WorkflowActivityLibrary\bin\Debug\MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.dll
-    /// C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\sn.exe -Vr*,[public key]
+    /// C:\Program Files (x86)\Microsoft SDKs\Windows\v7.0A\bin\sn.exe -Vr *,[public key]
     /// </remarks>
     [TestClass]
     public class ExpressionFunctionTests
