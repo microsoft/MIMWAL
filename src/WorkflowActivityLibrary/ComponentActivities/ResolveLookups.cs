@@ -789,7 +789,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupsForEachResourceChildInitialized, "ReadResource: '{0}'.", e.InstanceData);
+                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupsForEachResourceChildInitialized, "ReadResource: '{0}'.  Read Attributes: '{1}'.", e.InstanceData, this.ReadAttributes == null ? null : string.Join(",", this.ReadAttributes));
             }
         }
 
