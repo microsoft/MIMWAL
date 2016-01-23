@@ -5,6 +5,7 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 ### Version [Unreleased]
 
 * Support for executing a collection of Queries.
+* Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 
 ### Version 2.16.0115.0
 
