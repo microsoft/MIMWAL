@@ -618,7 +618,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         }
                     }
 
-                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionContains, "Contains function for value '{0}' evaluated '{1}'.", this.parameters[1], result);
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionContains, "Contains('{0}', '{1}') evaluated '{2}'.", this.parameters[0], this.parameters[1], result);
                 }
                 else
                 {

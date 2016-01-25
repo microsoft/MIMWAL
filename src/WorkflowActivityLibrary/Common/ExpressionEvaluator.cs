@@ -578,6 +578,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     }
                 }
 
+                /*
+                // We support Delta as well as normal attributes
+                [//ComparedRequest/Creator/DisplayName] 
+                [//ComparedRequest/Delta/DisplayName] 
+                [//ComparedRequest/Delta/Manager/DisplayName] 
+
                 syntax = string.Format(CultureInfo.InvariantCulture, "[//{0}", LookupParameter.ComparedRequest);
                 if (parameter.StartsWith(syntax, StringComparison.OrdinalIgnoreCase))
                 {
@@ -588,6 +594,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorValidateLookupParameterTypeUnsupportedTypeError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionParameterTypeUnsupportedTypeError, parameter));
                     }
                 }
+                */
             }
             finally
             {

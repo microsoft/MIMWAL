@@ -538,7 +538,7 @@
     <value>Match Condition Identifying a Conflicting Request</value>
   </data>
   <data name="RequestConflictMatchConditionHelpText" xml:space="preserve">
-    <value>Supply the Boolean condition which identifies an evaluated request as a conflict. Example: And(Eq([//Delta/AccountName], [//Target/AccountName]), Eq([//Delta/Domain], [//Target/Domain]))</value>
+    <value>Supply the Boolean condition which identifies an evaluated request as a conflict. Example: And(Eq([//Delta/AccountName], [//ComparedRequest/Delta/AccountName]), Eq([//Delta/Domain], [//ComparedRequest/Delta/Domain]))</value>
   </data>
   <data name="RequestConflictDenialMessage" xml:space="preserve">
     <value>Conflicting Request Denial Message</value>
