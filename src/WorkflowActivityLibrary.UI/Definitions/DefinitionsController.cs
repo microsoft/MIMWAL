@@ -480,6 +480,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Defini
                 listing.Clear();
             }
 
+            // BUGFIX: Sort the listing otherwise this leads to deletion at the old index of the old listing and  deletion / move-up at the new index of new listing.
+            this.MoveUp_Click(sender, e);
+
             // Make sure at least one listing is always active
             bool active = this.definitionListings.Any(listing => listing.Active);
 
