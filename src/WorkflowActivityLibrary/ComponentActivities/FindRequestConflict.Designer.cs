@@ -66,6 +66,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             this.Find.FoundIds = list_11;
             this.Find.FoundResources = list_12;
             this.Find.Name = "Find";
+            this.Find.QueryResults = null;
             this.Find.Value = null;
             this.Find.XPathFilter = null;
             // 
@@ -73,7 +74,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             // 
             this.ResolveStandard.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
             activitybind3.Name = "FindRequestConflict";
-            activitybind3.Path = "ExpressionEvaluator.LookupCache";
+            activitybind3.Path = "ActivityExpressionEvaluator.LookupCache";
             this.ResolveStandard.Name = "ResolveStandard";
             this.ResolveStandard.QueryResults = null;
             this.ResolveStandard.Value = null;
@@ -101,64 +102,58 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
         private ResolveLookups ResolveCompared;
-
         private ResolveLookups ResolveStandard;
-
         private FindResources Find;
-
         private CodeActivity Prepare;
-
         private ReplicatorActivity ForEachRequest;
-
         private Microsoft.ResourceManagement.Workflow.Activities.CurrentRequestActivity Request;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

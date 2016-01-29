@@ -97,6 +97,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to determine request actor. The supplied string is not a valid GUID format..
+        /// </summary>
+        internal static string DetermineActor_InvalidActorGuidFormatError {
+            get {
+                return ResourceManager.GetString("DetermineActor_InvalidActorGuidFormatError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to determine request actor. The supplied account information is assigned to multiple resources..
         /// </summary>
         internal static string DetermineActor_MultipleActorAccountsError {

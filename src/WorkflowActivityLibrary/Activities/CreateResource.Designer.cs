@@ -37,19 +37,25 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.ComponentModel.ActivityBind activitybind8 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind9 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind10 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Collections.Generic.List<Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType> list_11 = new System.Collections.Generic.List<Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType>();
             System.Workflow.ComponentModel.ActivityBind activitybind11 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind12 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Collections.Generic.List<Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType> list_11 = new System.Collections.Generic.List<Microsoft.ResourceManagement.WebServices.WSResourceManagement.ResourceType>();
             System.Workflow.ComponentModel.ActivityBind activitybind16 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind17 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition6 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind23 = new System.Workflow.ComponentModel.ActivityBind();
             System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<System.Guid>> dictionary_21 = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<System.Guid>>();
             this.PublishCreated = new System.Workflow.Activities.CodeActivity();
             this.Create = new Microsoft.ResourceManagement.Workflow.Activities.CreateResourceActivity();
@@ -58,6 +64,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.Authorization = new System.Workflow.Activities.IfElseBranchActivity();
             this.Publish = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups();
             this.SwitchSubmissionType = new System.Workflow.Activities.IfElseActivity();
+            this.GetActorForChildRequest = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
             this.PrepareCreate = new System.Workflow.Activities.CodeActivity();
             this.ResolveForValue = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
             this.EvaluateResults = new System.Workflow.Activities.CodeActivity();
@@ -68,11 +75,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.IfContentToPublish = new System.Workflow.Activities.IfElseActivity();
             this.IfUnique = new System.Workflow.Activities.IfElseActivity();
             this.IfCheckConflict = new System.Workflow.Activities.IfElseActivity();
+            this.GetActor = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
             this.ProcessCreate = new System.Workflow.Activities.SequenceActivity();
+            this.ActorIsNotValueExpression = new System.Workflow.Activities.IfElseBranchActivity();
             this.Finish = new System.Workflow.Activities.CodeActivity();
             this.ForEachIteration = new System.Workflow.Activities.ReplicatorActivity();
             this.PrepareIteration = new System.Workflow.Activities.CodeActivity();
-            this.GetActor = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
+            this.IfActorIsNotValueExpression = new System.Workflow.Activities.IfElseActivity();
             this.Resolve = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
             this.RunQueries = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries();
             this.ParseDefinitions = new System.Workflow.Activities.CodeActivity();
@@ -84,7 +93,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             // Create
             // 
-            activitybind1.Name = "GetActor";
+            activitybind1.Name = "GetActorForChildRequest";
             activitybind1.Path = "Actor";
             this.Create.ApplyAuthorizationPolicy = false;
             this.Create.AuthorizationWaitTimeInSeconds = -1;
@@ -99,7 +108,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             // AsyncCreate
             // 
-            activitybind4.Name = "GetActor";
+            activitybind4.Name = "GetActorForChildRequest";
             activitybind4.Path = "Actor";
             this.AsyncCreate.ApplyAuthorizationPolicy = true;
             activitybind5.Name = "CreateResource";
@@ -140,6 +149,25 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.SwitchSubmissionType.Activities.Add(this.Standard);
             this.SwitchSubmissionType.Name = "SwitchSubmissionType";
             // 
+            // GetActorForChildRequest
+            // 
+            activitybind8.Name = "GetActor";
+            activitybind8.Path = "Actor";
+            activitybind9.Name = "CreateResource";
+            activitybind9.Path = "ActorString";
+            activitybind10.Name = "CreateResource";
+            activitybind10.Path = "ActorType";
+            this.GetActorForChildRequest.Name = "GetActorForChildRequest";
+            activitybind11.Name = "RunQueries";
+            activitybind11.Path = "QueryResults";
+            activitybind12.Name = "CreateResource";
+            activitybind12.Path = "Value";
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
+            // 
             // PrepareCreate
             // 
             this.PrepareCreate.Name = "PrepareCreate";
@@ -148,14 +176,14 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // ResolveForValue
             // 
             this.ResolveForValue.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind8.Name = "CreateResource";
-            activitybind8.Path = "ValueExpressions";
+            activitybind13.Name = "CreateResource";
+            activitybind13.Path = "ValueExpressions";
             this.ResolveForValue.Name = "ResolveForValue";
             this.ResolveForValue.QueryResults = null;
-            activitybind9.Name = "CreateResource";
-            activitybind9.Path = "Value";
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
+            activitybind14.Name = "CreateResource";
+            activitybind14.Path = "Value";
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
             // 
             // EvaluateResults
             // 
@@ -166,17 +194,18 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             this.FindConflict.Attributes = null;
             this.FindConflict.ExcludeWorkflowTarget = false;
-            activitybind10.Name = "CreateResource";
-            activitybind10.Path = "Conflicts";
+            activitybind15.Name = "CreateResource";
+            activitybind15.Path = "Conflicts";
             this.FindConflict.FoundResources = list_11;
             this.FindConflict.Name = "FindConflict";
-            activitybind11.Name = "CreateResource";
-            activitybind11.Path = "Value";
-            activitybind12.Name = "CreateResource";
-            activitybind12.Path = "ConflictFilter";
-            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.XPathFilterProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
-            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
-            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.FoundIdsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
+            this.FindConflict.QueryResults = null;
+            activitybind16.Name = "CreateResource";
+            activitybind16.Path = "Value";
+            activitybind17.Name = "CreateResource";
+            activitybind17.Path = "ConflictFilter";
+            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.XPathFilterProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
+            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
+            this.FindConflict.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.FoundIdsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
             // 
             // ContentToPublish
             // 
@@ -189,6 +218,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             this.Unique.Activities.Add(this.ResolveForValue);
             this.Unique.Activities.Add(this.PrepareCreate);
+            this.Unique.Activities.Add(this.GetActorForChildRequest);
             this.Unique.Activities.Add(this.SwitchSubmissionType);
             codecondition3.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.Unique_Condition);
             this.Unique.Condition = codecondition3;
@@ -217,12 +247,34 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.IfCheckConflict.Activities.Add(this.CheckConflict);
             this.IfCheckConflict.Name = "IfCheckConflict";
             // 
+            // GetActor
+            // 
+            this.GetActor.Actor = new System.Guid("00000000-0000-0000-0000-000000000000");
+            activitybind18.Name = "CreateResource";
+            activitybind18.Path = "ActorString";
+            activitybind19.Name = "CreateResource";
+            activitybind19.Path = "ActorType";
+            this.GetActor.Name = "GetActor";
+            activitybind20.Name = "RunQueries";
+            activitybind20.Path = "QueryResults";
+            this.GetActor.Value = null;
+            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
+            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
+            // 
             // ProcessCreate
             // 
             this.ProcessCreate.Activities.Add(this.IfCheckConflict);
             this.ProcessCreate.Activities.Add(this.IfUnique);
             this.ProcessCreate.Activities.Add(this.IfContentToPublish);
             this.ProcessCreate.Name = "ProcessCreate";
+            // 
+            // ActorIsNotValueExpression
+            // 
+            this.ActorIsNotValueExpression.Activities.Add(this.GetActor);
+            codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ActorIsNotValueExpression_Condition);
+            this.ActorIsNotValueExpression.Condition = codecondition5;
+            this.ActorIsNotValueExpression.Name = "ActorIsNotValueExpression";
             // 
             // Finish
             // 
@@ -234,8 +286,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ForEachIteration.Activities.Add(this.ProcessCreate);
             this.ForEachIteration.ExecutionType = System.Workflow.Activities.ExecutionType.Sequence;
             this.ForEachIteration.Name = "ForEachIteration";
-            codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
-            this.ForEachIteration.UntilCondition = codecondition5;
+            codecondition6.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
+            this.ForEachIteration.UntilCondition = codecondition6;
             this.ForEachIteration.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildInitialized);
             this.ForEachIteration.ChildCompleted += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildCompleted);
             // 
@@ -244,39 +296,30 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.PrepareIteration.Name = "PrepareIteration";
             this.PrepareIteration.ExecuteCode += new System.EventHandler(this.PrepareIteration_ExecuteCode);
             // 
-            // GetActor
+            // IfActorIsNotValueExpression
             // 
-            this.GetActor.Actor = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind13.Name = "CreateResource";
-            activitybind13.Path = "ActorString";
-            activitybind14.Name = "CreateResource";
-            activitybind14.Path = "ActorType";
-            this.GetActor.Name = "GetActor";
-            activitybind15.Name = "RunQueries";
-            activitybind15.Path = "QueryResults";
-            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
-            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
-            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            this.IfActorIsNotValueExpression.Activities.Add(this.ActorIsNotValueExpression);
+            this.IfActorIsNotValueExpression.Name = "IfActorIsNotValueExpression";
             // 
             // Resolve
             // 
             this.Resolve.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind16.Name = "CreateResource";
-            activitybind16.Path = "ActivityExpressionEvaluator.LookupCache";
+            activitybind21.Name = "CreateResource";
+            activitybind21.Path = "ActivityExpressionEvaluator.LookupCache";
             this.Resolve.Name = "Resolve";
-            activitybind17.Name = "RunQueries";
-            activitybind17.Path = "QueryResults";
+            activitybind22.Name = "RunQueries";
+            activitybind22.Path = "QueryResults";
             this.Resolve.Value = null;
-            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
-            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
+            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
+            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
             // 
             // RunQueries
             // 
             this.RunQueries.Name = "RunQueries";
-            activitybind18.Name = "CreateResource";
-            activitybind18.Path = "Queries";
+            activitybind23.Name = "CreateResource";
+            activitybind23.Path = "Queries";
             this.RunQueries.QueryResults = dictionary_21;
-            this.RunQueries.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
+            this.RunQueries.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind23)));
             // 
             // ParseDefinitions
             // 
@@ -288,7 +331,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.Activities.Add(this.ParseDefinitions);
             this.Activities.Add(this.RunQueries);
             this.Activities.Add(this.Resolve);
-            this.Activities.Add(this.GetActor);
+            this.Activities.Add(this.IfActorIsNotValueExpression);
             this.Activities.Add(this.PrepareIteration);
             this.Activities.Add(this.ForEachIteration);
             this.Activities.Add(this.Finish);
@@ -403,6 +446,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         #endregion
 
+        private ComponentActivities.DetermineActor GetActorForChildRequest;
+        private ComponentActivities.DetermineActor GetActor;
+        private IfElseBranchActivity ActorIsNotValueExpression;
+        private IfElseActivity IfActorIsNotValueExpression;
         private ComponentActivities.ResolveLookups ResolveForValue;
         private IfElseBranchActivity Standard;
         private IfElseBranchActivity Authorization;
@@ -410,7 +457,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         private ComponentActivities.AsynchronousCreateResource AsyncCreate;
         private SequenceActivity ProcessCreate;
         private ReplicatorActivity ForEachIteration;
-        private ComponentActivities.DetermineActor GetActor;
         private CodeActivity PrepareIteration;
         private ComponentActivities.ResolveLookups Resolve;
         private CodeActivity Finish;

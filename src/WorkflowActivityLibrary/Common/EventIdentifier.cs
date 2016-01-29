@@ -124,6 +124,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int CreateResourceForEachIterationUntilCondition = 10114;
 
         /// <summary>
+        /// The event identifier for CreateResource ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int CreateResourceActorIsNotValueExpressionCondition = 10115;
+
+        /// <summary>
         /// The event identifier for DeleteResources Constructor events
         /// </summary>
         public const int DeleteResourcesConstructor = 10201;
@@ -177,6 +182,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for DeleteResources Authorization_Condition events
         /// </summary>
         public const int DeleteResourcesAuthorizationCondition = 10211;
+
+        /// <summary>
+        /// The event identifier for DeleteResources ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int DeleteResourcesActorIsNotValueExpressionCondition = 10212;
 
         /// <summary>
         /// The event identifier for GenerateUniqueValue Constructor events
@@ -334,6 +344,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int UpdateResourcesForEachIterationUntilCondition = 10508;
 
         /// <summary>
+        /// The event identifier for UpdateResources ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int UpdateResourcesActorIsNotValueExpressionCondition = 10509;
+
+        /// <summary>
         /// The event identifier for VerifyRequest Constructor events
         /// </summary>
         public const int VerifyRequestConstructor = 10601;
@@ -484,9 +499,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int DetermineActorExecute = 11002;
 
         /// <summary>
-        /// The event identifier for DetermineActor Prepare_ExecuteCode events
+        /// The event identifier for DetermineActor PrepareResolveActor_ExecuteCode events
         /// </summary>
-        public const int DetermineActorPrepareExecuteCode = 11003;
+        public const int DetermineActorPrepareResolveActorExecuteCode = 11003;
 
         /// <summary>
         /// The event identifier for DetermineActor Decide_ExecuteCode events
@@ -502,6 +517,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for DetermineActor AccountActor_Condition events
         /// </summary>
         public const int DetermineActorAccountActorCondition = 11006;
+
+        /// <summary>
+        /// The event identifier for DetermineActor ActorIsNotSet_Condition events
+        /// </summary>
+        public const int DetermineActorActorIsNotSetCondition = 11007;
+
+        /// <summary>
+        /// The event identifier for DetermineActor PrepareAccountActor_ExecuteCode events
+        /// </summary>
+        public const int DetermineActorPrepareAccountActorExecuteCode = 11008;
 
         /// <summary>
         /// The event identifier for FindRequestConflict Constructor events
@@ -777,6 +802,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionEvaluator ParseIfExpression events
         /// </summary>
         public const int ExpressionEvaluatorParseIfExpression = 11515;
+
+        /// <summary>
+        /// The event identifier for ExpressionEvaluator IsValueExpression events
+        /// </summary>
+        public const int ExpressionEvaluatorIsValueExpression = 11516;
 
         /// <summary>
         /// The event identifier for ExpressionFunction Constructor events
