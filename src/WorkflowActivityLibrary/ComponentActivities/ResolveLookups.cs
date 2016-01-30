@@ -789,7 +789,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupsForEachResourceChildInitialized, "ReadResource: '{0}'.", e.InstanceData);
+                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveLookupsForEachResourceChildInitialized, "ReadResource: '{0}'.  Read Attributes: '{1}'.", e.InstanceData, this.ReadAttributes == null ? null : string.Join(",", this.ReadAttributes));
             }
         }
 
@@ -1026,7 +1026,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                                 string propertyKey = string.Empty;
 
                                 UniqueIdentifier target = comparedRequest ? request.Target : this.Request.CurrentRequest.Target;
-                                if (parameter.Target == target)
+
+                                // for some reason target comes as null for compared requests
+                                if (parameter.Target == target || target == null)
                                 {
                                     // Build the property key based on the mode for the update
                                     // This property key will be used to identify matching keys in the read and expression dictionaries
@@ -1043,6 +1045,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                                             break;
                                     }
                                 }
+
+                                Logger.Instance.WriteVerbose(EventIdentifier.ResolveLookupsPublishRequestDelta, "Request Operation: '{0}'. ComparedRequest: '{1}'. Request Target: '{2}'. RequestParameter Target: '{3}'. Parameter: '{4}'.", request.Operation, comparedRequest, target, parameter.Target, parameter.PropertyName);
 
                                 // If this is a compared request, append the "ComparedRequest/" prefix to the delta property key
                                 // Publish the delta property to the resource and expression dictionaries
@@ -1065,12 +1069,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                                 string propertyKey = string.Empty;
 
                                 UniqueIdentifier target = comparedRequest ? request.Target : this.Request.CurrentRequest.Target;
-                                if (parameter.Target == target)
+
+                                // This be always null in AuthZ for a create request.
+                                if (parameter.Target == target || target == null)
                                 {
                                     // Build the property key which will be used to identify matching keys 
                                     // in the read and expression dictionaries
                                     propertyKey = string.Format(CultureInfo.InvariantCulture, "Delta/{0}", parameter.PropertyName);
                                 }
+
+                                Logger.Instance.WriteVerbose(EventIdentifier.ResolveLookupsPublishRequestDelta, "Request Operation: '{0}'. ComparedRequest: '{1}'. Request Target: '{2}'. RequestParameter Target: '{3}'. Parameter: '{4}'.", request.Operation, comparedRequest, target, parameter.Target, parameter.PropertyName);
 
                                 // If this is a compared request, append the "ComparedRequest/" prefix to the delta property key
                                 // Publish the delta property to the resource and expression dictionaries

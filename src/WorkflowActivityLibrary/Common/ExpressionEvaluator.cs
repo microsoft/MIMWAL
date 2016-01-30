@@ -168,7 +168,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
-        /// Test in the specified input string is a XPath search filter
+        /// Test if the specified input string is a XPath search filter
         /// </summary>
         /// <param name="input">input string to test as XPath</param>
         /// <returns>True if the specified input string is XPath. Otherwise false.</returns>
@@ -184,7 +184,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
-        /// Test in the specified input string is an expression
+        /// Test if the specified input string is an expression
         /// </summary>
         /// <param name="input">input string to test as an expression</param>
         /// <returns>True if the specified input string is an expression. Otherwise false.</returns>
@@ -200,7 +200,27 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
-        /// Test in the specified input string is an email address
+        /// Test if the specified input string is a value expression
+        /// </summary>
+        /// <param name="input">input string to test as a value expression</param>
+        /// <returns>True if the specified input string is a value expression. Otherwise false.</returns>
+        public static bool IsValueExpression(string input)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionEvaluatorIsValueExpression, "Input: '{0}'.", input);
+
+            string valueLookup = string.Format(CultureInfo.InvariantCulture, "[//{0}]", LookupParameter.Value).ToUpperInvariant();
+            string valueLookup2 = string.Format(CultureInfo.InvariantCulture, "[//{0}/", LookupParameter.Value).ToUpperInvariant();
+
+            bool result = !string.IsNullOrEmpty(input) && DetermineParameterType(input, true) != ParameterType.Unknown
+                && (input.ToUpperInvariant().Contains(valueLookup) || input.ToUpperInvariant().Contains(valueLookup2));
+
+            Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionEvaluatorIsValueExpression, "Input: '{0}'. Returning: {1}.", input, result);
+
+            return result;
+        }
+
+        /// <summary>
+        /// Test if the specified input string is an email address
         /// </summary>
         /// <param name="input">input string to test as an email address</param>
         /// <returns>True if the specified input string is an email address. Otherwise false.</returns>
@@ -578,6 +598,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     }
                 }
 
+                /*
+                // We support Delta as well as normal attributes
+                [//ComparedRequest/Creator/DisplayName] 
+                [//ComparedRequest/Delta/DisplayName] 
+                [//ComparedRequest/Delta/Manager/DisplayName] 
+
                 syntax = string.Format(CultureInfo.InvariantCulture, "[//{0}", LookupParameter.ComparedRequest);
                 if (parameter.StartsWith(syntax, StringComparison.OrdinalIgnoreCase))
                 {
@@ -588,6 +614,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorValidateLookupParameterTypeUnsupportedTypeError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionParameterTypeUnsupportedTypeError, parameter));
                     }
                 }
+                */
             }
             finally
             {

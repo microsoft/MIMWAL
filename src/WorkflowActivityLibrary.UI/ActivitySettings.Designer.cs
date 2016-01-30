@@ -1375,7 +1375,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Supply the Boolean condition which identifies an evaluated request as a conflict. Example: And(Eq([//Delta/AccountName], [//Target/AccountName]), Eq([//Delta/Domain], [//Target/Domain])).
+        ///   Looks up a localized string similar to Supply the Boolean condition which identifies an evaluated request as a conflict. Example: And(Eq([//Delta/AccountName], [//ComparedRequest/Delta/AccountName]), Eq([//Delta/Domain], [//ComparedRequest/Delta/Domain])).
         /// </summary>
         internal static string RequestConflictMatchConditionHelpText {
             get {

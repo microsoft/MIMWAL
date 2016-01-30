@@ -49,6 +49,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         public static DependencyProperty QueryResultsProperty =
             DependencyProperty.Register("QueryResults", typeof(Dictionary<string, List<Guid>>), typeof(DetermineActor));
 
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(object), typeof(DetermineActor));
+
         #endregion
 
         #region Declarations
@@ -57,7 +61,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         /// The expression evaluator.
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
-        public ExpressionEvaluator ExpressionEvaluator;
+        public ExpressionEvaluator ActivityExpressionEvaluator;
 
         #endregion
 
@@ -72,9 +76,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             {
                 this.InitializeComponent();
 
-                if (this.ExpressionEvaluator == null)
+                if (this.ActivityExpressionEvaluator == null)
                 {
-                    this.ExpressionEvaluator = new ExpressionEvaluator();
+                    this.ActivityExpressionEvaluator = new ExpressionEvaluator();
                 }
             }
             finally
@@ -165,6 +169,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
         }
 
+        /// <summary>
+        /// Gets or sets the value which should be used for [//Value/...] lookup resolution.
+        /// </summary>
+        [Description("The value which should be used for [//Value/...] lookup resolution.")]
+        [Category("Input")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public object Value
+        {
+            get
+            {
+                return this.GetValue(ValueProperty);
+            }
+
+            set
+            {
+                this.SetValue(ValueProperty, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -204,45 +228,86 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void Prepare_ExecuteCode(object sender, EventArgs e)
+        private void PrepareResolveActor_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.DetermineActorPrepareExecuteCode, "ActorType: '{0}'.", this.ActorType);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.DetermineActorPrepareResolveActorExecuteCode, "ActorType: '{0}'.", this.ActorType);
 
             try
             {
                 switch (this.ActorType)
                 {
                     case ActorType.Resolve:
-                        this.ExpressionEvaluator.ParseExpression(this.ActorString);
+                        this.ActivityExpressionEvaluator.ParseExpression(this.ActorString);
 
-                        Logger.Instance.WriteVerbose(EventIdentifier.DetermineActorPrepareExecuteCode, "The actor expression is: '{0}'.", this.ActorString);
+                        Logger.Instance.WriteVerbose(EventIdentifier.DetermineActorPrepareResolveActorExecuteCode, "The actor expression is: '{0}'.", this.ActorString);
 
                         break;
                     case ActorType.Account:
-                        string filter;
-                        if (!this.ActorString.Contains(@"\"))
+                        if (ExpressionEvaluator.IsValueExpression(this.ActorString))
                         {
-                            filter = string.Format(CultureInfo.InvariantCulture, "AccountName = '{0}'", this.ActorString);
+                            this.ActivityExpressionEvaluator.ParseExpression(this.ActorString);
                         }
-                        else
-                        {
-                            char[] delim = @"\".ToCharArray();
-                            filter = string.Format(CultureInfo.InvariantCulture,
-                                "Domain = '{0}' and AccountName = '{1}'",
-                                this.ActorString.Split(delim)[0],
-                                this.ActorString.Split(delim)[1]);
-                        }
-
-                        this.Query.XPathFilter = string.Format(CultureInfo.InvariantCulture, "/Person[{0}]", filter);
-
-                        Logger.Instance.WriteVerbose(EventIdentifier.DetermineActorPrepareExecuteCode, "The actor XPath filter is: '{0}'.", this.Query.XPathFilter);
 
                         break;
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorPrepareExecuteCode, "ActorType: '{0}'.", this.ActorType);
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorPrepareResolveActorExecuteCode, "ActorType: '{0}'.", this.ActorType);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ExecuteCode event of the Prepare CodeActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void PrepareAccountActor_ExecuteCode(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.DetermineActorPrepareAccountActorExecuteCode, "ActorType: '{0}'. ActorString: '{1}'.", this.ActorType, this.ActorString);
+
+            string actor = this.ActorString;
+
+            try
+            {
+                switch (this.ActorType)
+                {
+                    case ActorType.Account:
+                        {
+                            if (ExpressionEvaluator.IsValueExpression(this.ActorString))
+                            {
+                                actor = this.ActivityExpressionEvaluator.ResolveExpression(this.ActorString) as string;
+                                if (string.IsNullOrEmpty(actor))
+                                {
+                                    throw Logger.Instance.ReportError(new WorkflowActivityLibraryException(Messages.DetermineActor_NullResolvedActorError));
+                                }
+                            }
+
+                            string filter;
+                            if (!actor.Contains(@"\"))
+                            {
+                                filter = string.Format(CultureInfo.InvariantCulture, "AccountName = '{0}'", actor);
+                            }
+                            else
+                            {
+                                char[] delim = @"\".ToCharArray();
+                                string[] actorParts = actor.Split(delim, 2, StringSplitOptions.None);
+                                filter = string.Format(
+                                    CultureInfo.InvariantCulture,
+                                    "Domain = '{0}' and AccountName = '{1}'",
+                                    actorParts[0],
+                                    actorParts[1]);
+                            }
+
+                            this.Query.XPathFilter = string.Format(CultureInfo.InvariantCulture, "/Person[{0}]", filter);
+                        }
+
+                        break;
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorPrepareAccountActorExecuteCode, "ActorType: '{0}'. Actor: '{1}'. Actor XPath Filter: '{2}'.", this.ActorType, actor, this.Query.XPathFilter);
             }
         }
 
@@ -268,7 +333,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                         this.Actor = parentWorkflow.ActorId;
                         break;
                     case ActorType.Resolve:
-                        object resolved = this.ExpressionEvaluator.ResolveExpression(this.ActorString);
+                        object resolved = this.ActivityExpressionEvaluator.ResolveExpression(this.ActorString);
                         if (resolved is Guid)
                         {
                             this.Actor = (Guid)resolved;
@@ -280,6 +345,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                         else if (resolved.GetType().IsGenericType && resolved.GetType().GetGenericTypeDefinition() == typeof(List<>))
                         {
                             throw Logger.Instance.ReportError(new WorkflowActivityLibraryException(Messages.DetermineActor_MultipleResolvedActorsError));
+                        }
+                        else if (resolved is string && !string.IsNullOrEmpty(resolved as string))
+                        {
+                            try
+                            {
+                                this.Actor = new Guid(resolved as string);
+                            }
+                            catch (Exception ex)
+                            {
+                                throw Logger.Instance.ReportError(new WorkflowActivityLibraryException(Messages.DetermineActor_InvalidActorGuidFormatError, ex));
+                            }
                         }
                         else
                         {
@@ -301,12 +377,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
                         break;
                 }
-
-                Logger.Instance.WriteVerbose(EventIdentifier.DetermineActorDecideExecuteCode, "The unique identifier of the actor is: '{0}'.", this.Actor);
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorDecideExecuteCode, "ActorType: '{0}'.", this.ActorType);
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorDecideExecuteCode, "ActorType: '{0}'. Actor: '{1}'. ", this.ActorType, this.Actor);
             }
         }
 
@@ -323,11 +397,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
             try
             {
-                e.Result = this.ActorType == ActorType.Resolve;
+                e.Result = this.ActorType == ActorType.Resolve || ExpressionEvaluator.IsValueExpression(this.ActorString);
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorResolveActorCondition, "Condition evaluated '{0}'.", e.Result);
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorResolveActorCondition, "Condition evaluated '{0}'. Actor Type: '{1}'.", e.Result, this.ActorType);
             }
         }
 
@@ -346,7 +420,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorAccountActorCondition, "Condition evaluated '{0}'.", e.Result);
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorAccountActorCondition, "Condition evaluated '{0}'. Actor Type: '{1}'.", e.Result, this.ActorType);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the ActorIsNotSet Condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ActorIsNotSet_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.DetermineActorActorIsNotSetCondition);
+
+            try
+            {
+                e.Result = this.Actor == Guid.Empty || ExpressionEvaluator.IsValueExpression(this.ActorString);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.DetermineActorActorIsNotSetCondition, "Condition evaluated '{0}'. Actor: '{1}'. Actor String: '{2}'.", e.Result, this.Actor, this.ActorString);
             }
         }
 

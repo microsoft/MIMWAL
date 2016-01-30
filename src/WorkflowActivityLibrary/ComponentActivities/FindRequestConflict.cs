@@ -62,7 +62,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         /// The expression evaluator.
         /// </summary>
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
-        public ExpressionEvaluator ExpressionEvaluator;
+        public ExpressionEvaluator ActivityExpressionEvaluator;
 
         /// <summary>
         /// The service actor.
@@ -91,9 +91,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                     this.ComparedRequestLookups = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
                 }
 
-                if (this.ExpressionEvaluator == null)
+                if (this.ActivityExpressionEvaluator == null)
                 {
-                    this.ExpressionEvaluator = new ExpressionEvaluator();
+                    this.ActivityExpressionEvaluator = new ExpressionEvaluator();
                 }
             }
             finally
@@ -253,10 +253,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
                 // Using the expression evaluator, parse the match condition
                 // so that all associated expressions are loaded to the cache for resolution
-                this.ExpressionEvaluator.ParseExpression(this.MatchCondition);
+                this.ActivityExpressionEvaluator.ParseExpression(this.MatchCondition);
 
                 // Find all [//ComparedRequest/...] lookups included in the match condition
-                foreach (string lookup in from lookup in this.ExpressionEvaluator.LookupCache.Keys let lookupEvaluator = new LookupEvaluator(lookup) where lookupEvaluator.Parameter == LookupParameter.ComparedRequest select lookup)
+                foreach (string lookup in from lookup in this.ActivityExpressionEvaluator.LookupCache.Keys let lookupEvaluator = new LookupEvaluator(lookup) where lookupEvaluator.Parameter == LookupParameter.ComparedRequest select lookup)
                 {
                     this.ComparedRequestLookups.Add(lookup, null);
 
@@ -286,7 +286,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 List<string> comparedRequestLookups = this.ComparedRequestLookups.Keys.ToList();
                 foreach (string lookup in comparedRequestLookups)
                 {
-                    this.ExpressionEvaluator.LookupCache[lookup] = null;
+                    this.ActivityExpressionEvaluator.LookupCache[lookup] = null;
                     this.ComparedRequestLookups[lookup] = null;
                 }
 
@@ -338,13 +338,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                 // Add the resolved values to the expression evaluator lookup cache to facilitate match condition evaluation
                 foreach (string lookup in this.ComparedRequestLookups.Keys)
                 {
-                    this.ExpressionEvaluator.LookupCache[lookup] = this.ComparedRequestLookups[lookup];
+                    this.ActivityExpressionEvaluator.LookupCache[lookup] = this.ComparedRequestLookups[lookup];
                 }
 
                 // Now that all [//ComparedRequest/...] lookups have been resolved against
                 // the request currently being evaluated, determine if the supplied match condition
                 // is satisfied
-                object resolved = this.ExpressionEvaluator.ResolveExpression(this.MatchCondition);
+                object resolved = this.ActivityExpressionEvaluator.ResolveExpression(this.MatchCondition);
                 if (!(bool)resolved)
                 {
                     return;

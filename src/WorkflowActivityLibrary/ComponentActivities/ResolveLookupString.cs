@@ -23,6 +23,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
     using System.Workflow.Activities;
     using System.Workflow.ComponentModel;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common;
+    using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Exceptions;
 
     #endregion
 
@@ -40,6 +41,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
         public static DependencyProperty ResolvedProperty =
             DependencyProperty.Register("Resolved", typeof(string), typeof(ResolveLookupString));
+
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty ResolvedListProperty =
+            DependencyProperty.Register("ResolvedList", typeof(List<string>), typeof(ResolveLookupString));
 
         [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
         public static DependencyProperty QueryResultsProperty =
@@ -132,6 +137,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             set
             {
                 this.SetValue(ResolvedProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the list of resolved string.
+        /// </summary>
+        [Description("The list of resolved string. This will be used for supporting a collection of search filters in defining Queries lookup.")]
+        [Category("Output")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public List<string> ResolvedList
+        {
+            get
+            {
+                return (List<string>)this.GetValue(ResolvedListProperty);
+            }
+
+            set
+            {
+                this.SetValue(ResolvedListProperty, value);
             }
         }
 
@@ -335,7 +360,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                     else
                     {
                         // StringForResolution is of format /"EmailTemplate[DisplayName='" + [//WorkflowData/EmailTemplate] + "']"
-                        this.Resolved = string.Format(CultureInfo.InvariantCulture, "/{0}", this.ActivityExpressionEvaluator.ResolveExpression(expression) as string);
+                        object resolvedExpression = this.ActivityExpressionEvaluator.ResolveExpression(expression);
+
+                        if (resolvedExpression is string)
+                        {
+                            this.Resolved = string.Format(CultureInfo.InvariantCulture, "/{0}", this.ActivityExpressionEvaluator.ResolveExpression(expression) as string);
+                        }
+                        else if (resolvedExpression is List<string>)
+                        {
+                            this.ResolvedList = new List<string>();
+                            foreach (string filter in (List<string>)resolvedExpression)
+                            {
+                                this.ResolvedList.Add("/" + filter);
+                            }
+                        }
+                        else
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.ResolveLookupStringResolveStringExecuteCodeError, new WorkflowActivityLibraryException(Messages.ResolveLookupString_InvalidResolvedFilterError, this.StringForResolution, resolvedExpression));
+                        }
                     }
                 }
                 else if (ExpressionEvaluator.IsExpression(this.StringForResolution))

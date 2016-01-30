@@ -43,6 +43,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.ComponentModel.ActivityBind activitybind11 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind12 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind13 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind16 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.ComponentModel.ActivityBind activitybind17 = new System.Workflow.ComponentModel.ActivityBind();
             this.Delete = new Microsoft.ResourceManagement.Workflow.Activities.DeleteResourceActivity();
             this.AsyncDelete = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.AsynchronousDeleteResource();
             this.Standard = new System.Workflow.Activities.IfElseBranchActivity();
@@ -52,20 +57,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ResolveTarget = new System.Workflow.Activities.IfElseBranchActivity();
             this.SearchForTarget = new System.Workflow.Activities.IfElseBranchActivity();
             this.ForEachTarget = new System.Workflow.Activities.ReplicatorActivity();
+            this.GetActorForChildRequest = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
             this.PrepareDelete = new System.Workflow.Activities.CodeActivity();
             this.SwitchTargetType = new System.Workflow.Activities.IfElseActivity();
             this.PrepareTarget = new System.Workflow.Activities.CodeActivity();
             this.ResolveForValue = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
+            this.GetActor = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
             this.ProcessDelete = new System.Workflow.Activities.SequenceActivity();
+            this.ActorIsNotValueExpression = new System.Workflow.Activities.IfElseBranchActivity();
             this.ForEachIteration = new System.Workflow.Activities.ReplicatorActivity();
             this.PrepareIteration = new System.Workflow.Activities.CodeActivity();
-            this.GetActor = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor();
+            this.IfActorIsNotValueExpression = new System.Workflow.Activities.IfElseActivity();
             this.Resolve = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
             this.Prepare = new System.Workflow.Activities.CodeActivity();
             // 
             // Delete
             // 
-            activitybind1.Name = "GetActor";
+            activitybind1.Name = "GetActorForChildRequest";
             activitybind1.Path = "Actor";
             this.Delete.ApplyAuthorizationPolicy = false;
             this.Delete.AuthorizationWaitTimeInSeconds = -1;
@@ -77,7 +85,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             // AsyncDelete
             // 
-            activitybind3.Name = "GetActor";
+            activitybind3.Name = "GetActorForChildRequest";
             activitybind3.Path = "Actor";
             this.AsyncDelete.ApplyAuthorizationPolicy = true;
             this.AsyncDelete.Name = "AsyncDelete";
@@ -106,6 +114,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind5.Path = "Targets";
             this.Find.FoundResources = list_11;
             this.Find.Name = "Find";
+            this.Find.QueryResults = null;
             activitybind6.Name = "DeleteResources";
             activitybind6.Path = "Value";
             activitybind7.Name = "DeleteResources";
@@ -143,6 +152,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ForEachTarget.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachTarget_ChildInitialized);
             this.ForEachTarget.SetBinding(System.Workflow.Activities.ReplicatorActivity.InitialChildDataProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind8)));
             // 
+            // GetActorForChildRequest
+            // 
+            activitybind9.Name = "GetActor";
+            activitybind9.Path = "Actor";
+            activitybind10.Name = "DeleteResources";
+            activitybind10.Path = "ActorString";
+            activitybind11.Name = "DeleteResources";
+            activitybind11.Path = "ActorType";
+            this.GetActorForChildRequest.Name = "GetActorForChildRequest";
+            this.GetActorForChildRequest.QueryResults = null;
+            activitybind12.Name = "DeleteResources";
+            activitybind12.Path = "Value";
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
+            this.GetActorForChildRequest.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
+            // 
             // PrepareDelete
             // 
             this.PrepareDelete.Name = "PrepareDelete";
@@ -162,14 +188,27 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // ResolveForValue
             // 
             this.ResolveForValue.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind9.Name = "DeleteResources";
-            activitybind9.Path = "ValueExpressions";
+            activitybind13.Name = "DeleteResources";
+            activitybind13.Path = "ValueExpressions";
             this.ResolveForValue.Name = "ResolveForValue";
             this.ResolveForValue.QueryResults = null;
-            activitybind10.Name = "DeleteResources";
-            activitybind10.Path = "Value";
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind9)));
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind10)));
+            activitybind14.Name = "DeleteResources";
+            activitybind14.Path = "Value";
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
+            // 
+            // GetActor
+            // 
+            this.GetActor.Actor = new System.Guid("00000000-0000-0000-0000-000000000000");
+            activitybind15.Name = "DeleteResources";
+            activitybind15.Path = "ActorString";
+            activitybind16.Name = "DeleteResources";
+            activitybind16.Path = "ActorType";
+            this.GetActor.Name = "GetActor";
+            this.GetActor.QueryResults = null;
+            this.GetActor.Value = null;
+            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
+            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind16)));
             // 
             // ProcessDelete
             // 
@@ -177,8 +216,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ProcessDelete.Activities.Add(this.PrepareTarget);
             this.ProcessDelete.Activities.Add(this.SwitchTargetType);
             this.ProcessDelete.Activities.Add(this.PrepareDelete);
+            this.ProcessDelete.Activities.Add(this.GetActorForChildRequest);
             this.ProcessDelete.Activities.Add(this.ForEachTarget);
             this.ProcessDelete.Name = "ProcessDelete";
+            // 
+            // ActorIsNotValueExpression
+            // 
+            this.ActorIsNotValueExpression.Activities.Add(this.GetActor);
+            codecondition4.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ActorIsNotValueExpression_Condition);
+            this.ActorIsNotValueExpression.Condition = codecondition4;
+            this.ActorIsNotValueExpression.Name = "ActorIsNotValueExpression";
             // 
             // ForEachIteration
             // 
@@ -192,27 +239,20 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.PrepareIteration.Name = "PrepareIteration";
             this.PrepareIteration.ExecuteCode += new System.EventHandler(this.PrepareIteration_ExecuteCode);
             // 
-            // GetActor
+            // IfActorIsNotValueExpression
             // 
-            this.GetActor.Actor = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind11.Name = "DeleteResources";
-            activitybind11.Path = "ActorString";
-            activitybind12.Name = "DeleteResources";
-            activitybind12.Path = "ActorType";
-            this.GetActor.Name = "GetActor";
-            this.GetActor.QueryResults = null;
-            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorStringProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind11)));
-            this.GetActor.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.DetermineActor.ActorTypeProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind12)));
+            this.IfActorIsNotValueExpression.Activities.Add(this.ActorIsNotValueExpression);
+            this.IfActorIsNotValueExpression.Name = "IfActorIsNotValueExpression";
             // 
             // Resolve
             // 
             this.Resolve.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind13.Name = "DeleteResources";
-            activitybind13.Path = "ActivityExpressionEvaluator.LookupCache";
+            activitybind17.Name = "DeleteResources";
+            activitybind17.Path = "ActivityExpressionEvaluator.LookupCache";
             this.Resolve.Name = "Resolve";
             this.Resolve.QueryResults = null;
             this.Resolve.Value = null;
-            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
             // 
             // Prepare
             // 
@@ -223,7 +263,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // 
             this.Activities.Add(this.Prepare);
             this.Activities.Add(this.Resolve);
-            this.Activities.Add(this.GetActor);
+            this.Activities.Add(this.IfActorIsNotValueExpression);
             this.Activities.Add(this.PrepareIteration);
             this.Activities.Add(this.ForEachIteration);
             this.Name = "DeleteResources";
@@ -231,134 +271,118 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         #endregion
 
+        private ComponentActivities.DetermineActor GetActorForChildRequest;
+        private IfElseBranchActivity ActorIsNotValueExpression;
+        private IfElseActivity IfActorIsNotValueExpression;
         private ComponentActivities.ResolveLookups ResolveForValue;
-
         private CodeActivity PrepareTarget;
-
         private SequenceActivity ProcessDelete;
-
         private ReplicatorActivity ForEachIteration;
-
         private CodeActivity PrepareIteration;
-
         private ComponentActivities.ResolveLookups Resolve;
-
         private ComponentActivities.AsynchronousDeleteResource AsyncDelete;
-
         private ComponentActivities.DetermineActor GetActor;
-
         private IfElseBranchActivity Standard;
-
         private IfElseBranchActivity Authorization;
-
         private IfElseActivity SwitchSubmissionType;
-
         private CodeActivity Prepare;
-
         private ReplicatorActivity ForEachTarget;
-
         private IfElseBranchActivity ResolveTarget;
-
         private CodeActivity PrepareDelete;
-
         private IfElseBranchActivity SearchForTarget;
-
         private IfElseActivity SwitchTargetType;
-
         private ComponentActivities.FindResources Find;
-
         private Microsoft.ResourceManagement.Workflow.Activities.DeleteResourceActivity Delete;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }

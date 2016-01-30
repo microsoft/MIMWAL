@@ -211,12 +211,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         }
 
         /// <summary>
-        /// Gets or sets the actor for child requests. An empty GUID indicates that child requests will be submitted under the context of the original request actor.
+        /// Gets or sets the actor for child requests. An empty GUID indicates that child requests will be submitted under the context of the FIM Service account.
         /// </summary>
         /// <value>
         /// The actor.
         /// </value>
-        [Description("The Guid of the Actor for child requests. An empty Guid indicates that child requests will be submitted under the context of the original request actor.")]
+        [Description("The Guid of the Actor for child requests. An empty Guid indicates that child requests will be submitted under the context of the FIM Service account.")]
         [Category("Input")]
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]

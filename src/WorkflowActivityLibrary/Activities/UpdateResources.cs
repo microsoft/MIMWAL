@@ -581,30 +581,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
-        /// Handles the UntilCondition event of the ForEachIteration ReplicatorActivity.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void ForEachIteration_UntilCondition(object sender, ConditionalEventArgs e)
-        {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count);
-
-            int maxIterations = 0;
-            try
-            {
-                maxIterations = this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count;
-                if (this.iterations == maxIterations || this.breakIteration)
-                {
-                    e.Result = true;
-                }
-            }
-            finally
-            {
-                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, maxIterations, e.Result);
-            }
-        }
-
-        /// <summary>
         /// Handles the ExecuteCode event of the PrepareUpdate CodeActivity.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -709,6 +685,53 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesPrepareUpdateExecuteCode);
             }
         }
+
+        #region Conditions
+
+        /// <summary>
+        /// Handles the UntilCondition event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_UntilCondition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count);
+
+            int maxIterations = 0;
+            try
+            {
+                maxIterations = this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count;
+                if (this.iterations == maxIterations || this.breakIteration)
+                {
+                    e.Result = true;
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, maxIterations, e.Result);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the ActorIsNotValueExpression Condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ActorIsNotValueExpression_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesActorIsNotValueExpressionCondition);
+
+            try
+            {
+                e.Result = !ExpressionEvaluator.IsValueExpression(this.ActorString);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesActorIsNotValueExpressionCondition, "Condition evaluated '{0}'. Actor String: '{1}'.", e.Result, this.ActorString);
+            }
+        }
+
+        #endregion Conditions
 
         #endregion
     }

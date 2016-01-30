@@ -657,6 +657,25 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             }
         }
 
+        /// <summary>
+        /// Handles the Condition event of the ActorIsNotValueExpression Condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ActorIsNotValueExpression_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.DeleteResourcesActorIsNotValueExpressionCondition);
+
+            try
+            {
+                e.Result = !ExpressionEvaluator.IsValueExpression(this.ActorString);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.DeleteResourcesActorIsNotValueExpressionCondition, "Condition evaluated '{0}'. Actor String: '{1}'.", e.Result, this.ActorString);
+            }
+        }
+
         #endregion
 
         #endregion

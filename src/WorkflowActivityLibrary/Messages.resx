@@ -360,4 +360,10 @@
   <data name="ExpressionFunction_DeprecatedFunctionWarning" xml:space="preserve">
     <value>The function '{0}' is deprecated. Please use '{1}' instead.</value>
   </data>
+  <data name="ResolveLookupString_InvalidResolvedFilterError" xml:space="preserve">
+    <value>StringForResolution: '{0}' did not resolved to a string or List&lt;string&gt;. It resolved to a '{1}' instead.</value>
+  </data>
+  <data name="DetermineActor_InvalidActorGuidFormatError" xml:space="preserve">
+    <value>Unable to determine request actor. The supplied string is not a valid GUID format.</value>
+  </data>
 </root>

@@ -124,6 +124,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int CreateResourceForEachIterationUntilCondition = 10114;
 
         /// <summary>
+        /// The event identifier for CreateResource ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int CreateResourceActorIsNotValueExpressionCondition = 10115;
+
+        /// <summary>
         /// The event identifier for DeleteResources Constructor events
         /// </summary>
         public const int DeleteResourcesConstructor = 10201;
@@ -177,6 +182,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for DeleteResources Authorization_Condition events
         /// </summary>
         public const int DeleteResourcesAuthorizationCondition = 10211;
+
+        /// <summary>
+        /// The event identifier for DeleteResources ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int DeleteResourcesActorIsNotValueExpressionCondition = 10212;
 
         /// <summary>
         /// The event identifier for GenerateUniqueValue Constructor events
@@ -334,6 +344,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int UpdateResourcesForEachIterationUntilCondition = 10508;
 
         /// <summary>
+        /// The event identifier for UpdateResources ActorIsNotValueExpression_Condition events
+        /// </summary>
+        public const int UpdateResourcesActorIsNotValueExpressionCondition = 10509;
+
+        /// <summary>
         /// The event identifier for VerifyRequest Constructor events
         /// </summary>
         public const int VerifyRequestConstructor = 10601;
@@ -484,9 +499,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int DetermineActorExecute = 11002;
 
         /// <summary>
-        /// The event identifier for DetermineActor Prepare_ExecuteCode events
+        /// The event identifier for DetermineActor PrepareResolveActor_ExecuteCode events
         /// </summary>
-        public const int DetermineActorPrepareExecuteCode = 11003;
+        public const int DetermineActorPrepareResolveActorExecuteCode = 11003;
 
         /// <summary>
         /// The event identifier for DetermineActor Decide_ExecuteCode events
@@ -502,6 +517,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for DetermineActor AccountActor_Condition events
         /// </summary>
         public const int DetermineActorAccountActorCondition = 11006;
+
+        /// <summary>
+        /// The event identifier for DetermineActor ActorIsNotSet_Condition events
+        /// </summary>
+        public const int DetermineActorActorIsNotSetCondition = 11007;
+
+        /// <summary>
+        /// The event identifier for DetermineActor PrepareAccountActor_ExecuteCode events
+        /// </summary>
+        public const int DetermineActorPrepareAccountActorExecuteCode = 11008;
 
         /// <summary>
         /// The event identifier for FindRequestConflict Constructor events
@@ -552,6 +577,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for FindResources ResolvedFilterIsNotNull_Condition events
         /// </summary>
         public const int FindResourcesResolvedFilterIsNotNullCondition = 11205;
+
+        /// <summary>
+        /// The event identifier for FindResources PrepareResolvedFilterList_ExecuteCode events
+        /// </summary>
+        public const int FindResourcesPrepareResolvedFilterListExecuteCode = 11206;
+
+        /// <summary>
+        /// The event identifier for FindResources ForEachResolvedFilter_ChildInitialized events
+        /// </summary>
+        public const int FindResourcesForEachResolvedFilterChildInitialized = 11207;
 
         /// <summary>
         /// The event identifier for ResolveLookups Constructor events
@@ -767,6 +802,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionEvaluator ParseIfExpression events
         /// </summary>
         public const int ExpressionEvaluatorParseIfExpression = 11515;
+
+        /// <summary>
+        /// The event identifier for ExpressionEvaluator IsValueExpression events
+        /// </summary>
+        public const int ExpressionEvaluatorIsValueExpression = 11516;
 
         /// <summary>
         /// The event identifier for ExpressionFunction Constructor events
@@ -1142,6 +1182,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction ParametersTable events
         /// </summary>
         public const int ExpressionFunctionParametersTable = 11675;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction FormatMultivaluedList events
+        /// </summary>
+        public const int ExpressionFunctionFormatMultivaluedList = 11676;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
@@ -1817,6 +1862,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ResolveLookupString Execute events
         /// </summary>
         public const int ResolveLookupStringExecuteError = 41402;
+
+        /// <summary>
+        /// The event identifier for ResolveLookupString ResolveString_ExecuteCode events
+        /// </summary>
+        public const int ResolveLookupStringResolveStringExecuteCodeError = 41405;
 
         /// <summary>
         /// The event identifier for ExpressionEvaluator DetermineParameterType events
@@ -2782,6 +2832,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction ParametersTable events
         /// </summary>
         public const int ExpressionFunctionParametersTableInvalidFirstFunctionParameterTypeError = 41675;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction FormatMultivaluedList events
+        /// </summary>
+        public const int ExpressionFunctionExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError = 41676;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction FormatMultivaluedList events
+        /// </summary>
+        public const int ExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError = 41676;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction FormatMultivaluedList events
+        /// </summary>
+        public const int ExpressionFunctionFormatMultivaluedListNullFunctionParameterError = 41676;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction FormatMultivaluedList events
+        /// </summary>
+        public const int ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError = 41676;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
