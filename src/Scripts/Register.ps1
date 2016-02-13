@@ -31,10 +31,10 @@ $VerbosePreference = "Continue"
 $ProgressPreference = "SilentlyContinue"
 
 $walAssemblyName = "MicrosoftServices.IdentityManagement.WorkflowActivityLibrary"
-$walAssemblyPath = Join-Path $PWD -ChildPath "$walAssemblyName.dll"
-$walUIAssemblyPath = Join-Path $PWD -ChildPath "$walAssemblyName.UI.dll"
-$gacUtilExePath = Join-Path $PWD -ChildPath "gacutil.exe"
-$snExePath = Join-Path $PWD -ChildPath "sn.exe"
+$walAssemblyPath = Join-Path $PWD.ProviderPath -ChildPath "$walAssemblyName.dll"
+$walUIAssemblyPath = Join-Path $PWD.ProviderPath -ChildPath "$walAssemblyName.UI.dll"
+$gacUtilExePath = Join-Path $PWD.ProviderPath -ChildPath "gacutil.exe"
+$snExePath = Join-Path $PWD.ProviderPath -ChildPath "sn.exe"
 
 function TestIsAssemblyLoaded
 {
