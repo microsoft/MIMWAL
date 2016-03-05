@@ -4,8 +4,36 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ### Version [Unreleased]
 
-* Support for "/" as a Null Query.
+* Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
+
+------------
+
+### Version [2.16.0130.0] 
+
+#### Added
+
 * Support for executing a collection of Queries.
+* New function `FormatMultivaluedList`.
+* Support for `[//Value]` lookup in Request Actor expressions in CreateResource, DeleteResources and UpdateResources activities.
+
+#### Fixed
+
+* Fixed broken `[//ComparedRequest]` lookup.
+* Fix for deleting a definition listing causing deletion / mess up with the remaining listings.
+
+------------
+
+### Version 2.16.0115.0
+
+#### Added
+
+* Support for "/" as a Null Query.
+
+#### Fixed
+
+* Added null check in the ForEachIteration_UntilCondition function of UpdateResources and CreateResource activities to prevent crash when AEC is defined, but Iteration not.
+
+------------
 
 ### Version 2.16.0110.0
 
