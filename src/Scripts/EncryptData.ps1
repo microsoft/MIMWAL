@@ -6,13 +6,22 @@
     at http://msdn.microsoft.com/en-us/library/ms998283.aspx (How To: Encrypt Configuration Sections in ASP.NET 2.0 Using RSA), but for the FIM Service account.
 #>
 
-Add-Type -AssemblyName "System.Security"
-Add-Type -AssemblyName "MicrosoftServices.IdentityManagement.WorkflowActivityLibrary, Version=2.14.611.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+$Error.Clear()
 
+Add-Type -AssemblyName "System.Security"
+# use the full name for WAL assembly to eliminate need to assembly redirects for dependent assemblies.
+Add-Type -AssemblyName "MicrosoftServices.IdentityManagement.WorkflowActivityLibrary, Version=2.16.305.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+
+if ($Error)
+{
+    Write-Host "Aborting script execution."
+    return
+}
 
 function TestCertificateBasedEncryptionDecryption
 {
     $thumbprint = "9C697919FB2FB2D6324ADE42D5F8CB49E8778C08" # cert to be used for encryption.
+	$outFile = Join-Path -Path $PWD -ChildPath "cert-p.txt"
 
     $base64EncodedPublicKeyXml = [MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common.ProtectedData]::GetCertificatePublicKeyXml($thumbprint, "My", "LocalMachine")
 
@@ -22,9 +31,9 @@ function TestCertificateBasedEncryptionDecryption
 
     $encryptedData = [MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common.ProtectedData]::EncryptData($secret, $base64EncodedPublicKeyXml)
 
-    $encryptedData | Out-File cert-p.txt
-
     $encryptedDataConfig = "cert:\localmachine\my\$thumbprint,$encryptedData"
+
+    $encryptedDataConfig | Out-File $outFile
 
     $decryptedData = [MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common.ProtectedData]::DecryptData($encryptedDataConfig)
 
@@ -33,6 +42,7 @@ function TestCertificateBasedEncryptionDecryption
     if ($plainText -eq $secretToEncrypt)
     {
         Write-Host "`nEncryption and Decryption test using certificate '$thumbprint' succeeded!`n"
+        Write-Host "`nThe password config is saved in '$outFile'`n"
     }
     else
     {
@@ -43,12 +53,13 @@ function TestCertificateBasedEncryptionDecryption
 function TestDPAPIBasedEncryptionDecryption
 {
     $secretToEncrypt = "Pass@word1"
+	$outFile = Join-Path -Path $PWD -ChildPath "dpapi-p.txt"
 
     $secret = ConvertTo-SecureString -AsPlainText $secretToEncrypt -Force
 
     $encryptedData = [MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common.ProtectedData]::EncryptData($secret, [System.Security.Cryptography.DataProtectionScope]::LocalMachine)
 
-    $encryptedData | Out-File dpapi-p.txt
+    $encryptedData | Out-File $outFile
 
     $decryptedData = [MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common.ProtectedData]::DecryptData($encryptedData, [System.Security.Cryptography.DataProtectionScope]::LocalMachine)
 
@@ -57,6 +68,7 @@ function TestDPAPIBasedEncryptionDecryption
     if ($plainText -eq $secretToEncrypt)
     {
         Write-Host "`nEncryption and Decryption test using DPAPI succeeded!`n"
+        Write-Host "`nThe encrypted password is saved in '$outFile'`n"
     }
     else
     {
@@ -64,6 +76,6 @@ function TestDPAPIBasedEncryptionDecryption
     }
 }
 
-TestDPAPIBasedEncryptionDecryption
+TestCertificateBasedEncryptionDecryption
+#TestDPAPIBasedEncryptionDecryption
 
-#TestCertificateBasedEncryptionDecryption

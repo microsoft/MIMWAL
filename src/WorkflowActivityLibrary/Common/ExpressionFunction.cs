@@ -2900,7 +2900,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     {
                         string[] substituionPairs = substitutions.Split(new string[] { "|" }, StringSplitOptions.RemoveEmptyEntries);
 
-                        foreach (string[] substitution in substituionPairs.Select(substituionPair => substituionPair.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries)).Where(substitution => substitution.Length == 2))
+                        // Changed StringSplitOptions for substituionPairs from RemoveEmptyEntries to None so that soft and hard signs such as"Ь" can be simply dropped
+                        foreach (string[] substitution in substituionPairs.Select(substituionPair => substituionPair.Split(new string[] { ":" }, StringSplitOptions.None)).Where(substitution => substitution.Length == 2))
                         {
                             input = input.Replace(substitution[0].Trim(), substitution[1].Trim());
                             input = input.Replace(substitution[0], substitution[1].Trim());
