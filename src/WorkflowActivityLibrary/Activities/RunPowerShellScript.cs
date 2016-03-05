@@ -882,75 +882,78 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                             throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptInvocationError, new WorkflowActivityLibraryException(Messages.RunPowerShellScript_ScriptInvocationError, ex, ex.Message));
                         }
 
+                        // Let's go soft on the the non-terminating errors and trapped exceptions.
+                        // We'll just log the error streams.
+                        // If script wants to kill the activity, it should throw an exception.
                         if (shell.Streams.Error.Count == 0)
                         {
-                            if (this.ReturnType == PowerShellReturnType.None)
+                            StringBuilder message = new StringBuilder();
+                            message.AppendFormat(Messages.RunPowerShellScript_ScriptExecutionFailedError, shell.Streams.Error.Count);
+                            foreach (ErrorRecord error in shell.Streams.Error)
                             {
-                                return null;
+                                message.AppendFormat("{0}\n", error);
                             }
 
-                            if (results != null && results.Count == 1)
-                            {
-                                return results[0].BaseObject;
-                            }
-
-                            if (results == null || results.Count < 1)
-                            {
-                                return null;
-                            }
-
-                            // If multiple values were found for the lookup, verify that they are of a consistent type
-                            Type type = null;
-                                bool consistentType = true;
-                                foreach (PSObject pso in results)
-                                {
-                                    if (type == null)
-                                    {
-                                        type = pso.BaseObject.GetType();
-
-                                        Logger.Instance.WriteVerbose(EventIdentifier.RunPowerShellScriptRunScript, "The PowerShell script returned type: '{0}'.", type);
-                                    }
-                                    else if (pso.BaseObject.GetType() != type)
-                                    {
-                                        consistentType = false;
-                                        Logger.Instance.WriteError(EventIdentifier.RunPowerShellScriptRunScriptInconsistentScriptReturnTypeError, Messages.RunPowerShellScript_InconsistentScriptReturnTypeError, pso.BaseObject.GetType(), type);
-                                    }
-                                }
-
-                                // If we have multiple values of an inconsistent type, there is a problem
-                                // which needs to be addressed by the administrator
-                                if (!consistentType)
-                                {
-                                    throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptInconsistentScriptReturnTypeError, new WorkflowActivityLibraryException(Messages.RunPowerShellScript_InvalidReturnTypeError));
-                                }
-
-                                // Because we have multiple values returned for the PowerShell script, 
-                                // we want to return them in the form of a strongly-typed list
-                                // For example: List<string> instead of List<object>
-                                // Use reflection to create a new strongly-typed list
-                                Type listType = typeof(List<>).MakeGenericType(new Type[] { type });
-                                var typedList = Activator.CreateInstance(listType);
-
-                                // Using reflection, fetch the add method for the new list
-                                // and invoke it to add each value from the original PSobject collection to the new collection
-                                // Return the strongly-typed list
-                                MethodInfo add = listType.GetMethod("Add");
-                                foreach (PSObject pso in results)
-                                {
-                                    add.Invoke(typedList, new object[] { pso.BaseObject });
-                                }
-
-                                return typedList;
+                            Logger.Instance.WriteError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, message.ToString());
                         }
 
-                        StringBuilder message = new StringBuilder();
-                        message.AppendFormat(Messages.RunPowerShellScript_ScriptExecutionFailedError, shell.Streams.Error.Count);
-                        foreach (ErrorRecord error in shell.Streams.Error)
+                        if (this.ReturnType == PowerShellReturnType.None)
                         {
-                            message.AppendFormat("{0}\n", error);
+                            return null;
                         }
 
-                        throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, new WorkflowActivityLibraryException(message.ToString()));
+                        if (results != null && results.Count == 1)
+                        {
+                            return results[0].BaseObject;
+                        }
+
+                        if (results == null || results.Count < 1)
+                        {
+                            return null;
+                        }
+
+                        // If multiple values were found for the lookup, verify that they are of a consistent type
+                        Type type = null;
+                        bool consistentType = true;
+                        foreach (PSObject pso in results)
+                        {
+                            if (type == null)
+                            {
+                                type = pso.BaseObject.GetType();
+
+                                Logger.Instance.WriteVerbose(EventIdentifier.RunPowerShellScriptRunScript, "The PowerShell script returned type: '{0}'.", type);
+                            }
+                            else if (pso.BaseObject.GetType() != type)
+                            {
+                                consistentType = false;
+                                Logger.Instance.WriteError(EventIdentifier.RunPowerShellScriptRunScriptInconsistentScriptReturnTypeError, Messages.RunPowerShellScript_InconsistentScriptReturnTypeError, pso.BaseObject.GetType(), type);
+                            }
+                        }
+
+                        // If we have multiple values of an inconsistent type, there is a problem
+                        // which needs to be addressed by the administrator
+                        if (!consistentType)
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptInconsistentScriptReturnTypeError, new WorkflowActivityLibraryException(Messages.RunPowerShellScript_InvalidReturnTypeError));
+                        }
+
+                        // Because we have multiple values returned for the PowerShell script, 
+                        // we want to return them in the form of a strongly-typed list
+                        // For example: List<string> instead of List<object>
+                        // Use reflection to create a new strongly-typed list
+                        Type listType = typeof(List<>).MakeGenericType(new Type[] { type });
+                        var typedList = Activator.CreateInstance(listType);
+
+                        // Using reflection, fetch the add method for the new list
+                        // and invoke it to add each value from the original PSobject collection to the new collection
+                        // Return the strongly-typed list
+                        MethodInfo add = listType.GetMethod("Add");
+                        foreach (PSObject pso in results)
+                        {
+                            add.Invoke(typedList, new object[] { pso.BaseObject });
+                        }
+
+                        return typedList;
                     }
                 }
             }
