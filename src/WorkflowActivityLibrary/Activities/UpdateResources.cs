@@ -23,6 +23,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
     using System.Workflow.ComponentModel;
     using Microsoft.ResourceManagement.WebServices.WSResourceManagement;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common;
+    using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Definitions;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Enumerations;
 
@@ -75,6 +76,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         public static DependencyProperty ApplyAuthorizationPolicyProperty =
             DependencyProperty.Register("ApplyAuthorizationPolicy", typeof(bool), typeof(UpdateResources));
 
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty ResolveDynamicGrammarProperty =
+            DependencyProperty.Register("ResolveDynamicGrammar", typeof(bool), typeof(UpdateResources));
+
         #endregion
 
         #region Declarations
@@ -115,6 +120,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
         public Dictionary<string, object> ValueExpressions;
+
+        /// <summary>
+        /// The Dynamic Strings for Resolution
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<string> DynamicStringsForResolution = new List<string>();
 
         /// <summary>
         /// The update definitions
@@ -374,6 +386,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to apply authorization policy.
+        /// </summary>
+        [Description("Resolve Dynamic Grammar such as [//Queries/EmailTemplate/EmailSubject] or proper replacement of EvaluateExpression")]
+        [Category("Settings")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool ResolveDynamicGrammar
+        {
+            get
+            {
+                return (bool)this.GetValue(ResolveDynamicGrammarProperty);
+            }
+
+            set
+            {
+                this.SetValue(ResolveDynamicGrammarProperty, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -428,6 +460,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                     this.Iteration = null;
                     this.ActorType = ActorType.Service;
                     this.ApplyAuthorizationPolicy = false;
+                    this.ResolveDynamicGrammar = false;
                 }
 
                 // If the activity is configured to query for resources,
@@ -573,10 +606,144 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             {
                 var variableCache = this.ActivityExpressionEvaluator.VariableCache;
                 this.breakIteration = Convert.ToBoolean(variableCache[ExpressionEvaluator.ReservedVariableBreakIteration], CultureInfo.InvariantCulture);
+
+                // Reset to the original update definitions as ResolveDynamicGrammar updates the working definitions.
+                // The If check is really not needed.
+                if (this.ResolveDynamicGrammar)
+                {
+                    DefinitionsConverter updatesConverter = new DefinitionsConverter(this.UpdatesTable);
+                    this.updates = updatesConverter.Definitions;
+                }
             }
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachIterationChildCompleted, "Iteration: '{0}' of '{1}'. Break Iteration '{2}'.", this.iterations, this.ForEachIteration.InitialChildData.Count, this.breakIteration);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ExecuteCode event of the PrepareDynamicResolution CodeActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void PrepareDynamicGrammarResolution_ExecuteCode(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionInitialized);
+
+            this.DynamicStringsForResolution = new List<string>(); // clear any previous values
+            try
+            {
+                // Load resolved value expressions to the expression evaluator
+                foreach (string key in this.ValueExpressions.Keys)
+                {
+                    this.ActivityExpressionEvaluator.LookupCache[key] = this.ValueExpressions[key];
+                }
+
+                var newUpdates = new List<Definition>();
+
+                // Clear the variable cache for the expression evaluator
+                List<string> variables = this.ActivityExpressionEvaluator.VariableCache.Keys.ToList();
+                foreach (string variable in variables)
+                {
+                    this.ActivityExpressionEvaluator.VariableCache[variable] = null;
+                }
+
+                foreach (Definition updateDefinition in this.updates)
+                {
+                    // Determine if we are targeting a variable
+                    // If so, publish the variable
+                    bool targetVariable = ExpressionEvaluator.DetermineParameterType(updateDefinition.Right) == ParameterType.Variable;
+                    if (targetVariable)
+                    {
+                        object resolved = this.ActivityExpressionEvaluator.ResolveExpression(updateDefinition.Left);
+                        this.ActivityExpressionEvaluator.PublishVariable(updateDefinition.Right, resolved, UpdateMode.Modify);
+                    }
+                }
+
+                foreach (Definition updateDefinition in this.updates)
+                {
+                    // Resolve the source expression, including any functions or concatenation,
+                    // to retrieve the typed value that should be assigned to the target attribute
+                    object resolved = this.ActivityExpressionEvaluator.ResolveExpression(updateDefinition.Left);
+
+                    if (resolved is string)
+                    {
+                        string updateDefinitionLeft = resolved as string;
+                        newUpdates.Add(new Definition(updateDefinitionLeft, updateDefinition.Right, updateDefinition.Check));
+
+                        if (!this.ActivityExpressionEvaluator.ParseIfExpression(updateDefinitionLeft))
+                        {
+                            this.DynamicStringsForResolution.Add(updateDefinitionLeft);
+                        }
+                    }
+                    else
+                    {
+                        newUpdates.Add(updateDefinition);
+                    }
+                }
+
+                this.updates = newUpdates;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionInitialized, "DynamicStringsForResolution Count: '{0}'.", this.DynamicStringsForResolution.Count);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildInitialized event of the ForEachDynamicStringForResolution ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachDynamicStringForResolution_ChildInitialized(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionChildInitialized);
+
+            string stringForResolution = e.InstanceData as string;
+            try
+            {
+                ResolveLookupString resolveDynamicLookupString = e.Activity as ResolveLookupString;
+                if (resolveDynamicLookupString == null || string.IsNullOrEmpty(stringForResolution))
+                {
+                    return;
+                }
+
+                resolveDynamicLookupString.StringForResolution = stringForResolution;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionChildInitialized, "StringForResolution: '{0}'.", stringForResolution);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildCompleted event of the ForEachDynamicStringForResolution ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachDynamicStringForResolution_ChildCompleted(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionChildCompleted);
+
+            string stringForResolution = e.InstanceData as string;
+            string resolved = null;
+            try
+            {
+                // Using the resolved filter, execute the LDAP query to determine if a conflict exists
+                ResolveLookupString resolveDynamicLookupString = e.Activity as ResolveLookupString;
+                if (resolveDynamicLookupString == null || string.IsNullOrEmpty(stringForResolution))
+                {
+                    return;
+                }
+
+                resolved = resolveDynamicLookupString.Resolved;
+
+                // Load resolved value expressions to the expression evaluator
+                this.ActivityExpressionEvaluator.LookupCache[stringForResolution] = resolved;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionChildCompleted, "StringForResolution: '{0}'. Resolved: '{1}'.", stringForResolution, resolved);
             }
         }
 
@@ -611,7 +778,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 {
                     // Resolve the source expression, including any functions or concatenation,
                     // to retrieve the typed value that should be assigned to the target attribute
-                    object resolved = this.ActivityExpressionEvaluator.ResolveExpression(updateDefinition.Left);
+                    object resolved = null;
+                    if (!ExpressionEvaluator.IsExpression(updateDefinition.Left))
+                    {
+                        // This is a dynamic string for resolution already resolved
+                        // so just retrive the value from cache directly
+                        resolved = this.ActivityExpressionEvaluator.LookupCache[updateDefinition.Left];
+                    }
+                    else
+                    {
+                        resolved = this.ActivityExpressionEvaluator.ResolveExpression(updateDefinition.Left);
+                    }
 
                     // Determine if we are targeting a variable
                     // If not, assume we are targeting an expression which should result in requests or update
@@ -728,6 +905,25 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesActorIsNotValueExpressionCondition, "Condition evaluated '{0}'. Actor String: '{1}'.", e.Result, this.ActorString);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the ResolveDynamicGrammar Condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void DynamicGrammarResolutionNeed_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesDynamicGrammarResolutionNeedCondition);
+
+            try
+            {
+                e.Result = this.ResolveDynamicGrammar;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.UpdateResourcesDynamicGrammarResolutionNeedCondition, "Condition evaluated '{0}'. Actor String: '{1}'.", e.Result, this.ActorString);
             }
         }
 

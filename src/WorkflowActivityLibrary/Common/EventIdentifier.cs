@@ -349,6 +349,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int UpdateResourcesActorIsNotValueExpressionCondition = 10509;
 
         /// <summary>
+        /// The event identifier for UpdateResources DynamicGrammarResolutionNeed_Condition events
+        /// </summary>
+        public const int UpdateResourcesDynamicGrammarResolutionNeedCondition = 10510;
+
+        /// <summary>
+        /// The event identifier for UpdateResources ForEachDynamicStringForResolution_Initialized events
+        /// </summary>
+        public const int UpdateResourcesForEachDynamicStringForResolutionInitialized = 10511;
+
+        /// <summary>
+        /// The event identifier for UpdateResources ForEachDynamicStringForResolution_ChildInitialized events
+        /// </summary>
+        public const int UpdateResourcesForEachDynamicStringForResolutionChildInitialized = 10512;
+
+        /// <summary>
+        /// The event identifier for UpdateResources ForEachDynamicStringForResolution_ChildCompleted events
+        /// </summary>
+        public const int UpdateResourcesForEachDynamicStringForResolutionChildCompleted = 10513;
+
+        /// <summary>
         /// The event identifier for VerifyRequest Constructor events
         /// </summary>
         public const int VerifyRequestConstructor = 10601;
@@ -1693,6 +1713,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for RunPowerShellScript Run_ExecuteCode events
         /// </summary>
         public const int RunPowerShellScriptRunExecuteCodeNullHashtableReturnValueWarning = 30407;
+
+        /// <summary>
+        /// The event identifier for ExpressionEvaluator EvaluateFunction events
+        /// </summary>
+        public const int ExpressionEvaluatorEvaluateFunctionDeprecatedFunctionWarning = 31510;
 
         /// <summary>
         /// The event identifier for ExpressionFunction Run events

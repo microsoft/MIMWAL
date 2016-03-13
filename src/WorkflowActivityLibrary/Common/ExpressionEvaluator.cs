@@ -285,21 +285,27 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// Parses the expression if it's a valid expression.
         /// </summary>
         /// <param name="expression">The expression.</param>
-        public void ParseIfExpression(string expression)
+        /// <returns>True if the input is a valid expression. Otherwise returns false.</returns>
+        public bool ParseIfExpression(string expression)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionEvaluatorParseIfExpression, "Expression: '{0}'.", expression);
 
+            bool isExpression = false;
+
             try
             {
-                if (IsExpression(expression))
+                isExpression = IsExpression(expression);
+                if (isExpression)
                 {
                     this.ParseExpression(expression);
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionEvaluatorParseIfExpression, "Expression: '{0}'.", expression);
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionEvaluatorParseIfExpression, "Expression: '{0}'. IsExpression: {1}.", expression, isExpression);
             }
+
+            return isExpression;
         }
 
         /// <summary>
@@ -1020,6 +1026,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 // so that it's part of LookupCache.
                 if (functionName.Equals(ParameterType.EvaluateExpression.ToString(), StringComparison.OrdinalIgnoreCase))
                 {
+                    Logger.Instance.WriteWarning(EventIdentifier.ExpressionEvaluatorEvaluateFunctionDeprecatedFunctionWarning, Messages.ExpressionFunction_DeprecatedFunctionWarning, ParameterType.EvaluateExpression.ToString(), "Resolve Dynamic Grammar capability of UpdateResources activity");
+
                     string expression = this.EvaluateExpression(parameterString, mode) as string; // so e.g. IIF(Eq([//Target/Department],"HR"),"Template1","Template2")
                     if (mode != EvaluationMode.Parse && !string.IsNullOrEmpty(expression))
                     {
