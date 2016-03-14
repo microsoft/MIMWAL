@@ -8,6 +8,31 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ------------
 
+### Version 2.16.0314.0
+
+#### Added
+
+* Support for Dynamic Grammar Resolution capability to [Update Resources][UpdateResourcesActivity] activity.
+	* The activity can be configured to resolve / evaluate lookups and expressions in the values returned by the expressions in update definitions. e.g. The string returned by `[//Queries/EmailTemplate/EmailBody]` will be parsed and all lookups will be resolved.
+
+#### Changed
+
+* Use of [EvaluateExpression][EvaluateExpressionFunction] function will now log a deprecation warning in the event log in favour of using the newly implemented Dynamic Grammar Resolution capability of the [Update Resources][UpdateResourcesActivity] activity.
+
+------------
+
+### Version 2.16.0305.0
+
+#### Added
+
+* Support for dropping hard / soft signs and any other symbols in [NormalizeString][NormalizeStringFunction] function .
+
+#### Changed
+
+* [Run PowerShell Script][RunPowerShellScriptActivity] activity will now only abort the workflow execution when an unhandled or explicit exception is thrown from the PowerShell script. Non-terminating errors in the script will only get logged to the event log.
+
+------------
+
 ### Version [2.16.0130.0] 
 
 #### Added
@@ -61,3 +86,8 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 #### Fixed
 
 * There are no bug fixes in this release.
+
+[NormalizeStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/NormalizeString-Function
+[RunPowerShellScriptActivity]: https://github.com/Microsoft/MIMWAL/wiki/Run-PowerShell-Script-Activity
+[UpdateResourcesActivity]: https://github.com/Microsoft/MIMWAL/wiki/Update-Resources-Activity
+[EvaluateExpressionFunction]: https://github.com/Microsoft/MIMWAL/wiki/EvaluateExpression-Function
