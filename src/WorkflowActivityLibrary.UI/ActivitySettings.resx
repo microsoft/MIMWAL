@@ -801,4 +801,10 @@
   <data name="ActivityExecutionConditionValidationError" xml:space="preserve">
     <value>The activity execution condition must be a boolean function. Consider wrapping your current condition inside a ConvertToBoolean() function.</value>
   </data>
+  <data name="ResolveDynamicGrammar" xml:space="preserve">
+    <value>Resolve Dynamic Grammar</value>
+  </data>
+  <data name="ResolveDynamicGrammarHelpText" xml:space="preserve">
+    <value>The activity can be configured to resolve / evaluate lookups and expressions in the values returned by the expressions in update definitions. Example: The string returned by [//Queries/EmailTemplate/EmailBody] will be parsed and all lookups will be resolved.</value>
+  </data>
 </root>

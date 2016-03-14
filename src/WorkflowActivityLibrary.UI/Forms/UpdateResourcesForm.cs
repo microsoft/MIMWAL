@@ -69,6 +69,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
         private readonly ActivityCheckBox applyAuthorizationPolicy;
 
         /// <summary>
+        /// The resolve dynamic grammar checkbox
+        /// </summary>
+        private readonly ActivityCheckBox resolveDynamicGrammar;
+
+        /// <summary>
         /// The activity execution condition textbox
         /// </summary>
         private readonly ActivityTextBox activityExecutionCondition;
@@ -147,6 +152,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
                 this.actorString = this.controller.AddTextBox(ActivitySettings.ActorString, false, false);
                 this.applyAuthorizationPolicy = this.controller.AddCheckBox(ActivitySettings.ApplyAuthorizationPolicy, ActivitySettings.ApplyAuthorizationPolicyHelpText, false, false);
+                this.resolveDynamicGrammar = this.controller.AddCheckBox(ActivitySettings.ResolveDynamicGrammar, ActivitySettings.ResolveDynamicGrammarHelpText, false, false);
 
                 // Create a new definitions controller to capture update definitions
                 this.updates = new DefinitionsController("Updates", 330, 250, 70)
@@ -211,7 +217,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                     Iteration = this.iteration.Value,
                     ActorType = GetActorType(this.actorType.Value),
                     ActorString = this.actorString.Value,
-                    ApplyAuthorizationPolicy = this.applyAuthorizationPolicy.Value
+                    ApplyAuthorizationPolicy = this.applyAuthorizationPolicy.Value,
+                    ResolveDynamicGrammar = this.resolveDynamicGrammar.Value
                 };
 
                 // Convert the definition listings (web controls) to hash tables which can be serialized to the XOML workflow definition
@@ -260,6 +267,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 this.actorType.Value = wfa.ActorType.ToString();
                 this.actorString.Value = wfa.ActorString;
                 this.applyAuthorizationPolicy.Value = wfa.ApplyAuthorizationPolicy;
+                this.resolveDynamicGrammar.Value = wfa.ResolveDynamicGrammar;
                 this.queries.LoadActivitySettings(wfa.QueriesTable);
                 this.updates.LoadActivitySettings(wfa.UpdatesTable);
             }
@@ -658,6 +666,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 this.iteration.Visible = this.advanced.Value;
                 this.actorType.Visible = this.advanced.Value;
                 this.applyAuthorizationPolicy.Visible = this.advanced.Value;
+                this.resolveDynamicGrammar.Visible = this.advanced.Value;
 
                 if (!this.advanced.Value)
                 {
