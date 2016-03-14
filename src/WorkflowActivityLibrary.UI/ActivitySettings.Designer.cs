@@ -1456,7 +1456,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The activity can be configured to resolve / evaluate lookups and expressions in the values returned by lookups in update definitions. Example: [//Queries/EmailTemplate/EmailBody] string will be parsed and all lookups will be resolved..
+        ///   Looks up a localized string similar to The activity can be configured to resolve / evaluate lookups and expressions in the values returned by the expressions in update definitions. Example: The string returned by [//Queries/EmailTemplate/EmailBody] will be parsed and all lookups will be resolved..
         /// </summary>
         internal static string ResolveDynamicGrammarHelpText {
             get {
