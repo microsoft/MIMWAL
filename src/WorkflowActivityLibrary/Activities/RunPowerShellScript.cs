@@ -885,7 +885,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                         // Let's go soft on the the non-terminating errors and trapped exceptions.
                         // We'll just log the error streams.
                         // If script wants to kill the activity, it should throw an exception.
-                        if (shell.Streams.Error.Count == 0)
+                        if (shell.Streams.Error.Count != 0)
                         {
                             StringBuilder message = new StringBuilder();
                             message.AppendFormat(Messages.RunPowerShellScript_ScriptExecutionFailedError, shell.Streams.Error.Count);

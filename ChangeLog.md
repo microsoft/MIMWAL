@@ -8,7 +8,7 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ------------
 
-### Version 2.16.0314.0
+### Version 2.16.0315.0
 
 #### Added
 
@@ -18,6 +18,10 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 #### Changed
 
 * Use of [EvaluateExpression][EvaluateExpressionFunction] function will now log a deprecation warning in the event log in favour of using the newly implemented Dynamic Grammar Resolution capability of the [Update Resources][UpdateResourcesActivity] activity.
+
+#### Fixed
+
+* Error event logging logic in the [Run PowerShell Script][RunPowerShellScriptActivity] activity.
 
 ------------
 

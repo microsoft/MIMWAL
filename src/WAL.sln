@@ -32,6 +32,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "LanguagePacks", "LanguagePa
 		LanguagePacks\Messages.es.resx = LanguagePacks\Messages.es.resx
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SrcDocs", "SrcDocs", "{112DBE20-BAFC-467A-9145-6A5B1F94DA9D}"
+	ProjectSection(SolutionItems) = preProject
+		..\.gitattributes = ..\.gitattributes
+		..\.gitignore = ..\.gitignore
+		..\ChangeLog.md = ..\ChangeLog.md
+		..\CONTRIBUTING.md = ..\CONTRIBUTING.md
+		..\LICENSE.txt = ..\LICENSE.txt
+		..\README.md = ..\README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +63,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9B89C43C-1EA6-4128-95B7-F56401152246} = {2B90D189-D995-4304-8525-17D75B4C9907}
 		{1829DEFF-5553-4E93-9A9B-08118F3D2225} = {2B90D189-D995-4304-8525-17D75B4C9907}
+		{112DBE20-BAFC-467A-9145-6A5B1F94DA9D} = {2B90D189-D995-4304-8525-17D75B4C9907}
 	EndGlobalSection
 EndGlobal
