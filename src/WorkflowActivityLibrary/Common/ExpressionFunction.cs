@@ -344,7 +344,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <typeparam name="T">Type of the object to be deserialized</typeparam>
         /// <param name="xml">Serialized representation of the specified type</param>
         /// <returns>The Object being deserialized.</returns>
-        private static T DeserializeObject<T>(string xml)
+        internal static T DeserializeObject<T>(string xml)
         where T : class
         {
             T t;
