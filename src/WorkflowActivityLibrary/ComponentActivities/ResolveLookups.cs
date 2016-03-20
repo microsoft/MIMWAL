@@ -760,7 +760,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
                     this.ReadResources = this.resources[this.resourceKey];
                     this.ReadAttributes = this.reads[this.resourceKey].ToArray();
 
-                    Logger.Instance.WriteVerbose(EventIdentifier.ResolveLookupsForEachReadChildInitialized, "ResourceKey: '{0}'. Read Attributes: '{1}'.", e.InstanceData, string.Join(",", this.ReadAttributes)); 
+                    Logger.Instance.WriteVerbose(EventIdentifier.ResolveLookupsForEachReadChildInitialized, "ResourceKey: '{0}'. Read Attributes: '{1}'.", e.InstanceData, string.Join(",", this.ReadAttributes));
                 }
             }
             finally
@@ -813,7 +813,34 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
 
                 foreach (string attribute in this.reads[this.resourceKey].Where(attribute => read.Resource[attribute] != null))
                 {
-                    this.Publish(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.resourceKey, attribute), read.Resource[attribute]);
+                    // If the request is SystemEvent, RequestParameter of Request is published from the parent request. 
+                    if (this.resourceKey.Equals(LookupParameter.Request.ToString()) && this.Request.CurrentRequest.Operation == OperationType.SystemEvent && attribute == "RequestParameter")
+                    {
+                        RequestType parentRequest = this.ReadParentRequest.Resource as RequestType;
+
+                        if (parentRequest != null)
+                        {
+                            IList<string> parentRequestParameters = parentRequest.RequestParameters;
+                            List<string> requestParameters = new List<string>();
+                            if (parentRequestParameters.Count != 0)
+                            {
+                                foreach (string s in parentRequestParameters)
+                                {
+                                    RequestParameter parentRequestParameter = ExpressionFunction.DeserializeObject<RequestParameter>(s);
+                                    if (parentRequestParameter.Target == this.Request.CurrentRequest.Target)
+                                    {
+                                        requestParameters.Add(s);
+                                    }
+                                }
+
+                                this.Publish(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", LookupParameter.Request.ToString(), attribute), requestParameters);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        this.Publish(string.Format(CultureInfo.InvariantCulture, "{0}/{1}", this.resourceKey, attribute), read.Resource[attribute]);
+                    }
                 }
             }
             finally

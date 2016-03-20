@@ -8,6 +8,14 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ------------
 
+### Version 2.16.0320.0
+
+#### Changed
+
+* The `[//Request/RequestParameter]` lookup for a SystemEvent request will resolve to request parameters in the parent request.
+
+------------
+
 ### Version 2.16.0315.0
 
 #### Added
