@@ -554,15 +554,18 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
                 if (!string.IsNullOrEmpty(this.powerShellUser.Value))
                 {
-                    if (!this.powerShellUser.Value.Contains(@"\"))
+                    if (this.impersonatePowerShellUser.Value)
                     {
-                        this.controller.ValidationError = ActivitySettings.PowerShellUserFormatValidationError;
-                        return false;
+                        if (!this.powerShellUser.Value.Contains(@"\") && !this.powerShellUser.Value.Contains("@"))
+                        {
+                            this.controller.ValidationError = ActivitySettings.PowerShellUserFormatValidationError;
+                            return false;
+                        }
                     }
 
                     if (string.IsNullOrEmpty(this.powerShellUserPassword.Value))
                     {
-                        this.controller.ValidationError = ActivitySettings.PowerShellImpersonationSettingsValidationError;
+                        this.controller.ValidationError = ActivitySettings.PowerShellUserPasswordValidationError;
                         return false;
                     }
 

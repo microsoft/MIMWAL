@@ -247,7 +247,7 @@
     <value>The variable cache does not contain an entry for {0}</value>
   </data>
   <data name="RunPowerShellActivity_InvalidUserFormat" xml:space="preserve">
-    <value>Invalid UserName format {0}. Expected format "Domain\UserName".</value>
+    <value>Invalid UserName format {0}. Expected format is "Domain\UserName" or UPN.</value>
   </data>
   <data name="ProtectedData_EncryptionCertificateNotFoundError" xml:space="preserve">
     <value>The X.509 encryption certificate with thumbprint '{0}' could not be found.</value>
@@ -365,5 +365,11 @@
   </data>
   <data name="DetermineActor_InvalidActorGuidFormatError" xml:space="preserve">
     <value>Unable to determine request actor. The supplied string is not a valid GUID format.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterTypeError2" xml:space="preserve">
+    <value>The function '{0}' expects parameter at position {1} to be of type '{2}' or '{3}'. It was supplied a '{4}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterError2" xml:space="preserve">
+    <value>The function '{0}' expects list at position {1} to be of length '{2}'. It has a length of '{3}'.</value>
   </data>
 </root>

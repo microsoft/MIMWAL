@@ -988,10 +988,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 return null;
             }
 
-            string[] userParts = this.PowerShellUser.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
-            if (userParts.Length != 2)
+            if (this.ImpersonatePowerShellUser)
             {
-                throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, new WorkflowActivityLibraryException(Messages.RunPowerShellActivity_InvalidUserFormat, this.PowerShellUser));
+                string[] userParts = this.PowerShellUser.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
+                if (userParts.Length != 2 && !this.PowerShellUser.Contains("@"))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, new WorkflowActivityLibraryException(Messages.RunPowerShellActivity_InvalidUserFormat, this.PowerShellUser));
+                }
             }
 
             SecureString password = ProtectedData.DecryptData(this.PowerShellUserPassword);

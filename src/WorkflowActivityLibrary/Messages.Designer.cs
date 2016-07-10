@@ -340,6 +340,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects list at position {1} to be of length &apos;{2}&apos;. It has a length of &apos;{3}&apos;..
+        /// </summary>
+        internal static string ExpressionFunction_InvalidFunctionParameterError2 {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_InvalidFunctionParameterError2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The function &apos;{0}&apos; expects &apos;{1} or more&apos; parameters. It was supplied &apos;{2}&apos; parameters..
         /// </summary>
         internal static string ExpressionFunction_InvalidFunctionParameterMinCountError {
@@ -363,6 +372,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         internal static string ExpressionFunction_InvalidFunctionParameterTypeError {
             get {
                 return ResourceManager.GetString("ExpressionFunction_InvalidFunctionParameterTypeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects parameter at position {1} to be of type &apos;{2}&apos; or &apos;{3}&apos;. It was supplied a &apos;{4}&apos; parameter..
+        /// </summary>
+        internal static string ExpressionFunction_InvalidFunctionParameterTypeError2 {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_InvalidFunctionParameterTypeError2", resourceCulture);
             }
         }
         
@@ -664,7 +682,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid UserName format {0}. Expected format &quot;Domain\UserName&quot;..
+        ///   Looks up a localized string similar to Invalid UserName format {0}. Expected format is &quot;Domain\UserName&quot; or UPN..
         /// </summary>
         internal static string RunPowerShellActivity_InvalidUserFormat {
             get {

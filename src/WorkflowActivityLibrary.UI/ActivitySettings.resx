@@ -658,7 +658,7 @@
     <value>PowerShell Script User</value>
   </data>
   <data name="PowerShellUserHelpText" xml:space="preserve">
-    <value>Specify the user in the format domain\userName to be used to construct PowerShell Credential object.</value>
+    <value>Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format.</value>
   </data>
   <data name="PowerShellUserPassword" xml:space="preserve">
     <value>PowerShell Script User Password</value>
@@ -670,7 +670,7 @@
     <value>Specify UserName and Password of the impersonated user.</value>
   </data>
   <data name="PowerShellUserFormatValidationError" xml:space="preserve">
-    <value>Specify the PowerShell user in the format domain\userName.</value>
+    <value>The PowerShell user must be specified in the domain\userName or UPN format when Impersonate PowerShell User option is selected.</value>
   </data>
   <data name="RequestActorValidationError" xml:space="preserve">
     <value>Authorization Policy cannot be applied when Request Actor is Service Account</value>
@@ -806,5 +806,8 @@
   </data>
   <data name="ResolveDynamicGrammarHelpText" xml:space="preserve">
     <value>The activity can be configured to resolve / evaluate lookups and expressions in the values returned by the expressions in update definitions. Example: The string returned by [//Queries/EmailTemplate/EmailBody] will be parsed and all lookups will be resolved.</value>
+  </data>
+  <data name="PowerShellUserPasswordValidationError" xml:space="preserve">
+    <value>Specify the PowerShell user password.</value>
   </data>
 </root>

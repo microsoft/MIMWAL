@@ -7,7 +7,7 @@ set walUIAssembly="%~dp0\MicrosoftServices.IdentityManagement.WorkflowActivityLi
 set snkFile="%~dp0..\WAL.snk"
 set snExe="%~dp0sn.exe"
 
-if not exist %walAssembly% echo ERROR: File '%walAssembly%' Not Found. You need to compile WAL solution first! & (goto exit_error)
+if not exist %walAssembly% echo ERROR: File '%walAssembly%' Not Found. You need to compile WAL solution first! Make sure you use REBUILD Solution menu. & (goto exit_error)
 if not exist %walUIAssembly% echo ERROR: File '%walUIAssembly%' Not Found. You need to compile WAL solution first! & (goto exit_error)
 if not exist %snkFile% echo ERROR: File '%snkFile%' Not Found. You need to specify correct path to your strong name file! & (goto exit_error)
 
