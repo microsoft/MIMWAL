@@ -1756,7 +1756,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
         /// <summary>
         /// Formats the multivalued list as per the specified format.
-        /// Function Syntax: FormatMultivaluedString(format:string, list1:List of strings)
+        /// Function Syntax: FormatMultivaluedString(format:string, list1:List of strings[, list2:List of strings, ...] )
         /// </summary>
         /// <returns>The formatted list.</returns>
         private object FormatMultivaluedList()
@@ -1765,7 +1765,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
             try
             {
-                if (this.parameters.Count != 2)
+                if (this.parameters.Count < 2)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
                 }
@@ -1776,52 +1776,93 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
                 }
 
-                parameter = this.parameters[1];
-                if (parameter == null)
+                for (int i = 1; i < this.parameters.Count; ++i)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                    parameter = this.parameters[i];
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
                 }
 
                 Type parameterType = typeof(List<string>);
                 Type parameterType2 = typeof(string);
-                parameter = this.parameters[1];
-                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
+                for (int i = 1; i < this.parameters.Count; ++i)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError3, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
+                    parameter = this.parameters[i];
+                    if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError2, this.function, i + 1, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
+                    }
                 }
 
-                object result;
+                object result = null;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
                     if (this.parameters[1] is string)
                     {
-                        if (string.IsNullOrEmpty(this.parameters[1] as string))
+                        for (int i = 1; i < this.parameters.Count; ++i)
+                        {
+                            parameter = this.parameters[i];
+                            if (parameter is string == false)
+                            {
+                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, "string", parameter == null ? "null" : parameter.GetType().Name));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        var listCount = ((List<string>)this.parameters[1]).Count;
+                        if (listCount == 0)
                         {
                             throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
                         }
 
-                        result = string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), this.parameters[1].ToString());
+                        for (int i = 2; i < this.parameters.Count; ++i)
+                        {
+                            parameter = this.parameters[i];
+                            if (parameter is List<string> == false)
+                            {
+                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                            }
+
+                            var listCount2 = ((List<string>)parameter).Count;
+                            if (listCount2 != listCount)
+                            {
+                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError2, this.function, i + 1, listCount, listCount2));
+                            }
+                        }
                     }
-                    else if (((List<string>)this.parameters[1]).Count == 0)
+
+                    if (this.parameters[1] is string)
                     {
-                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                        string[] args = new string[this.parameters.Count - 1];
+                        for (int i = 1; i < this.parameters.Count; ++i)
+                        {
+                            args[i - 1] = this.parameters[i] as string;
+                        }
+
+                        result = string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), args);
                     }
                     else
                     {
-                        result = new List<string>(((List<string>)this.parameters[1]).Count);
+                        var listCount = ((List<string>)this.parameters[1]).Count;
+                        result = new List<string>(listCount);
 
-                        foreach (string s in (List<string>)this.parameters[1])
+                        string[] args = new string[this.parameters.Count - 1];
+                        for (int n = 0; n < listCount; ++n)
                         {
-                            ((List<string>)result).Add(string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), s));
+                            for (int i = 1; i < this.parameters.Count; ++i)
+                            {
+                                args[i - 1] = ((List<string>)this.parameters[i])[n];
+                            }
+
+                            ((List<string>)result).Add(string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), args));
                         }
                     }
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConcatenateMultivaluedString, "FormatMultivaluedList() returned '{0}'.", result);
-                }
-                else
-                {
-                    result = null;
                 }
 
                 return result;
@@ -1850,10 +1891,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(List<Guid>);
                 Type parameterType2 = typeof(Guid);
+                Type parameterType3 = typeof(byte[]);
                 object parameter = this.parameters[0];
-                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
+                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, parameterType3))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToUniqueIdentifierInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError2, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToUniqueIdentifierInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 object result;
@@ -1873,7 +1915,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         }
                         else
                         {
-                            result = new UniqueIdentifier((Guid)this.parameters[0]);
+                            result = this.parameters[0] is byte[] ? new UniqueIdentifier(new Guid((byte[])this.parameters[0])) : new UniqueIdentifier((Guid)this.parameters[0]);
                         }
                     }
 

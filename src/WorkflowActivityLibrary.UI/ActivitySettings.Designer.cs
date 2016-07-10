@@ -970,7 +970,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify the PowerShell user in the format domain\userName..
+        ///   Looks up a localized string similar to The PowerShell user must be specified in the domain\userName or UPN format when Impersonate PowerShell User option is selected..
         /// </summary>
         internal static string PowerShellUserFormatValidationError {
             get {
@@ -979,7 +979,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify the user in the format domain\userName to be used to construct PowerShell Credential object..
+        ///   Looks up a localized string similar to Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format..
         /// </summary>
         internal static string PowerShellUserHelpText {
             get {
@@ -1002,6 +1002,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         internal static string PowerShellUserPasswordHelpText {
             get {
                 return ResourceManager.GetString("PowerShellUserPasswordHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify the PowerShell user password..
+        /// </summary>
+        internal static string PowerShellUserPasswordValidationError {
+            get {
+                return ResourceManager.GetString("PowerShellUserPasswordValidationError", resourceCulture);
             }
         }
         

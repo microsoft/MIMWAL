@@ -703,9 +703,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                         }
                     }
 
-                    // Pull any [//Value] expressions from the expression evaluator's lookup cache for
+                    // Pull any [//Value] or [//WorkflowData] expressions from the expression evaluator's lookup cache for
                     // resolution during iteration
-                    foreach (string key in from key in this.ActivityExpressionEvaluator.LookupCache.Keys let lookup = new LookupEvaluator(key) where lookup.Parameter == LookupParameter.Value select key)
+                    foreach (string key in from key in this.ActivityExpressionEvaluator.LookupCache.Keys let lookup = new LookupEvaluator(key) where lookup.Parameter == LookupParameter.Value || lookup.Parameter == LookupParameter.WorkflowData select key)
                     {
                         this.ValueExpressions.Add(key, null);
                     }

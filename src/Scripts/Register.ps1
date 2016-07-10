@@ -85,6 +85,10 @@ function RegisterAssembly
             throw ("Error Registering assembly to skip strong name verification: '$assemblyName' " )
         }
     }
+	elseif ($executionStatus -eq "")
+	{
+		Write-Warning "Execution status of gacutil.exe was not confirmed. Make sure that you have correct version of the gacutil tool."
+	}
  }
 
 function RegisterActivity
@@ -428,4 +432,4 @@ net start FIMService
 
 iisreset
 
-Write-Host -ForegroundColor green "Review script console output for any errors. Once the deployment is successful on all the servers, update the assembly version in MIMWAL XOMLs by executing UpdateWorkflowXoml.ps1 script."
+Write-Host -ForegroundColor green "Review script console output for any errors. Once the deployment is successful on *ALL* the servers, update the assembly version in MIMWAL XOMLs by executing UpdateWorkflowXoml.ps1 script."
