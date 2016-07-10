@@ -8,6 +8,20 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ------------
 
+### Version 2.16.0710.0
+
+#### Changed
+
+*  RunPowerShellScript User for can now be specified in the UPN format. The Domain\UserName or UPN format is also only required if "Impersonate PowerShell User" option is selected.
+*  Iteration in CreateResource, DeleteResource and UpdateResources activities now re-evaluates not only `[//Value]` expressions but also `[//WorkflowData]` expressions.
+
+#### Added
+
+* `FormatMultivaluedString` function now supports more than one list of strings as input to format.
+* `ConvertToUniqueIdentifier` now supports a Guid in byte[] format as input.
+
+------------
+
 ### Version 2.16.0320.0
 
 #### Changed
