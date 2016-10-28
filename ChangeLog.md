@@ -5,6 +5,14 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 ### Version [Unreleased]
 
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
+* Implement Approve Request Activity.
+
+### Version 2.16.1028.0
+
+#### Changed
+
+* [FormatMultivaluedList][FormatMultivaluedListFunction] function now supports list of variable lengths as input to format. It also no more expects the list to be of strings. The input can be any object type.
+* [ConvertToString][ConvertToStringFunction] function now supports a Guid as input.
 
 ------------
 
@@ -12,13 +20,13 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 #### Changed
 
-*  RunPowerShellScript User for can now be specified in the UPN format. The Domain\UserName or UPN format is also only required if "Impersonate PowerShell User" option is selected.
-*  Iteration in CreateResource, DeleteResource and UpdateResources activities now re-evaluates not only `[//Value]` expressions but also `[//WorkflowData]` expressions.
+* RunPowerShellScript User for can now be specified in the UPN format. The Domain\UserName or UPN format is also only required if "Impersonate PowerShell User" option is selected.
+* Iteration in CreateResource, DeleteResource and UpdateResources activities now re-evaluates not only `[//Value]` expressions but also `[//WorkflowData]` expressions.
 
 #### Added
 
-* `FormatMultivaluedString` function now supports more than one list of strings as input to format.
-* `ConvertToUniqueIdentifier` now supports a Guid in byte[] format as input.
+* [FormatMultivaluedList][FormatMultivaluedListFunction] function now supports more than one list of strings as input to format.
+* [ConvertToUniqueIdentifier][ConvertToUniqueIdentifierFunction] now supports a Guid in byte[] format as input.
 
 ------------
 
@@ -64,7 +72,7 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 #### Added
 
 * Support for executing a collection of Queries.
-* New function `FormatMultivaluedList`.
+* New function [FormatMultivaluedList][FormatMultivaluedList].
 * Support for `[//Value]` lookup in Request Actor expressions in CreateResource, DeleteResources and UpdateResources activities.
 
 #### Fixed
@@ -117,3 +125,6 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 [RunPowerShellScriptActivity]: https://github.com/Microsoft/MIMWAL/wiki/Run-PowerShell-Script-Activity
 [UpdateResourcesActivity]: https://github.com/Microsoft/MIMWAL/wiki/Update-Resources-Activity
 [EvaluateExpressionFunction]: https://github.com/Microsoft/MIMWAL/wiki/EvaluateExpression-Function
+[FormatMultivaluedListFunction]: https://github.com/Microsoft/MIMWAL/wiki/FormatMultivaluedList-Function
+[ConvertToUniqueIdentifierFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToUniqueIdentifier-Function
+[ConvertToStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToString-Function

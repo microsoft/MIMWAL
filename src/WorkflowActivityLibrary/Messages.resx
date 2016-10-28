@@ -372,4 +372,10 @@
   <data name="ExpressionFunction_InvalidFunctionParameterError2" xml:space="preserve">
     <value>The function '{0}' expects list at position {1} to be of length '{2}'. It has a length of '{3}'.</value>
   </data>
+  <data name="ExpressionFunction_InvalidFirstFunctionParameterTypeError3" xml:space="preserve">
+    <value>The function '{0}' expects first parameter to be of type '{1}' or '{2}' or '{3}'. It was supplied a '{4}' parameter.</value>
+  </data>
+  <data name="ExpressionFunction_NullFunctionParameterError2" xml:space="preserve">
+    <value>The function '{0}' requires the at least one parameter at position '{1}' or later to be not null.</value>
+  </data>
 </root>
