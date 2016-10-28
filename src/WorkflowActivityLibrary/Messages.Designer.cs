@@ -313,6 +313,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects first parameter to be of type &apos;{1}&apos; or &apos;{2}&apos; or &apos;{3}&apos;. It was supplied a &apos;{4}&apos; parameter..
+        /// </summary>
+        internal static string ExpressionFunction_InvalidFirstFunctionParameterTypeError3 {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_InvalidFirstFunctionParameterTypeError3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The function &apos;{0}&apos; expects &apos;{1}&apos; parameters. It was supplied &apos;{2}&apos; parameters..
         /// </summary>
         internal static string ExpressionFunction_InvalidFunctionParameterCountError {
@@ -462,6 +471,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         internal static string ExpressionFunction_NullFunctionParameterError {
             get {
                 return ResourceManager.GetString("ExpressionFunction_NullFunctionParameterError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; requires the at least one parameter at position &apos;{1}&apos; or later to be not null..
+        /// </summary>
+        internal static string ExpressionFunction_NullFunctionParameterError2 {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_NullFunctionParameterError2", resourceCulture);
             }
         }
         

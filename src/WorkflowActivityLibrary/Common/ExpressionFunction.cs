@@ -1756,7 +1756,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
         /// <summary>
         /// Formats the multivalued list as per the specified format.
-        /// Function Syntax: FormatMultivaluedString(format:string, list1:List of strings[, list2:List of strings, ...] )
+        /// Function Syntax: FormatMultivaluedString(format:string, value1:list or object [, value2:list or object, ...] )
+        /// If more than one value lists are supplied as parameters, they will be treated as if they are of the length equal to that of the largest list with `null` as additional items. 
+        /// If one of the parameters supplied is a single / non-list object, e.g. a string, that parameter will be treated as if it is a list of length equal to that of the largest list filled with each item being the same object.
         /// </summary>
         /// <returns>The formatted list.</returns>
         private object FormatMultivaluedList()
@@ -1776,86 +1778,79 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
                 }
 
+                // At least one argument to format string function should not be null
+                bool allArgsNull = true;
                 for (int i = 1; i < this.parameters.Count; ++i)
                 {
                     parameter = this.parameters[i];
-                    if (parameter == null)
+                    if (parameter != null)
                     {
-                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                        allArgsNull = false;
+                        break;
                     }
                 }
 
-                Type parameterType = typeof(List<string>);
-                Type parameterType2 = typeof(string);
-                for (int i = 1; i < this.parameters.Count; ++i)
+                if (allArgsNull)
                 {
-                    parameter = this.parameters[i];
-                    if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
-                    {
-                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError2, this.function, i + 1, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
-                    }
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError2, this.function, 2));
                 }
 
                 object result = null;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    if (this.parameters[1] is string)
+                    var maxListItemCount = 0;
+                    for (int i = 1; i < this.parameters.Count; ++i)
                     {
-                        for (int i = 1; i < this.parameters.Count; ++i)
+                        Type paramType = this.parameters[i].GetType();
+                        if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
                         {
-                            parameter = this.parameters[i];
-                            if (parameter is string == false)
-                            {
-                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, "string", parameter == null ? "null" : parameter.GetType().Name));
-                            }
-                        }
-                    }
-                    else
-                    {
-                        var listCount = ((List<string>)this.parameters[1]).Count;
-                        if (listCount == 0)
-                        {
-                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
-                        }
+                            var listItemCount = ((IEnumerable)this.parameters[i]).Cast<object>().ToList().Count;
 
-                        for (int i = 2; i < this.parameters.Count; ++i)
-                        {
-                            parameter = this.parameters[i];
-                            if (parameter is List<string> == false)
-                            {
-                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
-                            }
-
-                            var listCount2 = ((List<string>)parameter).Count;
-                            if (listCount2 != listCount)
-                            {
-                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError2, this.function, i + 1, listCount, listCount2));
-                            }
+                            maxListItemCount = listItemCount > maxListItemCount ? listItemCount : maxListItemCount;
                         }
                     }
 
-                    if (this.parameters[1] is string)
+                    if (maxListItemCount == 0)
                     {
-                        string[] args = new string[this.parameters.Count - 1];
+                        // treat all (empty) lists as null and all non-lists as is
+                        var args = new object[this.parameters.Count - 1];
                         for (int i = 1; i < this.parameters.Count; ++i)
                         {
-                            args[i - 1] = this.parameters[i] as string;
+                            Type paramType = this.parameters[i].GetType();
+                            if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                            {
+                                args[i - 1] = null;
+                            }
+                            else
+                            {
+                                args[i - 1] = this.parameters[i];
+                            }
                         }
 
                         result = string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), args);
                     }
                     else
                     {
-                        var listCount = ((List<string>)this.parameters[1]).Count;
-                        result = new List<string>(listCount);
+                        result = new List<string>(maxListItemCount);
 
-                        string[] args = new string[this.parameters.Count - 1];
-                        for (int n = 0; n < listCount; ++n)
+                        // We'll conceptually stretch all non-list and list paramters to be a list of maxListItem
+                        var args = new object[this.parameters.Count - 1];
+                        for (int n = 0; n < maxListItemCount; ++n)
                         {
                             for (int i = 1; i < this.parameters.Count; ++i)
                             {
-                                args[i - 1] = ((List<string>)this.parameters[i])[n];
+                                Type paramType = this.parameters[i].GetType();
+                                if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                                {
+                                    List<object> list = ((IEnumerable)this.parameters[i]).Cast<object>().ToList();
+
+                                    args[i - 1] = list.Count > n ? list[n] : null;
+                                }
+                                else
+                                {
+                                    args[i - 1] = this.parameters[i];
+                                }
                             }
 
                             ((List<string>)result).Add(string.Format(CultureInfo.InvariantCulture, this.parameters[0].ToString(), args));
@@ -1961,18 +1956,14 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     else
                     {
                         Type paramType = this.parameters[0].GetType();
-                        int count = 0;
+                        int count = 1;
 
                         if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
                         {
-                            count += ((IEnumerable)this.parameters[0]).Cast<object>().Count();
+                            count = ((IEnumerable)this.parameters[0]).Cast<object>().Count();
+                        }
 
-                            result = count;
-                        }
-                        else
-                        {
-                            result = 1;
-                        }
+                        result = count;
                     }
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCount, "Count('{0}') returned '{1}'.", this.parameters[0], result);
@@ -4356,7 +4347,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
         /// <summary>
         /// This function is used to convert a value to its string representation.
-        /// Function Syntax: ConvertToString(value:integer) or ConvertToString(value:boolean)
+        /// Function Syntax: ConvertToString(value:integer) or ConvertToString(value:boolean) or ConvertToString(value:guid)
         /// </summary>
         /// <returns>A string representation of the given value.</returns>
         private string ConvertToString()
@@ -4372,15 +4363,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(long);
                 Type parameterType2 = typeof(bool);
+                Type parameterType3 = typeof(Guid);
+                Type parameterType4 = typeof(byte[]);
                 object parameter = this.parameters[0];
                 if (parameter == null)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToStringNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
                 }
 
-                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, typeof(string)))
+                if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, parameterType3) && !this.VerifyType(parameter, parameterType4) && !this.VerifyType(parameter, typeof(string)))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError2, this.function, parameterType.Name, parameterType2.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError3, this.function, parameterType.Name, parameterType2.Name, parameterType3.Name, parameter.GetType().Name));
                 }
 
                 string result;
