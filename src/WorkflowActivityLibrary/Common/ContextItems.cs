@@ -40,6 +40,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         [SecurityCritical]
         public static void SetContextItem(object key, object value)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException("key");
+            }
+
             Hashtable contextItems = (Hashtable)CallContext.GetData(CallContextSlotName) ?? new Hashtable();
 
             contextItems[key] = value;

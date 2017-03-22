@@ -167,6 +167,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <param name="value">Value.  Objects will be serialized.</param>
         /// <example>The following example demonstrates use of the AddContextItem method.
         /// <code>Logger.SetContextItem("SessionID", myComponent.SessionId);</code></example>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed. Required.")]
         [SecurityCritical]
         public static void SetContextItem(object key, object value)
         {
@@ -175,12 +176,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 throw new ArgumentNullException("key");
             }
 
-            if (value == null)
+            if (value is string && !string.IsNullOrEmpty(value as string))
             {
-                throw new ArgumentNullException("value");
+                // remove any curly braces as they cause FormatException in WriteEvent method when args is passed to it.
+                var stringValue = ((string)value).Replace("{", string.Empty).Replace("}", string.Empty);
+                ContextItems.SetContextItem(key, stringValue);
             }
-
-            ContextItems.SetContextItem(key, value);
+            else
+            {
+                ContextItems.SetContextItem(key, value);
+            }
         }
 
         /// <summary>
@@ -571,19 +576,20 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         traceSource.TraceEvent(eventType, eventId, message);
                     }
                 }
-                catch (FormatException)
+                catch (FormatException e)
                 {
+                    Debug.WriteLine(e);
                     traceSource.TraceEvent(eventType, eventId, message);
                 }
                 catch (Win32Exception e)
                 {
                     // FIM Portal run in WSS_Minimal trust level by default
                     // the quickest way to fix this is to make FIM Portal Web Apppool Identity a local admin
-                    System.Diagnostics.Debug.WriteLine(e);
+                    Debug.WriteLine(e);
                 }
                 catch (Exception e)
                 {
-                    System.Diagnostics.Debug.WriteLine(e);
+                    Debug.WriteLine(e);
                 }
             }
         }
