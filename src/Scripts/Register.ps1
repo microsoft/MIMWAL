@@ -189,7 +189,7 @@ function UpdateAssemblyBindings
     {
         try
         {
-            Import-Module "WebAdministration"
+            Import-Module "WebAdministration" -Debug:$false -Verbose:$false
             
             $portalSite = Get-WebSite | Where-Object { $_.Name -eq $PortalSiteName }
             
