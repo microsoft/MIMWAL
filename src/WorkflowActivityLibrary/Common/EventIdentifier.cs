@@ -1209,6 +1209,31 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionFormatMultivaluedList = 11676;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter = 11677;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter2 events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter2 = 11678;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlScalar events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlScalar = 11679;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlNonQuery events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlNonQuery = 11680;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByKey events
+        /// </summary>
+        public const int ExpressionFunctionValueByKey = 11681;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -2877,6 +2902,96 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction FormatMultivaluedList events
         /// </summary>
         public const int ExpressionFunctionFormatMultivaluedListInvalidSecondFunctionParameterTypeError = 41676;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameterInvalidFunctionParameterCountError = 41677;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameterInvalidFunctionParameterError = 41677;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameterNullFunctionParameterError = 41677;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameterInvalidFunctionParameterTypeError = 41677;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter2 events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterCountError = 41678;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter2 events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter2NullFunctionParameterError = 41678;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter2 events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterError = 41678;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CreateSqlParameter2 events
+        /// </summary>
+        public const int ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError = 41678;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlScalar events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlScalarInvalidFunctionParameterCountError = 41679;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlScalar events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlScalarNullFunctionParameterError = 41679;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlScalar events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlScalarInvalidFunctionParameterTypeError = 41679;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlNonQuery events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlNonQueryInvalidFunctionParameterCountError = 41680;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlNonQuery events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError = 41680;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ExecuteSqlNonQuery events
+        /// </summary>
+        public const int ExpressionFunctionExecuteSqlNonQueryInvalidFunctionParameterTypeError = 41680;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByKey events
+        /// </summary>
+        public const int ExpressionFunctionValueByKeyInvalidFunctionParameterCountError = 41681;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByKey events
+        /// </summary>
+        public const int ExpressionFunctionValueByKeyNullFunctionParameterError = 41681;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByKey events
+        /// </summary>
+        public const int ExpressionFunctionValueByKeyInvalidFirstFunctionParameterTypeError = 41681;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByKey events
+        /// </summary>
+        public const int ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError = 41681;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events

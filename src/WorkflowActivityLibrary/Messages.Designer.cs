@@ -295,6 +295,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; is configured with an invalid or missing config key &apos;{1}&apos;. .
+        /// </summary>
+        internal static string ExpressionFunction_InvalidConfigKeyConfiguration {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_InvalidConfigKeyConfiguration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The function &apos;{0}&apos; expects first parameter to be of type &apos;{1}&apos;. It was supplied a &apos;{2}&apos; parameter..
         /// </summary>
         internal static string ExpressionFunction_InvalidFirstFunctionParameterTypeError {
@@ -390,6 +399,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         internal static string ExpressionFunction_InvalidFunctionParameterTypeError2 {
             get {
                 return ResourceManager.GetString("ExpressionFunction_InvalidFunctionParameterTypeError2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects parameter at position {1} to be of type &apos;{2}&apos; or &apos;{3}&apos; or &apos;{4}&apos;. It was supplied a &apos;{5}&apos; parameter..
+        /// </summary>
+        internal static string ExpressionFunction_InvalidFunctionParameterTypeError3 {
+            get {
+                return ResourceManager.GetString("ExpressionFunction_InvalidFunctionParameterTypeError3", resourceCulture);
             }
         }
         

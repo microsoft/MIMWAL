@@ -15,6 +15,7 @@
       <Value>hklm</Value>
       <Value>lookup</Value>
       <Value>Utc</Value>
+      <Value>Sql</Value>
     </CollectionProperty>
   </GlobalSettings>
   <Parsers>
@@ -29,6 +30,7 @@
       <AnalyzerSettings>
         <CollectionProperty Name="Hungarian">
           <Value>dn</Value>
+          <Value>db</Value>
         </CollectionProperty>
       </AnalyzerSettings>
     </Analyzer>

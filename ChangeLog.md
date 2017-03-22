@@ -7,6 +7,17 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 
+### Version 2.17.0322.0
+
+#### Added
+
+* Support for executing SQL stored procedures and  queries with the implementation of following new functions: 
+	* New function [CreateSqlParameter][CreateSqlParameterFunction] 
+	* New function [CreateSqlParameter2][CreateSqlParameter2Function]
+	* New function [ExecuteSqlNonQuery][ExecuteSqlNonQueryFunction]
+	* New function [ExecuteSqlScalar][ExecuteSqlScalarFunction]
+	* New function [ValueByKey][ValueByKeyFunction]
+
 ### Version 2.16.1028.0
 
 #### Changed
@@ -128,3 +139,8 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 [FormatMultivaluedListFunction]: https://github.com/Microsoft/MIMWAL/wiki/FormatMultivaluedList-Function
 [ConvertToUniqueIdentifierFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToUniqueIdentifier-Function
 [ConvertToStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToString-Function
+[CreateSqlParameterFunction]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter-Function
+[CreateSqlParameter2Function]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter2-Function
+[ExecuteSqlNonQueryFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlNonQuery-Function
+[ExecuteSqlScalarFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlScalar-Function
+[ValueByKeyFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByKey-Function
