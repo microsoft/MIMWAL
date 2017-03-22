@@ -767,7 +767,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                                 object value = results[s];
 
                                 // Values may come as PSObject types. In that case, read the base object.
-                                if (value.GetType() == typeof(PSObject))
+                                if (value != null && value.GetType() == typeof(PSObject))
                                 {
                                     value = ((PSObject)results[s]).BaseObject;
                                 }
