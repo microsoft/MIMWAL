@@ -7,11 +7,11 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 
-### Version 2.17.0322.0
+### Version 2.17.0414.0
 
 #### Added
 
-* Support for executing SQL stored procedures and  queries with the implementation of following new functions: 
+* Support for executing SQL stored procedures and queries for SQL Server and ODBC Data Sources with the implementation of following new functions: 
 	* New function [CreateSqlParameter][CreateSqlParameterFunction] 
 	* New function [CreateSqlParameter2][CreateSqlParameter2Function]
 	* New function [ExecuteSqlNonQuery][ExecuteSqlNonQueryFunction]

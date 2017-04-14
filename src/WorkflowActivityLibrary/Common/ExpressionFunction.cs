@@ -350,7 +350,45 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             }
             catch (Exception ex)
             {
-                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRunUnknownFunctionExecutionError, new InvalidFunctionOperationException(Messages.ExpressionFunction_UnknownFunctionExecutionError, this.mode.ToString().ToLowerInvariant(), ex, this.function, ex.Message));
+                // dump all function parameters in an error log entry
+                string paramString = string.Empty;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    try
+                    {
+                        if (this.parameters != null && this.parameters.Count > 0)
+                        {
+                            for (var i = 0; i < this.parameters.Count; ++i)
+                            {
+                                var parameter = this.parameters[i];
+                                paramString += "'";
+                                if (parameter != null)
+                                {
+                                    try
+                                    {
+                                        paramString += Convert.ToString(parameter) + "',";
+                                    }
+                                    catch (Exception)
+                                    {
+                                        // let it print without the ending single quote as an indication of the conversion failure
+                                    }
+                                }
+                                else
+                                {
+                                    paramString += "',";
+                                }
+                            }
+                        }
+
+                        paramString = "(" + paramString.TrimEnd(',') + ")";
+                    }
+                    catch (Exception)
+                    {
+                        // do nothing - silenty ignore
+                    }
+                }
+
+                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRunUnknownFunctionExecutionError, new InvalidFunctionOperationException(Messages.ExpressionFunction_UnknownFunctionExecutionError, this.mode.ToString().ToLowerInvariant(), ex, this.function + paramString, ex.Message));
             }
             finally
             {
