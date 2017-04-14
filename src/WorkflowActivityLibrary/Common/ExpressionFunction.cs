@@ -15,6 +15,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
     using System;
     using System.Collections;
     using System.Collections.Generic;
+    using System.Configuration;
+    using System.Data;
+    using System.Data.Common;
+    using System.Data.Odbc;
+    using System.Data.SqlClient;
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
@@ -154,6 +159,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "COUNT":
                         return this.Count();
 
+                    case "CREATESQLPARAMETER":
+                        return this.CreateSqlParameter();
+
+                    case "CREATESQLPARAMETER2":
+                        return this.CreateSqlParameter2();
+
                     case "CRLF":
                         return this.CRLF();
 
@@ -180,6 +191,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                     case "ESCAPEDNCOMPONENT":
                         return this.EscapeDNComponent();
+
+                    case "EXECUTESQLNONQUERY":
+                        return this.ExecuteSqlNonQuery();
+
+                    case "EXECUTESQLSCALAR":
+                        return this.ExecuteSqlScalar();
 
                     case "FIRST":
                         return this.First();
@@ -307,6 +324,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "VALUEBYINDEX":
                         return this.ValueByIndex();
 
+                    case "VALUEBYKEY":
+                        return this.ValueByKey();
+
                     case "VALUETYPE":
                         return this.ValueType();
 
@@ -330,7 +350,45 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             }
             catch (Exception ex)
             {
-                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRunUnknownFunctionExecutionError, new InvalidFunctionOperationException(Messages.ExpressionFunction_UnknownFunctionExecutionError, this.mode.ToString().ToLowerInvariant(), ex, this.function, ex.Message));
+                // dump all function parameters in an error log entry
+                string paramString = string.Empty;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    try
+                    {
+                        if (this.parameters != null && this.parameters.Count > 0)
+                        {
+                            for (var i = 0; i < this.parameters.Count; ++i)
+                            {
+                                var parameter = this.parameters[i];
+                                paramString += "'";
+                                if (parameter != null)
+                                {
+                                    try
+                                    {
+                                        paramString += Convert.ToString(parameter) + "',";
+                                    }
+                                    catch (Exception)
+                                    {
+                                        // let it print without the ending single quote as an indication of the conversion failure
+                                    }
+                                }
+                                else
+                                {
+                                    paramString += "',";
+                                }
+                            }
+                        }
+
+                        paramString = "(" + paramString.TrimEnd(',') + ")";
+                    }
+                    catch (Exception)
+                    {
+                        // do nothing - silenty ignore
+                    }
+                }
+
+                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRunUnknownFunctionExecutionError, new InvalidFunctionOperationException(Messages.ExpressionFunction_UnknownFunctionExecutionError, this.mode.ToString().ToLowerInvariant(), ex, this.function + paramString, ex.Message));
             }
             finally
             {
@@ -972,6 +1030,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// true if the request parameters contain the specified attribute name. Otherwise false.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1603:DocumentationMustContainValidXml", Justification = "Reviewed.")]
         private bool ParametersContain()
         {
@@ -1082,6 +1141,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// List of the attribute names in the request parameters.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1603:DocumentationMustContainValidXml", Justification = "Reviewed.")]
         private List<string> ParametersList()
         {
@@ -1161,6 +1221,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// The value of the attribute in the request parameters.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1603:DocumentationMustContainValidXml", Justification = "Reviewed.")]
         private object ParameterValue()
         {
@@ -1266,6 +1327,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// The added value of the multi-valued attribute in the request parameters.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1603:DocumentationMustContainValidXml", Justification = "Reviewed.")]
         private object ParameterValueAdded()
         {
@@ -1372,6 +1434,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// The removed value of the multi-valued attribute in the request parameters.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1603:DocumentationMustContainValidXml", Justification = "Reviewed.")]
         private object ParameterValueRemoved()
         {
@@ -1469,6 +1532,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>
         /// A table of of attribute name, modification type and modified values in the request parameters.
         /// </returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed. Required.")]
         private string ParametersTable()
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionParametersTable, "Evaluation Mode: '{0}'.", this.mode);
@@ -1769,7 +1833,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             {
                 if (this.parameters.Count < 2)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinCountError, this.function, 2, this.parameters.Count));
                 }
 
                 object parameter = this.parameters[0];
@@ -3697,6 +3761,77 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
+        /// This function is used to retrieve the value at the specified key in the input Dictionary of string/object key/pair.
+        /// Function Syntax: ValueByKey(dictionary:[Dictionary], key:string)
+        /// </summary>
+        /// <returns>The object associated with the specified key. If the specified key does not exist, null is returned.</returns>
+        private object ValueByKey()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionValueByKey, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(string);
+                object parameter = this.parameters[1];
+                if (parameter == null)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
+                }
+
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                object result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    if (this.parameters[0] == null)
+                    {
+                        result = null;
+                    }
+                    else
+                    {
+                        string key = this.parameters[1] as string;
+
+                        parameterType = typeof(Dictionary<string, object>);
+                        parameter = this.parameters[0];
+                        if (parameter.GetType() == parameterType)
+                        {
+                            var dictionary = parameter as Dictionary<string, object>;
+                            if (dictionary != null && dictionary.ContainsKey(key))
+                            {
+                                result = dictionary[key];
+                            }
+                        }
+                        else
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                        }
+                    }
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionValueByKey, "ValueByKey('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionValueByKey, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
         /// This function is used to determine the type of the supplied input object.
         /// Function Syntax: ValueType(value:object)
         /// </summary>
@@ -4710,6 +4845,648 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionSortList, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to create a <see cref="DbParameter" /> object for use in various ExecuteSql functions.
+        /// Function Syntax: CreateSqlParameter(sqlConnectionStringConfigKey:string, parameterName:string, parameterValue:object [,parameterDirection:string])
+        /// </summary>
+        /// <returns>The <see cref="DbParameter" /> object.</returns>
+        private DbParameter CreateSqlParameter()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCreateSqlParameter, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 3 || this.parameters.Count > 4)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinMaxCountError, this.function, 3, 4, this.parameters.Count));
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    object parameter = this.parameters[i]; // 0 = SQL Connection String Config Key, 1 = Parameter Name
+                    Type parameterType = typeof(string);
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+
+                    if (this.mode != EvaluationMode.Parse)
+                    {
+                        switch (i)
+                        {
+                            case 0: // SQL Connection String Config Key
+                                {
+                                    var connectionStringConfigKey = this.parameters[0] as string;
+                                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+                                    if (string.IsNullOrEmpty(providerName))
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                                    }
+
+                                    try
+                                    {
+                                        DbProviderFactories.GetFactory(providerName);
+                                    }
+                                    catch (DbException)
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                                    }
+                                }
+
+                                break;
+                            case 1: // SQL Parameter Name
+                                var parameterName = parameter as string;
+                                if (!parameterName.StartsWith("@", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError, this.function, i, "@" + parameterName, parameterName));
+                                }
+
+                                break;
+                        }
+                    }
+                }
+
+                if (this.parameters.Count == 4)
+                {
+                    var i = 3;
+                    object parameter = this.parameters[i]; // 3 = Parameter Direction
+                    Type parameterType = typeof(string);
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+
+                    if (this.mode != EvaluationMode.Parse)
+                    {
+                        try
+                        {
+                            Enum.Parse(typeof(ParameterDirection), parameter as string, true);
+                        }
+                        catch (ArgumentException e)
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, e, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                        }
+                    }
+                }
+
+                DbParameter result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    string parameterName = this.parameters[1] as string;
+                    object parameterValue = this.parameters[2];
+                    var parameterDirection = ParameterDirection.Input;
+
+                    if (this.parameters.Count == 4)
+                    {
+                        parameterDirection = (ParameterDirection)Enum.Parse(typeof(ParameterDirection), this.parameters[3] as string, true);
+                    }
+
+                    var connectionStringConfigKey = this.parameters[0] as string;
+                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+                    if (string.IsNullOrEmpty(providerName))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameterNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                    }
+
+                    var factory = DbProviderFactories.GetFactory(providerName);
+
+                    result = factory.CreateParameter();
+                    result.ParameterName = parameterName;
+                    result.Direction = parameterDirection;
+                    result.Value = (parameterValue == null) ? DBNull.Value : parameterValue;
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCreateSqlParameter, "CreateSqlParameter('{0}', '{1}', '{2}', '{3}') returned '{4}'.", this.parameters[0], result.ParameterName, result.Value, result.Direction, result);
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCreateSqlParameter, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to create a <see cref="DbParameter" /> object for use in various ExecuteSql functions.
+        /// Function Syntax: CreateSqlParameter2(sqlConnectionStringConfigKey:string, parameterName:string, parameterDirection:string, parameterType:string [, parameterSize:integer, parameterValue:object])
+        /// </summary>
+        /// <returns>The <see cref="DbParameter" /> object.</returns>
+        private DbParameter CreateSqlParameter2()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCreateSqlParameter2, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 4 || this.parameters.Count > 6)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinMaxCountError, this.function, 4, 6, this.parameters.Count));
+                }
+
+                for (int i = 0; i < 4; ++i)
+                {
+                    object parameter = this.parameters[i]; // 0 = SQL Connection String Config Key, 1 = Parameter Name, 2 = Parameter Direction, 3 = Parameter Type
+                    Type parameterType = typeof(string);
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+
+                    if (this.mode != EvaluationMode.Parse)
+                    {
+                        switch (i)
+                        {
+                            case 0: // SQL Connection String Config Key
+                                {
+                                    var connectionStringConfigKey = this.parameters[0] as string;
+                                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+                                    if (string.IsNullOrEmpty(providerName))
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                                    }
+
+                                    try
+                                    {
+                                        DbProviderFactories.GetFactory(providerName);
+                                    }
+                                    catch (DbException)
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                                    }
+                                }
+
+                                break;
+                            case 1: // SQL Parameter Name
+                                var parameterName = parameter as string;
+                                if (!parameterName.StartsWith("@", StringComparison.OrdinalIgnoreCase))
+                                {
+                                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError, this.function, i, "@" + parameterName, parameterName));
+                                }
+
+                                break;
+                            case 2: // SQL Parameter Direction
+                                {
+                                    try
+                                    {
+                                        Enum.Parse(typeof(ParameterDirection), parameter as string, true);
+                                    }
+                                    catch (ArgumentException e)
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, e, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                                    }
+                                }
+
+                                break;
+                            case 3: // SQL Parameter Type
+                                {
+                                    var connectionStringConfigKey = this.parameters[0] as string;
+                                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+                                    var factory = DbProviderFactories.GetFactory(providerName);
+
+                                    var dbParameter = factory.CreateParameter();
+                                    if (dbParameter is SqlParameter)
+                                    {
+                                        try
+                                        {
+                                            Enum.Parse(typeof(SqlDbType), parameter as string, true);
+                                        }
+                                        catch (ArgumentException)
+                                        {
+                                            try
+                                            {
+                                                Enum.Parse(typeof(DbType), parameter as string, true);
+                                            }
+                                            catch (ArgumentException e)
+                                            {
+                                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError2, e, this.function, i + 1, typeof(SqlDbType), typeof(DbType), parameter.GetType().Name));
+                                            }
+                                        }
+                                    }
+                                    else if (dbParameter is OdbcParameter)
+                                    {
+                                        try
+                                        {
+                                            Enum.Parse(typeof(OdbcType), parameter as string, true);
+                                        }
+                                        catch (ArgumentException)
+                                        {
+                                            try
+                                            {
+                                                Enum.Parse(typeof(DbType), parameter as string, true);
+                                            }
+                                            catch (ArgumentException e)
+                                            {
+                                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError2, e, this.function, i + 1, typeof(OdbcType), typeof(DbType), parameter.GetType().Name));
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        try
+                                        {
+                                            Enum.Parse(typeof(DbType), parameter as string, true);
+                                        }
+                                        catch (ArgumentException e)
+                                        {
+                                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, e, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                                        }
+                                    }
+                                }
+
+                                break;
+                        }
+                    }
+                }
+
+                if (this.parameters.Count > 4)
+                {
+                    var i = 4;
+                    object parameter = this.parameters[i]; // SQL Parameter Size
+                    Type parameterType = typeof(int);
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCreateSqlParameter2InvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+                }
+
+                DbParameter result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    var connectionStringConfigKey = this.parameters[0] as string;
+                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+                    var factory = DbProviderFactories.GetFactory(providerName);
+
+                    var parameterName = this.parameters[1] as string;
+                    var parameterDirection = (ParameterDirection)Enum.Parse(typeof(ParameterDirection), this.parameters[2] as string, true);
+                    var parameterDbType = this.parameters[3] as string;
+
+                    var parameterSize = 0;
+                    if (this.parameters.Count > 4)
+                    {
+                        parameterSize = Convert.ToInt32(this.parameters[4], CultureInfo.InvariantCulture); // SQL Parameter Size
+                    }
+
+                    object parameterValue = null;
+                    if (this.parameters.Count > 5)
+                    {
+                        parameterValue = this.parameters[5]; // SQL Parameter Value
+                    }
+
+                    result = factory.CreateParameter();
+                    result.ParameterName = parameterName;
+                    result.Direction = parameterDirection;
+
+                    if (result is SqlParameter)
+                    {
+                        try
+                        {
+                            ((SqlParameter)result).SqlDbType = (SqlDbType)Enum.Parse(typeof(SqlDbType), parameterDbType, true);
+                        }
+                        catch (ArgumentException)
+                        {
+                            result.DbType = (DbType)Enum.Parse(typeof(DbType), parameterDbType, true);
+                        }
+                    }
+                    else if (result is OdbcParameter)
+                    {
+                        try
+                        {
+                            ((OdbcParameter)result).OdbcType = (OdbcType)Enum.Parse(typeof(OdbcType), parameterDbType, true);
+                        }
+                        catch (ArgumentException)
+                        {
+                            result.DbType = (DbType)Enum.Parse(typeof(DbType), parameterDbType, true);
+                        }
+                    }
+                    else
+                    {
+                        result.DbType = (DbType)Enum.Parse(typeof(DbType), parameterDbType, true);
+                    }
+
+                    if (parameterSize != 0)
+                    {
+                        result.Size = parameterSize;
+                    }
+
+                    result.Value = (parameterValue == null) ? DBNull.Value : parameterValue;
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCreateSqlParameter2, "CreateSqlParameter2('{0}', '{1}', '{2}', '{3}', '{4}', '{5}') returned '{6}'.", connectionStringConfigKey, result.ParameterName, result.Direction, result.DbType, result.Size, result.Value, result);
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCreateSqlParameter2, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to execute a SQL stored procedure or query against a SQL database.
+        /// Function Syntax: ExecuteSqlScalar(sqlConnectionStringConfigKey:string, sqlStatement:string [, parameter1:SqlParameter, parameter2:SqlParameter, ...])
+        /// </summary>
+        /// <returns>The first column of the first row in the result set.</returns>
+        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "The query does not contain end-user input as well as it's parameterised.")]
+        private object ExecuteSqlScalar()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionExecuteSqlScalar, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinCountError, this.function, 2, this.parameters.Count));
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    object parameter = this.parameters[i];
+                    Type parameterType = typeof(string);
+
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+                }
+
+                for (int i = 2; i < this.parameters.Count; ++i)
+                {
+                    object parameter = this.parameters[i];
+                    Type parameterType = typeof(DbParameter);
+                    Type parameterType2 = typeof(SqlParameter);
+                    Type parameterType3 = typeof(OdbcParameter);
+
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, parameterType3))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError3, this.function, i + 1, parameterType.Name, parameterType2.Name, parameterType3.Name, parameter.GetType().Name));
+                    }
+                }
+
+                object result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    var connectionStringConfigKey = this.parameters[0] as string;
+                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                    var connectionString = connectionStringConfig != null ? connectionStringConfig.ConnectionString : null;
+                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+
+                    if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(providerName))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                    }
+
+                    var commandTimeout = 30;
+                    commandTimeout = int.TryParse(ConfigurationManager.AppSettings["WAL_DBCommandTimeout"], out commandTimeout) ? commandTimeout : 30;
+
+                    try
+                    {
+                        var factory = DbProviderFactories.GetFactory(providerName);
+                        using (var dbConnection = factory.CreateConnection())
+                        {
+                            dbConnection.ConnectionString = connectionString;
+                            using (var dbCommand = factory.CreateCommand())
+                            {
+                                dbCommand.Connection = dbConnection;
+                                var dbCmdText = (this.parameters[1] as string).Trim();
+                                dbCommand.CommandText = dbCmdText;
+
+                                // If the command text has spaces inbetween, assume it's a query, else stored procedure as we won't support anything else.
+                                dbCommand.CommandType = dbCmdText.Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
+                                dbCommand.CommandTimeout = commandTimeout;
+
+                                string paramString = string.Empty;
+                                for (var i = 2; i < this.parameters.Count; ++i)
+                                {
+                                    var parameter = this.parameters[i] as DbParameter;
+                                    dbCommand.Parameters.Add(parameter);
+                                    paramString += parameter.ParameterName + "='" + parameter.Value + "',";
+                                }
+
+                                paramString = paramString.TrimEnd(',');
+
+                                if (providerName.Equals("System.Data.Odbc", StringComparison.OrdinalIgnoreCase) && dbCommand.CommandType == CommandType.StoredProcedure)
+                                {
+                                    var paramCount = dbCommand.Parameters.Count;
+                                    var paramPlaceholder = string.Empty;
+                                    for (var i = 0; i < paramCount; ++i)
+                                    {
+                                        paramPlaceholder += string.IsNullOrEmpty(paramPlaceholder) ? "?" : ",?";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(paramPlaceholder))
+                                    {
+                                        dbCommand.CommandText = string.Format(CultureInfo.InvariantCulture, "{0} CALL {1}({2}) {3}", "{", dbCmdText, paramPlaceholder, "}");
+                                    }
+                                }
+
+                                dbConnection.Open();
+                                result = dbCommand.ExecuteScalar();
+
+                                if (result == DBNull.Value)
+                                {
+                                    result = null;
+                                }
+
+                                Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionExecuteSqlScalar, "ExecuteSqlScalar('{0}', '{1}, '{2}') returned '{3}'.", connectionStringConfigKey, dbCommand.CommandText, paramString, result);
+                            }
+                        }
+                    }
+                    catch (DbException e)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlScalarNullFunctionParameterError, e);
+                    }
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionExecuteSqlScalar, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to execute a SQL stored procedure or insert, update, delete statements against a SQL database.
+        /// Function Syntax: ExecuteSqlNonQuery(sqlConnectionStringConfigKey:string, sqlStatement:string [, parameter1:SqlParameter, parameter2:SqlParameter, ...])
+        /// </summary>
+        /// <returns>The dictionary of output parameter names and their values.</returns>
+        [SuppressMessage("Microsoft.Security", "CA2100:Review SQL queries for security vulnerabilities", Justification = "The query does not contain end-user input as well as it's parameterised.")]
+        private Dictionary<string, object> ExecuteSqlNonQuery()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionExecuteSqlNonQuery, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterMinCountError, this.function, 2, this.parameters.Count));
+                }
+
+                for (int i = 0; i < 2; ++i)
+                {
+                    object parameter = this.parameters[i];
+                    Type parameterType = typeof(string);
+
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, i + 1, parameterType.Name, parameter.GetType().Name));
+                    }
+                }
+
+                for (int i = 2; i < this.parameters.Count; ++i)
+                {
+                    object parameter = this.parameters[i];
+                    Type parameterType = typeof(DbParameter);
+                    Type parameterType2 = typeof(SqlParameter);
+                    Type parameterType3 = typeof(OdbcParameter);
+
+                    if (parameter == null)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, i + 1));
+                    }
+
+                    if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, parameterType3))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryInvalidFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError3, this.function, i + 1, parameterType.Name, parameterType2.Name, parameterType3.Name, parameter.GetType().Name));
+                    }
+                }
+
+                Dictionary<string, object> result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    var connectionStringConfigKey = this.parameters[0] as string;
+                    var connectionStringConfig = ConfigurationManager.ConnectionStrings[connectionStringConfigKey];
+                    var connectionString = connectionStringConfig != null ? connectionStringConfig.ConnectionString : null;
+                    var providerName = connectionStringConfig != null ? connectionStringConfig.ProviderName : null;
+
+                    if (string.IsNullOrEmpty(connectionString) || string.IsNullOrEmpty(providerName))
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, this.function, connectionStringConfigKey));
+                    }
+
+                    var commandTimeout = 30;
+                    commandTimeout = int.TryParse(ConfigurationManager.AppSettings["WAL_DBCommandTimeout"], out commandTimeout) ? commandTimeout : 30;
+
+                    try
+                    {
+                        var factory = DbProviderFactories.GetFactory(providerName);
+                        using (var dbConnection = factory.CreateConnection())
+                        {
+                            dbConnection.ConnectionString = connectionString;
+                            using (var dbCommand = factory.CreateCommand())
+                            {
+                                dbCommand.Connection = dbConnection;
+                                var dbCmdText = (this.parameters[1] as string).Trim();
+                                dbCommand.CommandText = dbCmdText;
+
+                                // If the command text has spaces inbetween, assume it's a query, else stored procedure as we won't support anything else.
+                                dbCommand.CommandType = dbCmdText.Contains(" ") ? CommandType.Text : CommandType.StoredProcedure;
+                                dbCommand.CommandTimeout = commandTimeout;
+
+                                string paramString = string.Empty;
+                                for (var i = 2; i < this.parameters.Count; ++i)
+                                {
+                                    var parameter = this.parameters[i] as DbParameter;
+                                    if (parameter != null)
+                                    {
+                                        dbCommand.Parameters.Add(parameter);
+                                        paramString += parameter.ParameterName + "='" + parameter.Value + "',";
+                                    }
+                                }
+
+                                paramString = paramString.TrimEnd(',');
+
+                                if (providerName.Equals("System.Data.Odbc", StringComparison.OrdinalIgnoreCase) && dbCommand.CommandType == CommandType.StoredProcedure)
+                                {
+                                    var paramCount = dbCommand.Parameters.Count;
+                                    var paramPlaceholder = string.Empty;
+                                    for (var i = 0; i < paramCount; ++i)
+                                    {
+                                        paramPlaceholder += string.IsNullOrEmpty(paramPlaceholder) ? "?" : ",?";
+                                    }
+
+                                    if (!string.IsNullOrEmpty(paramPlaceholder))
+                                    {
+                                        dbCommand.CommandText = string.Format(CultureInfo.InvariantCulture, "{0} CALL {1}({2}) {3}", "{", dbCmdText, paramPlaceholder, "}");
+                                    }
+                                }
+
+                                dbConnection.Open();
+                                var rowsAffected = dbCommand.ExecuteNonQuery();
+
+                                result = new Dictionary<string, object>();
+                                result.Add("@RowsAffected", rowsAffected);
+                                foreach (DbParameter param in dbCommand.Parameters)
+                                {
+                                    if (param.Direction != ParameterDirection.Input)
+                                    {
+                                        result.Add(param.ParameterName, param.Value);
+                                    }
+                                }
+
+                                string paramOutString = string.Join(",", result.Select(kvp => string.Format(CultureInfo.InvariantCulture, "{0}='{1}'", kvp.Key, kvp.Value)).ToArray());
+
+                                Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionExecuteSqlNonQuery, "ExecuteSqlNonQuery('{0}', '{1}, '{2}') returned a dictionary of '{3}' parameter/value pairs.", connectionStringConfigKey, dbCommand.CommandText, paramString, paramOutString);
+                            }
+                        }
+                    }
+                    catch (DbException e)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, e);
+                    }
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionExecuteSqlNonQuery, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 

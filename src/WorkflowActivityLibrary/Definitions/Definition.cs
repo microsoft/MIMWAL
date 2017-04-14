@@ -30,8 +30,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Definitio
         /// <param name="check">if set to true, the right-hand side can be assigned null value.</param>
         public Definition(string left, string right, bool check)
         {
-            this.Left = left;
-            this.Right = right;
+            this.Left = !string.IsNullOrEmpty(left) ? left.Trim() : left;
+            this.Right = !string.IsNullOrEmpty(right) ? right.Trim() : right;
             this.Check = check;
         }
 

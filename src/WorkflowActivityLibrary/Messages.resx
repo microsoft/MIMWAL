@@ -378,4 +378,10 @@
   <data name="ExpressionFunction_NullFunctionParameterError2" xml:space="preserve">
     <value>The function '{0}' requires the at least one parameter at position '{1}' or later to be not null.</value>
   </data>
+  <data name="ExpressionFunction_InvalidConfigKeyConfiguration" xml:space="preserve">
+    <value>The function '{0}' is configured with an invalid or missing config key '{1}'. </value>
+  </data>
+  <data name="ExpressionFunction_InvalidFunctionParameterTypeError3" xml:space="preserve">
+    <value>The function '{0}' expects parameter at position {1} to be of type '{2}' or '{3}' or '{4}'. It was supplied a '{5}' parameter.</value>
+  </data>
 </root>

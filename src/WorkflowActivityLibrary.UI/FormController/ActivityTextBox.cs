@@ -74,7 +74,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.FormCo
 
             set
             {
-                this.textBoxControl.Text = value;
+                this.textBoxControl.Text = !string.IsNullOrEmpty(value) ? value.Trim() : value;
             }
         }
         
