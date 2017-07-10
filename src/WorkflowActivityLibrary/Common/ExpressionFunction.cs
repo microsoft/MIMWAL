@@ -366,7 +366,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 {
                                     try
                                     {
-                                        paramString += Convert.ToString(parameter) + "',";
+                                        paramString += Convert.ToString(parameter, CultureInfo.InvariantCulture) + "',";
                                     }
                                     catch (Exception)
                                     {

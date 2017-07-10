@@ -14,12 +14,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
     using System;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Workflow.ComponentModel;
     using Microsoft.IdentityManagement.WebUI.Controls;
     using Microsoft.ResourceManagement.Workflow.Activities;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activities;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common;
+    using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Enumerations;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Exceptions;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Definitions;
@@ -34,6 +37,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
     internal class SendEmailNotificationForm : ActivitySettingsPart
     {
         #region Declarations
+
+        /// <summary>
+        /// The regex pattern for FIM resource type and attribute validation
+        /// </summary>
+        private const string RegexPattern = @"^[(a-z)(A-Z)(_)(:)][(a-z)(A-Z)(0-9)(\-)(.)(_)(:)]*$";
 
         /// <summary>
         /// The activity display name textbox
@@ -54,6 +62,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
         /// The activity form controller
         /// </summary>
         private readonly ActivityFormController controller = new ActivityFormController(ActivitySettings.SendEmailNotification);
+
+        /// <summary>
+        /// The iteration textbox
+        /// </summary>
+        private readonly ActivityTextBox iteration;
+
+        /// <summary>
+        /// The queries definitions controller
+        /// </summary>
+        private readonly DefinitionsController queries;
+
+        /// <summary>
+        /// The query resources checkbox
+        /// </summary>
+        private readonly ActivityCheckBox queryResources;
+
+        /// <summary>
+        /// The WorkflowData variables definitions controller
+        /// </summary>
+        private readonly DefinitionsController workflowDataVariables;
 
         /// <summary>
         /// The email template textbox
@@ -98,7 +126,39 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 this.advanced.CheckBoxControl.CheckedChanged += this.Advanced_CheckedChanged;
                 this.advanced.CheckBoxControl.AutoPostBack = true;
 
+                this.queryResources = this.controller.AddCheckBox(ActivitySettings.QueryResources, ActivitySettings.QueryResourcesHelpText, false, false);
+                this.queryResources.CheckBoxControl.CheckedChanged += this.QueryResources_CheckedChanged;
+                this.queryResources.CheckBoxControl.AutoPostBack = true;
+
+                // Create a new instance of the definitions controller to capture query definitions
+                // The visibility of the queries control will be governed by the Query Resources checkbox
+                this.queries = new DefinitionsController("Queries", 150, 430, 0)
+                {
+                    DisplayName = ActivitySettings.Queries,
+                    Description = ActivitySettings.QueriesHelpText,
+                    LeftHeader = ActivitySettings.QueriesLeftHeader,
+                    RightHeader = ActivitySettings.QueriesRightHeader
+                };
+                this.queries.HeaderRow.Visible = false;
+                this.queries.TableRow.Visible = false;
+                this.controller.ActivityControlTable.Rows.Add(this.queries.HeaderRow);
+                this.controller.ActivityControlTable.Rows.Add(this.queries.TableRow);
+
                 this.activityExecutionCondition = this.controller.AddTextBox(ActivitySettings.ActivityExecutionCondition, ActivitySettings.ConditionHelpText, false, false);
+                this.iteration = this.controller.AddTextBox(ActivitySettings.Iteration, ActivitySettings.IterationHelpText, false, false);
+
+                // Create a new definitions controller to capture update definitions
+                this.workflowDataVariables = new DefinitionsController("Workflow Lookup Variables", 330, 250, 70)
+                {
+                    DisplayName = ActivitySettings.WorkflowDataVariables,
+                    Description = ActivitySettings.WorkflowDataVariablesHelpText,
+                    LeftHeader = ActivitySettings.WorkflowDataVariablesLeftHeader,
+                    RightHeader = ActivitySettings.WorkflowDataVariablesRightHeader,
+                };
+                this.workflowDataVariables.HeaderRow.Visible = false;
+                this.workflowDataVariables.TableRow.Visible = false;
+                this.controller.ActivityControlTable.Rows.Add(this.workflowDataVariables.HeaderRow);
+                this.controller.ActivityControlTable.Rows.Add(this.workflowDataVariables.TableRow);
 
                 this.emailTemplate = this.controller.AddTextBox(ActivitySettings.SendEmailNotificationEmailTemplate, ActivitySettings.SendEmailNotificationEmailTemplateHelpText, true, true);
                 this.emailTemplate.TextBoxControl.Width = 300;
@@ -159,14 +219,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 SendEmailNotification wfa = new SendEmailNotification
                 {
                     ActivityDisplayName = this.activityDisplayName.Value,
+                    QueryResources = this.queryResources.Value,
                     Advanced = this.advanced.Value,
                     ActivityExecutionCondition = this.activityExecutionCondition.Value,
+                    Iteration = this.iteration.Value,
                     EmailTemplate = this.emailTemplate.Value,
                     To = this.to.Value,
                     CC = this.cc.Value,
                     Bcc = this.bcc.Value,
                     SuppressException = this.suppressException.Value,
                 };
+
+                // Convert the definition listings (web controls) to hash tables which can be serialized to the XOML workflow definition
+                // A hash table is used due to issues with deserialization of lists and other structured data
+                DefinitionsConverter queriesConverter = new DefinitionsConverter(this.queries.DefinitionListings);
+                DefinitionsConverter workflowDataVariablesConverter = new DefinitionsConverter(this.workflowDataVariables.DefinitionListings);
+                wfa.QueriesTable = queriesConverter.DefinitionsTable;
+                wfa.WorkflowDataVariablesTable = workflowDataVariablesConverter.DefinitionsTable;
 
                 return wfa;
             }
@@ -200,13 +269,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
                 // Set form control values based on the activity's dependency properties
                 this.activityDisplayName.Value = wfa.ActivityDisplayName;
+                this.queryResources.Value = wfa.QueryResources;
                 this.advanced.Value = wfa.Advanced;
                 this.activityExecutionCondition.Value = wfa.ActivityExecutionCondition;
+                this.iteration.Value = wfa.Iteration;
                 this.emailTemplate.Value = wfa.EmailTemplate;
                 this.to.Value = wfa.To;
                 this.cc.Value = wfa.CC;
                 this.bcc.Value = wfa.Bcc;
                 this.suppressException.Value = wfa.SuppressException;
+                this.queries.LoadActivitySettings(wfa.QueriesTable);
+                this.workflowDataVariables.LoadActivitySettings(wfa.WorkflowDataVariablesTable);
             }
             catch (Exception e)
             {
@@ -232,6 +305,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 // Use the controller to persist the settings for standard activity controls
                 // The definitions controller will manage persistance of associated values
                 ActivitySettingsPartData data = this.controller.PersistSettings();
+                data = this.queries.PersistSettings(data);
+                data = this.workflowDataVariables.PersistSettings(data);
                 return data;
             }
             catch (Exception e)
@@ -257,6 +332,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
             {
                 // Use the controller and definitions controller to restore settings for activity controls
                 this.controller.RestoreSettings(data);
+                this.queries.RestoreSettings(data);
+                this.workflowDataVariables.RestoreSettings(data);
+                this.ManageQueryControls();
                 this.ManageAdvancedControls();
             }
             catch (Exception e)
@@ -283,6 +361,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                 // Use the controller to enable/disable standard activity controls
                 // the definitions controller will manage the mode of associated controls
                 this.controller.SwitchMode(mode);
+                this.queries.SwitchMode(mode);
+                this.workflowDataVariables.SwitchMode(mode);
             }
             catch (Exception e)
             {
@@ -328,6 +408,35 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
                     if (this.advanced.Value)
                     {
+                        if (this.queryResources.Value)
+                        {
+                            // Loop through all active query listings and make sure they are valid
+                            foreach (DefinitionListing query in this.queries.DefinitionListings.Where(query => query.Active))
+                            {
+                                // If a value is missing for key or query, the definition
+                                // will be null and the listing fails validation
+                                if (query.Definition == null)
+                                {
+                                    this.controller.ValidationError = ActivitySettings.QueryDefinitionValidationError;
+                                    return false;
+                                }
+
+                                // Make sure that the specified query key is properly formatted
+                                if (!Regex.Match(query.Definition.Left, RegexPattern).Success)
+                                {
+                                    this.controller.ValidationError = string.Format(CultureInfo.CurrentUICulture, ActivitySettings.QueryDefintionLeftValidationError, query.Definition.Left);
+                                    return false;
+                                }
+
+                                // Make sure that the specified XPath filter is properly formatted
+                                if (!ExpressionEvaluator.IsXPath(query.Definition.Right))
+                                {
+                                    this.controller.ValidationError = string.Format(CultureInfo.CurrentUICulture, ActivitySettings.QueryDefintionRightValidationError, query.Definition.Left);
+                                    return false;
+                                }
+                            }
+                        }
+
                         if (!string.IsNullOrEmpty(this.activityExecutionCondition.Value))
                         {
                             evaluator.ParseExpression(this.activityExecutionCondition.Value);
@@ -340,8 +449,95 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                             }
                         }
 
+                        if (!string.IsNullOrEmpty(this.iteration.Value))
+                        {
+                            evaluator.ParseExpression(this.iteration.Value);
+                        }
+
                         ParseRecipient(this.cc.Value);
                         ParseRecipient(this.bcc.Value);
+
+                        // Loop through all active workflow data listings and make sure they are valid
+                        var activeListings = this.workflowDataVariables.DefinitionListings.Where(workflowDataVariable => workflowDataVariable.Active);
+                        var activeListingsCount = activeListings.Count();
+                        foreach (DefinitionListing workflowDataVariable in activeListings)
+                        {
+                            if (workflowDataVariable.Definition == null)
+                            {
+                                // Allow the listing to be null if the count is only one as it's optional in this activity
+                                if (activeListingsCount == 1)
+                                {
+                                    continue;
+                                }
+
+                                // If a value is missing for source or target, the definition
+                                // will be null and the listing fails validation
+                                this.controller.ValidationError = ActivitySettings.WorkflowDataVariablesDefinitionValidationError;
+                                return false;
+                            }
+
+                            // Attempt to parse the source expression and target lookup or variable
+                            // Fail validation if an exception is thrown for either
+                            try
+                            {
+                                evaluator.ParseExpression(workflowDataVariable.Definition.Left);
+                                ParameterType targetType = ParameterType.Lookup;
+                                try
+                                {
+                                    targetType = ExpressionEvaluator.DetermineParameterType(workflowDataVariable.Definition.Right);
+                                }
+                                catch (WorkflowActivityLibraryException)
+                                {
+                                }
+
+                                // Target variables are valid
+                                // Target lookups require further evaluation to determine if they represent a valid target
+                                if (targetType != ParameterType.Variable)
+                                {
+                                    LookupEvaluator lookup = new LookupEvaluator(workflowDataVariable.Definition.Right);
+                                    if (!lookup.IsValidTarget)
+                                    {
+                                        this.controller.ValidationError = string.Format(CultureInfo.CurrentUICulture, ActivitySettings.TargetLookupValidationError, workflowDataVariable.Definition.Right);
+                                        return false;
+                                    }
+                                }
+                            }
+                            catch (WorkflowActivityLibraryException ex)
+                            {
+                                this.controller.ValidationError = ex.Message;
+                                return false;
+                            }
+                        }
+
+                        // Verify that no [//Query/...] or [//Value/...] expressions exist
+                        // if the query resources or iteration options are not enabled, respectively
+                        bool containsQueryExpressions = false;
+                        bool containsValueExpressions = false;
+
+                        foreach (LookupEvaluator lookup in evaluator.LookupCache.Keys.Select(key => new LookupEvaluator(key)))
+                        {
+                            if (lookup.Parameter == LookupParameter.Queries)
+                            {
+                                containsQueryExpressions = true;
+                            }
+
+                            if (lookup.Parameter == LookupParameter.Value)
+                            {
+                                containsValueExpressions = true;
+                            }
+                        }
+
+                        if (!this.queryResources.Value && containsQueryExpressions)
+                        {
+                            this.controller.ValidationError = ActivitySettings.QueryResourcesValidationError;
+                            return false;
+                        }
+
+                        if (string.IsNullOrEmpty(this.iteration.Value) && containsValueExpressions)
+                        {
+                            this.controller.ValidationError = ActivitySettings.IterationValidationError;
+                            return false;
+                        }
                     }
                     else
                     {
@@ -381,6 +577,25 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
             try
             {
                 this.ManageAdvancedControls();
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit();
+            }
+        }
+
+        /// <summary>
+        /// Handles the CheckedChanged event of the QueryResources control.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        public void QueryResources_CheckedChanged(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry();
+
+            try
+            {
+                this.ManageQueryControls();
             }
             finally
             {
@@ -491,10 +706,41 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
             try
             {
+                this.queryResources.Visible = this.advanced.Value;
                 this.activityExecutionCondition.Visible = this.advanced.Value;
+                this.iteration.Visible = this.advanced.Value;
                 this.cc.Visible = this.advanced.Value;
                 this.bcc.Visible = this.advanced.Value;
                 this.suppressException.Visible = this.advanced.Value;
+                this.workflowDataVariables.HeaderRow.Visible = this.advanced.Value;
+                this.workflowDataVariables.TableRow.Visible = this.advanced.Value;
+                if (!this.advanced.Value)
+                {
+                    this.queries.HeaderRow.Visible = false;
+                    this.queries.TableRow.Visible = false;
+                }
+                else
+                {
+                    this.ManageQueryControls();
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit();
+            }
+        }
+
+        /// <summary>
+        /// Manages the query controls.
+        /// </summary>
+        private void ManageQueryControls()
+        {
+            Logger.Instance.WriteMethodEntry();
+
+            try
+            {
+                this.queries.HeaderRow.Visible = this.queryResources.Value;
+                this.queries.TableRow.Visible = this.queryResources.Value;
             }
             finally
             {

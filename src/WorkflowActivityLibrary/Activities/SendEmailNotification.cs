@@ -17,10 +17,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
     using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
+    using System.Globalization;
     using System.Linq;
     using System.Workflow.Activities;
     using System.Workflow.ComponentModel;
+    using Microsoft.ResourceManagement.WebServices.WSResourceManagement;
+    using Microsoft.ResourceManagement.Workflow.Activities;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common;
+    using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Definitions;
+    using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Enumerations;
     using MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Exceptions;
 
     #endregion
@@ -37,12 +42,28 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             DependencyProperty.Register("ActivityDisplayName", typeof(string), typeof(SendEmailNotification));
 
         [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty AdvancedProperty =
+            DependencyProperty.Register("Advanced", typeof(bool), typeof(SendEmailNotification));
+
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty QueryResourcesProperty =
+            DependencyProperty.Register("QueryResources", typeof(bool), typeof(SendEmailNotification));
+
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty QueriesTableProperty =
+            DependencyProperty.Register("QueriesTable", typeof(Hashtable), typeof(SendEmailNotification));
+
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
         public static DependencyProperty ActivityExecutionConditionProperty =
             DependencyProperty.Register("ActivityExecutionCondition", typeof(string), typeof(SendEmailNotification));
 
         [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
-        public static DependencyProperty AdvancedProperty =
-            DependencyProperty.Register("Advanced", typeof(bool), typeof(SendEmailNotification));
+        public static DependencyProperty IterationProperty =
+            DependencyProperty.Register("Iteration", typeof(string), typeof(SendEmailNotification));
+
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty WorkflowDataVariablesTableProperty =
+            DependencyProperty.Register("WorkflowDataVariablesTable", typeof(Hashtable), typeof(SendEmailNotification));
 
         [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
         public static DependencyProperty EmailTemplateProperty =
@@ -76,11 +97,112 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         public ExpressionEvaluator ActivityExpressionEvaluator;
 
         /// <summary>
+        /// The query definitions
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<Definition> Queries;
+
+        /// <summary>
+        /// The value.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public object Value;
+
+        /// <summary>
+        /// The value expressions.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public Dictionary<string, object> ValueExpressions;
+
+        /// <summary>
         /// The email template Guid.
         /// </summary>
         [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
         [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
         public Guid EmailTemplateGuid;
+
+        /// <summary>
+        /// The list of unique identifiers of matching email templates found.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<Guid> EmailTemplateFoundIds;
+
+        /// <summary>
+        /// The list of unique identifiers of matching "To" recipients found.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<Guid> EmailToRecipientsFoundIds;
+
+        /// <summary>
+        /// The list of unique identifiers of matching "CC" recipients found.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<Guid> EmailCcRecipientsFoundIds;
+
+        /// <summary>
+        /// The list of unique identifiers of matching "Bcc" recipients found.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<Guid> EmailBccRecipientsFoundIds;
+
+        /// <summary>
+        /// The list of "To" recipients.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public string EmailNotificationToRecipients;
+
+        /// <summary>
+        /// The list of "Cc" recipients.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public string EmailNotificationCcRecipients;
+
+        /// <summary>
+        /// The list of "Bcc" recipients.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public string EmailNotificationBccRecipients;
+
+        /// <summary>
+        /// The lookup update definitions.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public List<UpdateLookupDefinition> LookupUpdates;
+
+        /// <summary>
+        /// The workflowDataVariables definitions
+        /// </summary>
+        private List<Definition> workflowDataVariables = new List<Definition>();
+
+        /// <summary>
+        /// The number of iterations preformed so far
+        /// </summary>
+        private int iterations;
+
+        /// <summary>
+        /// Break iteration if true
+        /// </summary>
+        private bool breakIteration;
 
         #endregion
 
@@ -98,6 +220,21 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 if (this.ActivityExpressionEvaluator == null)
                 {
                     this.ActivityExpressionEvaluator = new ExpressionEvaluator();
+                }
+
+                if (this.Queries == null)
+                {
+                    this.Queries = new List<Definition>();
+                }
+
+                if (this.ValueExpressions == null)
+                {
+                    this.ValueExpressions = new Dictionary<string, object>(StringComparer.OrdinalIgnoreCase);
+                }
+
+                if (this.LookupUpdates == null)
+                {
+                    this.LookupUpdates = new List<UpdateLookupDefinition>();
                 }
             }
             finally
@@ -129,6 +266,67 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether advanced checkbox is selected.
+        /// </summary>
+        [Description("Advanced")]
+        [Category("Settings")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool Advanced
+        {
+            get
+            {
+                return (bool)this.GetValue(AdvancedProperty);
+            }
+
+            set
+            {
+                this.SetValue(AdvancedProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to query resources.
+        /// </summary>
+        [Description("QueryResources")]
+        [Category("Settings")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public bool QueryResources
+        {
+            get
+            {
+                return (bool)this.GetValue(QueryResourcesProperty);
+            }
+
+            set
+            {
+                this.SetValue(QueryResourcesProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the queries hash table.
+        /// </summary>
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Reviewed.")]
+        [Description("QueriesTable")]
+        [Category("Settings")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Hashtable QueriesTable
+        {
+            get
+            {
+                return (Hashtable)this.GetValue(QueriesTableProperty);
+            }
+
+            set
+            {
+                this.SetValue(QueriesTableProperty, value);
+            }
+        }
+
+        /// <summary>
         /// Gets or sets the condition.
         /// </summary>
         [Description("Activity Execution Condition")]
@@ -149,22 +347,43 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
-        /// Gets or sets a value indicating whether advanced checkbox is selected.
+        /// Gets or sets the iteration.
         /// </summary>
-        [Description("Advanced")]
+        [Description("Iteration")]
         [Category("Settings")]
         [Browsable(true)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
-        public bool Advanced
+        public string Iteration
         {
             get
             {
-                return (bool)this.GetValue(AdvancedProperty);
+                return (string)this.GetValue(IterationProperty);
             }
 
             set
             {
-                this.SetValue(AdvancedProperty, value);
+                this.SetValue(IterationProperty, value);
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the WorkflowData variables hash table.
+        /// </summary>
+        [SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly", Justification = "Reviewed.")]
+        [Description("WorkflowDataVariablesTable")]
+        [Category("Settings")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public Hashtable WorkflowDataVariablesTable
+        {
+            get
+            {
+                return (Hashtable)this.GetValue(WorkflowDataVariablesTableProperty);
+            }
+
+            set
+            {
+                this.SetValue(WorkflowDataVariablesTableProperty, value);
             }
         }
 
@@ -394,7 +613,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void ParseExpressions_ExecuteCode(object sender, EventArgs e)
+        private void Prepare_ExecuteCode(object sender, EventArgs e)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationParseExpressionsExecuteCode);
 
@@ -404,13 +623,40 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 // clear any supplied advanced settings so they do not impact activity execution
                 if (!this.Advanced)
                 {
+                    this.QueryResources = false;
                     this.ActivityExecutionCondition = null;
+                    this.Iteration = null;
                     this.CC = null;
                     this.Bcc = null;
                     this.SuppressException = false;
                 }
 
+                // If the activity is configured to query for resources,
+                // convert the queries hash table to a list of definitions that will feed the activity responsible
+                // for their execution
+                if (this.QueryResources && this.QueriesTable != null && this.QueriesTable.Count > 0)
+                {
+                    DefinitionsConverter queriesConverter = new DefinitionsConverter(this.QueriesTable);
+                    this.Queries = queriesConverter.Definitions;
+                }
+
+                // If the activity is configured for iteration or conditional execution, parse the associated expressions
+                this.ActivityExpressionEvaluator.ParseIfExpression(this.Iteration);
                 this.ActivityExpressionEvaluator.ParseIfExpression(this.ActivityExecutionCondition);
+
+                // Definitions are supplied to the workflow activity in the form of a hash table
+                // This is necessary due to deserialization issues with lists and custom classes
+                // Convert the WorkflowData variables hash table to a list of definitions that is easier to work with
+                DefinitionsConverter workflowDataVariablesConverter = new DefinitionsConverter(this.WorkflowDataVariablesTable);
+                this.workflowDataVariables = workflowDataVariablesConverter.Definitions;
+
+                // Load each source expression into the evaluator so associated lookups can be loaded into the cache for resolution
+                // For WorkflowData variables, the left side of the definition represents the source expression
+                foreach (Definition workflowDataVariablesDefinition in this.workflowDataVariables)
+                {
+                    this.ActivityExpressionEvaluator.ParseExpression(workflowDataVariablesDefinition.Left);
+                }
+
                 this.ActivityExpressionEvaluator.ParseIfExpression(this.To);
                 this.ActivityExpressionEvaluator.ParseIfExpression(this.CC);
                 this.ActivityExpressionEvaluator.ParseIfExpression(this.Bcc);
@@ -432,34 +678,247 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
-        /// Handles the Condition event of the ActivityExecutionConditionSatisfied condition.
+        /// Handles the ExecuteCode event of the PrepareIteration CodeActivity.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void ActivityExecutionConditionSatisfied_Condition(object sender, ConditionalEventArgs e)
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void PrepareIteration_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationActivityExecutionConditionSatisfiedCondition, "Condition: '{0}'.", this.ActivityExecutionCondition);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationPrepareIterationExecuteCode, "Iteration: '{0}'. Condition: '{1}'.", this.Iteration, this.ActivityExecutionCondition);
 
+            bool submitRequests = false;
+            List<object> iterationValues = new List<object>();
             try
             {
-                // Determine if requests should be submitted based on whether or not a condition was supplied
-                // and if that condition resolves to true
+                // Determine if requests should be submitted based on the configuration for conditional execution
+                // If a condition was specified and that condition resolves to false, no values will be added for iteration
                 if (string.IsNullOrEmpty(this.ActivityExecutionCondition))
                 {
-                    e.Result = true;
+                    submitRequests = true;
                 }
                 else
                 {
                     object resolved = this.ActivityExpressionEvaluator.ResolveExpression(this.ActivityExecutionCondition);
                     if (resolved is bool && (bool)resolved)
                     {
-                        e.Result = true;
+                        submitRequests = true;
+                    }
+                }
+
+                if (!submitRequests)
+                {
+                    return;
+                }
+
+                // If the activity is not configured for iteration, a null value is added to the list
+                // to ensure a single email is sent
+                if (string.IsNullOrEmpty(this.Iteration))
+                {
+                    iterationValues.Add(null);
+                }
+                else
+                {
+                    // If the activity is configured for iteration, resolve the associated expression
+                    object resolved = this.ActivityExpressionEvaluator.ResolveExpression(this.Iteration);
+
+                    // If the expression resolved to one or more values, add those values to the list for iteration
+                    if (resolved != null)
+                    {
+                        if (resolved.GetType().IsGenericType && resolved.GetType().GetGenericTypeDefinition() == typeof(List<>))
+                        {
+                            iterationValues.AddRange(((IEnumerable)resolved).Cast<object>());
+                        }
+                        else
+                        {
+                            iterationValues.Add(resolved);
+                        }
+                    }
+
+                    // Pull any [//Value] or [//WorkflowData] expressions from the expression evaluator's lookup cache for
+                    // resolution during iteration
+                    foreach (string key in from key in this.ActivityExpressionEvaluator.LookupCache.Keys let lookup = new LookupEvaluator(key) where lookup.Parameter == LookupParameter.Value || lookup.Parameter == LookupParameter.WorkflowData select key)
+                    {
+                        this.ValueExpressions.Add(key, null);
+                    }
+                }
+
+                // Add the iteration values to the replicator activity if requests should be submitted
+                this.ForEachIteration.InitialChildData = iterationValues;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationPrepareIterationExecuteCode, "Iteration: '{0}'. Condition: '{1}'. Submit Request: '{2}'. Total Iterations: '{3}'.", this.Iteration, this.ActivityExecutionCondition, submitRequests, iterationValues.Count);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildInitialized event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_ChildInitialized(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationForEachIterationChildInitialized, "Current Iteration Value: '{0}'.", e.InstanceData);
+
+            try
+            {
+                // Get the instance value so it can be used to resolve associated expressions
+                // and clear previous resolutions
+                this.Value = e.InstanceData;
+
+                // Increment current iteration count
+                this.iterations += 1;
+
+                // Since the WF desinger does not allow binding boolean property SupressException we do it here
+                foreach (var childActivity in (e.Activity as SequenceActivity).EnabledActivities)
+                {
+                    var sendMailActivity = childActivity as EmailNotificationActivity;
+                    if (sendMailActivity != null)
+                    {
+                        sendMailActivity.SuppressException = this.SuppressException;
+                        break;
                     }
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationActivityExecutionConditionSatisfiedCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.ActivityExecutionCondition, e.Result);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationForEachIterationChildInitialized, "Current Iteration Value: '{0}'.", e.InstanceData);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ChildCompleted event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ReplicatorChildEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_ChildCompleted(object sender, ReplicatorChildEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationForEachIterationChildCompleted, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData.Count);
+
+            try
+            {
+                var variableCache = this.ActivityExpressionEvaluator.VariableCache;
+                this.breakIteration = Convert.ToBoolean(variableCache[ExpressionEvaluator.ReservedVariableBreakIteration], CultureInfo.InvariantCulture);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationForEachIterationChildCompleted, "Iteration: '{0}' of '{1}'. Break Iteration '{2}'.", this.iterations, this.ForEachIteration.InitialChildData.Count, this.breakIteration);
+            }
+        }
+
+        /// <summary>
+        /// Handles the ExecuteCode event of the PrepareMailTemplate CodeActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void PrepareUpdate_ExecuteCode(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationPrepareUpdateExecuteCode);
+
+            try
+            {
+                // Load resolved value expressions to the expression evaluator
+                foreach (string key in this.ValueExpressions.Keys)
+                {
+                    this.ActivityExpressionEvaluator.LookupCache[key] = this.ValueExpressions[key];
+                }
+
+                // Clear the variable cache for the expression evaluator
+                List<string> variables = this.ActivityExpressionEvaluator.VariableCache.Keys.ToList();
+                foreach (string variable in variables)
+                {
+                    this.ActivityExpressionEvaluator.VariableCache[variable] = null;
+                }
+
+                // Loop through each workflow data variable definition to build the
+                // update resource parameters which will be used to update each target resource
+                this.LookupUpdates = new List<UpdateLookupDefinition>();
+                foreach (Definition workflowDataVariableDefinition in this.workflowDataVariables)
+                {
+                    // Resolve the source expression, including any functions or concatenation,
+                    // to retrieve the typed value that should be assigned to the target attribute
+                    object resolved = null;
+                    if (!ExpressionEvaluator.IsExpression(workflowDataVariableDefinition.Left))
+                    {
+                        // This is a dynamic string for resolution already resolved
+                        // so just retrive the value from cache directly
+                        resolved = this.ActivityExpressionEvaluator.LookupCache[workflowDataVariableDefinition.Left];
+                    }
+                    else
+                    {
+                        resolved = this.ActivityExpressionEvaluator.ResolveExpression(workflowDataVariableDefinition.Left);
+                    }
+
+                    // Determine if we are targeting a variable
+                    // If not, assume we are targeting an expression which should result in requests or update
+                    // to the workflow dictionary
+                    bool targetVariable = ExpressionEvaluator.DetermineParameterType(workflowDataVariableDefinition.Right) == ParameterType.Variable;
+
+                    // Only create an update lookup definition if the value is not null, or if the
+                    // update definition is configured to allow null values to be transferred to the target(s)
+                    if (resolved == null && workflowDataVariableDefinition.Check)
+                    {
+                        if (targetVariable)
+                        {
+                            this.ActivityExpressionEvaluator.PublishVariable(workflowDataVariableDefinition.Right, null, UpdateMode.Modify);
+                        }
+                        else
+                        {
+                            this.LookupUpdates.Add(new UpdateLookupDefinition(workflowDataVariableDefinition.Right, null, UpdateMode.Modify));
+                        }
+                    }
+                    else if (resolved != null)
+                    {
+                        if (resolved.GetType() == typeof(InsertedValuesCollection))
+                        {
+                            // If the resolved object is an InsertedValues collection, the source for the update definition includes the InsertValues function
+                            // All associated values should be added to the target
+                            foreach (object o in (InsertedValuesCollection)resolved)
+                            {
+                                if (targetVariable)
+                                {
+                                    this.ActivityExpressionEvaluator.PublishVariable(workflowDataVariableDefinition.Right, o, UpdateMode.Insert);
+                                }
+                                else
+                                {
+                                    this.LookupUpdates.Add(new UpdateLookupDefinition(workflowDataVariableDefinition.Right, o, UpdateMode.Insert));
+                                }
+                            }
+                        }
+                        else if (resolved.GetType() == typeof(RemovedValuesCollection))
+                        {
+                            // If the resolved object is a RemovedValues collection, the source for the update definition includes the RemoveValues function
+                            // All associated values should be removed from the target
+                            foreach (object o in (RemovedValuesCollection)resolved)
+                            {
+                                if (targetVariable)
+                                {
+                                    this.ActivityExpressionEvaluator.PublishVariable(workflowDataVariableDefinition.Right, o, UpdateMode.Remove);
+                                }
+                                else
+                                {
+                                    this.LookupUpdates.Add(new UpdateLookupDefinition(workflowDataVariableDefinition.Right, o, UpdateMode.Remove));
+                                }
+                            }
+                        }
+                        else
+                        {
+                            // For all other conditions, update the variable or build a new update request parameter for the target attribute
+                            if (targetVariable)
+                            {
+                                this.ActivityExpressionEvaluator.PublishVariable(workflowDataVariableDefinition.Right, resolved, UpdateMode.Modify);
+                            }
+                            else
+                            {
+                                this.LookupUpdates.Add(new UpdateLookupDefinition(workflowDataVariableDefinition.Right, resolved, UpdateMode.Modify));
+                            }
+                        }
+                    }
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationPrepareUpdateExecuteCode);
             }
         }
 
@@ -493,17 +952,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
             try
             {
-                if (this.FindEmailTemplate.FoundIds.Count == 0)
+                if (this.EmailTemplateFoundIds.Count == 0)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.SendEmailNotificationCheckEmailTemplateResourceExecuteCodeError, new WorkflowActivityLibraryException(Messages.SendEmailNotification_MissingEmailTemplateError, this.EmailTemplate));
                 }
 
-                if (this.FindEmailTemplate.FoundIds.Count > 1)
+                if (this.EmailTemplateFoundIds.Count > 1)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.SendEmailNotificationCheckEmailTemplateResourceExecuteCodeError, new WorkflowActivityLibraryException(Messages.SendEmailNotification_MultipleEmailTemplatesError, this.EmailTemplate));
                 }
 
-                this.EmailTemplateGuid = this.FindEmailTemplate.FoundIds[0];
+                this.EmailTemplateGuid = this.EmailTemplateFoundIds[0];
             }
             finally
             {
@@ -556,24 +1015,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CheckEmailToRecipientResources_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailToRecipientResourcesExecuteCode, "To recipients count: {0}. Recipient: '{1}'.", this.FindEmailToRecipients.FoundIds.Count, this.To);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailToRecipientResourcesExecuteCode, "To recipients count: {0}. Recipient: '{1}'.", this.EmailToRecipientsFoundIds.Count, this.To);
 
             try
             {
-                if (this.FindEmailToRecipients.FoundIds.Count == 0)
+                if (this.EmailToRecipientsFoundIds.Count == 0)
                 {
                     Logger.Instance.WriteWarning(EventIdentifier.SendEmailNotificationCheckEmailToRecipientResourcesExecuteCodeWarning, Messages.SendEmailNotification_ToRecipientNotFoundError, this.To);
-                    this.To = null;
+                    this.EmailNotificationToRecipients = null;
                 }
                 else
                 {
-                    string[] recipients = (from id in this.FindEmailToRecipients.FoundIds select id.ToString()).ToArray();
-                    this.To = string.Join(";", recipients);
+                    string[] recipients = (from id in this.EmailToRecipientsFoundIds select id.ToString()).ToArray();
+                    this.EmailNotificationToRecipients = string.Join(";", recipients);
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailToRecipientResourcesExecuteCode, "To recipients count: {0}. Recipient: '{1}'.", this.FindEmailToRecipients.FoundIds.Count, this.To);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailToRecipientResourcesExecuteCode, "To recipients count: {0}. Recipient: '{1}'. Returning: '{2}'.", this.EmailToRecipientsFoundIds.Count, this.To, this.EmailNotificationToRecipients);
             }
         }
 
@@ -595,11 +1054,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                     Logger.Instance.WriteWarning(EventIdentifier.SendEmailNotificationResolveEmailToRecipientsExecuteCodeWarning, Messages.SendEmailNotification_ToRecipientNotFoundError, this.To);
                 }
 
-                this.To = recipient;
+                this.EmailNotificationToRecipients = recipient;
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailToRecipientsExecuteCode, "To Recipients: '{0}'.", this.To);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailToRecipientsExecuteCode, "To Recipients: '{0}'. Returning: '{1}'.", this.To, this.EmailNotificationToRecipients);
             }
         }
 
@@ -629,23 +1088,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CheckEmailCcRecipientResources_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailCcRecipientResourcesExecuteCode, "CC recipients count: {0}. Recipient: '{1}'.", this.FindEmailCcRecipients.FoundIds.Count, this.CC);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailCcRecipientResourcesExecuteCode, "CC recipients count: {0}. Recipient: '{1}'.", this.EmailCcRecipientsFoundIds.Count, this.CC);
 
             try
             {
-                if (this.FindEmailCcRecipients.FoundIds.Count == 0)
+                if (this.EmailCcRecipientsFoundIds.Count == 0)
                 {
-                    this.CC = null;
+                    this.EmailNotificationCcRecipients = null;
                 }
                 else
                 {
-                    string[] recipients = (from id in this.FindEmailCcRecipients.FoundIds select id.ToString()).ToArray();
-                    this.CC = string.Join(";", recipients);
+                    string[] recipients = (from id in this.EmailCcRecipientsFoundIds select id.ToString()).ToArray();
+                    this.EmailNotificationCcRecipients = string.Join(";", recipients);
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailCcRecipientResourcesExecuteCode, "CC recipients count: {0}. Recipient: '{1}'.", this.FindEmailCcRecipients.FoundIds.Count, this.CC);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailCcRecipientResourcesExecuteCode, "CC recipients count: {0}. Recipient: '{1}'. Returning: '{2}'.", this.EmailCcRecipientsFoundIds.Count, this.CC, this.EmailNotificationCcRecipients);
             }
         }
 
@@ -660,11 +1119,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
             try
             {
-                this.CC = this.FormatRecipient(this.CC);
+                this.EmailNotificationCcRecipients = this.FormatRecipient(this.CC);
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailCcRecipientsExecuteCode, "CC Recipients: '{0}'.", this.CC);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailCcRecipientsExecuteCode, "CC Recipients: '{0}'. Returning: '{1}'.", this.CC, this.EmailNotificationCcRecipients);
             }
         }
 
@@ -694,23 +1153,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void CheckEmailBccRecipientResources_ExecuteCode(object sender, EventArgs e)
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailBccRecipientResourcesExecuteCode, "Bcc recipients count: {0}. Recipient: '{1}'.", this.FindEmailTemplate.FoundIds.Count, this.Bcc);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationCheckEmailBccRecipientResourcesExecuteCode, "Bcc recipients count: {0}. Recipient: '{1}'.", this.EmailBccRecipientsFoundIds.Count, this.Bcc);
 
             try
             {
-                if (this.FindEmailBccRecipients.FoundIds.Count == 0)
+                if (this.EmailBccRecipientsFoundIds.Count == 0)
                 {
-                    this.Bcc = null;
+                    this.EmailNotificationBccRecipients = null;
                 }
                 else
                 {
-                    string[] recipients = (from id in this.FindEmailBccRecipients.FoundIds select id.ToString()).ToArray();
-                    this.Bcc = string.Join(";", recipients);
+                    string[] recipients = (from id in this.EmailBccRecipientsFoundIds select id.ToString()).ToArray();
+                    this.EmailNotificationBccRecipients = string.Join(";", recipients);
                 }
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailBccRecipientResourcesExecuteCode, "Bcc recipients count: {0}. Recipient: '{1}'.", this.FindEmailTemplate.FoundIds.Count, this.Bcc);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationCheckEmailBccRecipientResourcesExecuteCode, "Bcc recipients count: {0}. Recipient: '{1}'. Returning: '{2}'.", this.EmailBccRecipientsFoundIds.Count, this.Bcc, this.EmailNotificationBccRecipients);
             }
         }
 
@@ -725,11 +1184,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
             try
             {
-                this.Bcc = this.FormatRecipient(this.Bcc);
+                this.EmailNotificationBccRecipients = this.FormatRecipient(this.Bcc);
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailBccRecipientsExecuteCode, "Bcc Recipients: '{0}'.", this.Bcc);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailBccRecipientsExecuteCode, "Bcc Recipients: '{0}'. Returning: '{1}'.", this.Bcc, this.EmailNotificationBccRecipients);
             }
         }
 
@@ -740,7 +1199,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
         private void PrepareSendMail_ExecuteCode(object sender, EventArgs e)
         {
-            var traceData = new object[] { this.To, this.CC, this.Bcc, this.EmailTemplate, this.EmailTemplateGuid, this.SuppressException };
+            var traceData = new object[] { this.EmailNotificationToRecipients, this.EmailNotificationCcRecipients, this.EmailNotificationBccRecipients, this.EmailTemplate, this.EmailTemplateGuid, this.SuppressException };
 
             Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationPrepareSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
 
@@ -748,17 +1207,48 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // we might as well do tracing as well as all binding here.
             try
             {
+                // Since we are now using replicator activity, this does not work any more and must be done via WF designer
+                /*
                 this.SendMail.To = this.To;
                 this.SendMail.CC = this.CC;
                 this.SendMail.Bcc = this.Bcc;
                 this.SendMail.EmailTemplate = this.EmailTemplateGuid;
                 this.SendMail.SuppressException = this.SuppressException;
+                */
             }
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationPrepareSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
             }
         }
+
+        #region Conditions
+
+        /// <summary>
+        /// Handles the UntilCondition event of the ForEachIteration ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void ForEachIteration_UntilCondition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. ", this.iterations, this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count);
+
+            int maxIterations = 0;
+            try
+            {
+                maxIterations = this.ForEachIteration.InitialChildData == null ? 0 : this.ForEachIteration.InitialChildData.Count;
+                if (this.iterations == maxIterations || this.breakIteration)
+                {
+                    e.Result = true;
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, maxIterations, e.Result);
+            }
+        }
+
+        #endregion
 
         #endregion
     }

@@ -1552,6 +1552,31 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int SendEmailNotificationGetEmailTemplateGuid = 12624;
 
         /// <summary>
+        /// The event identifier for SendEmailNotification PrepareIterationExecuteCode events
+        /// </summary>
+        public const int SendEmailNotificationPrepareIterationExecuteCode = 12625;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationChildInitialized events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationChildInitialized = 12626;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationChildCompleted events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationChildCompleted = 12627;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationUntilCondition events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationUntilCondition = 12628;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification PrepareMailTemplate_ExecuteCode events
+        /// </summary>
+        public const int SendEmailNotificationPrepareUpdateExecuteCode = 12629;
+
+        /// <summary>
         /// The event identifier for RequestApproval Constructor events
         /// </summary>
         public const int RequestApprovalConstructor = 12701;
