@@ -38,6 +38,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
         public static DependencyProperty QueryResultsProperty =
             DependencyProperty.Register("QueryResults", typeof(Dictionary<string, List<Guid>>), typeof(ResolveQueries));
 
+        [SuppressMessage("Microsoft.Usage", "CA2211:NonConstantFieldsShouldNotBeVisible", Justification = "DependencyProperty")]
+        public static DependencyProperty ValueProperty =
+            DependencyProperty.Register("Value", typeof(object), typeof(ResolveQueries));
+
         #endregion
 
         /// <summary>
@@ -50,11 +54,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             try
             {
                 this.InitializeComponent();
-
-                if (this.QueryResults == null)
-                {
-                    this.QueryResults = new Dictionary<string, List<Guid>>(StringComparer.OrdinalIgnoreCase);
-                }
             }
             finally
             {
@@ -104,6 +103,27 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             }
         }
 
+        /// <summary>
+        /// Gets or sets the value which should be used for [//Value/...] lookup resolution.
+        /// </summary>
+        [SuppressMessage("Microsoft.Naming", "CA1721:PropertyNamesShouldNotMatchGetMethods", Justification = "Reviewed")]
+        [Description("The value which should be used for [//Value/...] lookup resolution.")]
+        [Category("Input")]
+        [Browsable(true)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
+        public object Value
+        {
+            get
+            {
+                return this.GetValue(ValueProperty);
+            }
+
+            set
+            {
+                this.SetValue(ValueProperty, value);
+            }
+        }
+
         #endregion
 
         #region Methods
@@ -135,6 +155,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Component
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ResolveQueriesExecute);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Initialized event of the ForEachQuery ReplicatorActivity.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        private void ForEachQuery_Initialized(object sender, EventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ResolveQueriesForEachQueryInitialized);
+
+            try
+            {
+                // initialize this afresh at the start of the processing
+                this.QueryResults = new Dictionary<string, List<Guid>>(StringComparer.OrdinalIgnoreCase);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ResolveQueriesForEachQueryInitialized);
             }
         }
 

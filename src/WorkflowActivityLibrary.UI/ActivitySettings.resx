@@ -610,7 +610,7 @@
     <value>A Search Target XPath must be supplied.</value>
   </data>
   <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
-    <value>The definitions table is null or corrupt</value>
+    <value>The definitions table is corrupt.</value>
   </data>
   <data name="ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
     <value>Only the last value expression in the list can leverage the [//UniquenessKey] lookup.</value>

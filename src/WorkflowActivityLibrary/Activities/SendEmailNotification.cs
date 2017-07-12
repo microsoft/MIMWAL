@@ -190,6 +190,14 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         public List<UpdateLookupDefinition> LookupUpdates;
 
         /// <summary>
+        /// The results of any defined queries.
+        /// </summary>
+        [SuppressMessage("Microsoft.Design", "CA1051:DoNotDeclareVisibleInstanceFields", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        [SuppressMessage("Microsoft.Design", "CA1002:DoNotExposeGenericLists", Justification = "Used only internally to bind to an activity.")]
+        [SuppressMessage("StyleCop.CSharp.MaintainabilityRules", "SA1401:FieldsMustBePrivate", Justification = "Reviewed. VS designer renders public properties as dependency property.")]
+        public Dictionary<string, List<Guid>> QueryResults;
+
+        /// <summary>
         /// The workflowDataVariables definitions
         /// </summary>
         private List<Definition> workflowDataVariables = new List<Definition>();
@@ -522,6 +530,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="emailTemplate">An email template resolved expression</param>
         /// <returns>The Guid of the specified email template</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private Guid GetEmailTemplateGuid(string emailTemplate)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationGetEmailTemplateGuid, "Email Template: '{0}'.", emailTemplate);
@@ -570,6 +579,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="recipient">Guid or email address of the recipient</param>
         /// <returns>A string representation of the recipient object</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private string FormatRecipient(string recipient)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationFormatRecipient, "Recipient: '{0}'.", recipient);
@@ -734,9 +744,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                         }
                     }
 
-                    // Pull any [//Value] or [//WorkflowData] expressions from the expression evaluator's lookup cache for
+                    // Pull any [//Value] or [//WorkflowData] or [//Queries] expressions from the expression evaluator's lookup cache for
                     // resolution during iteration
-                    foreach (string key in from key in this.ActivityExpressionEvaluator.LookupCache.Keys let lookup = new LookupEvaluator(key) where lookup.Parameter == LookupParameter.Value || lookup.Parameter == LookupParameter.WorkflowData select key)
+                    foreach (string key in from key in this.ActivityExpressionEvaluator.LookupCache.Keys let lookup = new LookupEvaluator(key) where lookup.Parameter == LookupParameter.Value || lookup.Parameter == LookupParameter.WorkflowData || lookup.Parameter == LookupParameter.Queries select key)
                     {
                         this.ValueExpressions.Add(key, null);
                     }
@@ -815,6 +825,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationPrepareUpdateExecuteCode);
 
+            // For this activity, these are supposed to be only WorkflowData Variable updates
             try
             {
                 // Load resolved value expressions to the expression evaluator
@@ -923,25 +934,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
-        /// Handles the Condition event of the EmailTemplateIsXPath_Condition condition.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void EmailTemplateIsXPath_Condition(object sender, ConditionalEventArgs e)
-        {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailTemplateIsXPathCondition, "Condition: '{0}'.", this.EmailTemplate);
-
-            try
-            {
-                e.Result = ExpressionEvaluator.IsXPath(this.EmailTemplate);
-            }
-            finally
-            {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailTemplateIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.EmailTemplate, e.Result);
-            }
-        }
-
-        /// <summary>
         /// Handles the ExecuteCode event of the CheckEmailTemplateResource CodeActivity.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -986,25 +978,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailTemplateExecuteCode, "Email template: '{0}'.", this.EmailTemplate);
-            }
-        }
-
-        /// <summary>
-        /// Handles the Condition event of the EmailToIsXPath_Condition condition.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void EmailToIsXPath_Condition(object sender, ConditionalEventArgs e)
-        {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailToIsXPathCondition, "Condition: '{0}'.", this.To);
-
-            try
-            {
-                e.Result = ExpressionEvaluator.IsXPath(this.To);
-            }
-            finally
-            {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailToIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.To, e.Result);
             }
         }
 
@@ -1063,25 +1036,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
-        /// Handles the Condition event of the EmailCcIsXPath_Condition condition.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void EmailCcIsXPath_Condition(object sender, ConditionalEventArgs e)
-        {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailCcIsXPathCondition, "Condition: '{0}'.", this.CC);
-
-            try
-            {
-                e.Result = ExpressionEvaluator.IsXPath(this.CC);
-            }
-            finally
-            {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailCcIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.CC, e.Result);
-            }
-        }
-
-        /// <summary>
         /// Handles the ExecuteCode event of the CheckEmailCcRecipientResources CodeActivity.
         /// </summary>
         /// <param name="sender">The source of the event.</param>
@@ -1124,25 +1078,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationResolveEmailCcRecipientsExecuteCode, "CC Recipients: '{0}'. Returning: '{1}'.", this.CC, this.EmailNotificationCcRecipients);
-            }
-        }
-
-        /// <summary>
-        /// Handles the Condition event of the EmailBccIsXPath_Condition condition.
-        /// </summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
-        private void EmailBccIsXPath_Condition(object sender, ConditionalEventArgs e)
-        {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailBccIsXPathCondition, "Condition: '{0}'.", this.Bcc);
-
-            try
-            {
-                e.Result = ExpressionEvaluator.IsXPath(this.Bcc);
-            }
-            finally
-            {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailBccIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.Bcc, e.Result);
             }
         }
 
@@ -1197,32 +1132,46 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
-        private void PrepareSendMail_ExecuteCode(object sender, EventArgs e)
+        private void TraceSendMail_ExecuteCode(object sender, EventArgs e)
         {
             var traceData = new object[] { this.EmailNotificationToRecipients, this.EmailNotificationCcRecipients, this.EmailNotificationBccRecipients, this.EmailTemplate, this.EmailTemplateGuid, this.SuppressException };
 
-            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationPrepareSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationTraceSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
 
-            // Since the WF desinger does not allow binding boolean property SupressException
-            // we might as well do tracing as well as all binding here.
             try
             {
-                // Since we are now using replicator activity, this does not work any more and must be done via WF designer
-                /*
-                this.SendMail.To = this.To;
-                this.SendMail.CC = this.CC;
-                this.SendMail.Bcc = this.Bcc;
-                this.SendMail.EmailTemplate = this.EmailTemplateGuid;
-                this.SendMail.SuppressException = this.SuppressException;
-                */
+                Logger.Instance.WriteInfo(EventIdentifier.SendEmailNotificationTraceSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationPrepareSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationTraceSendMailExecuteCode, "To: '{0}'. CC: '{1}'. BCC: '{2}'. Email Template: '{3}'. Email Template Guid: '{4}'. Suppress Exception: '{5}'.", traceData);
             }
         }
 
         #region Conditions
+
+        /// <summary>
+        /// Handles the Condition event of the QueriesHaveNoValueExpressions condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void QueriesHaveNoValueExpressions_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationQueriesHaveNoValueExpressionsCondition, "QueryResources: '{0}'. ", this.QueryResources);
+
+            e.Result = true;
+            try
+            {
+                if (this.QueryResources && this.Queries.Count > 0)
+                {
+                    e.Result = !this.Queries.Any(query => query.Right.IndexOf("[//" + LookupParameter.Value.ToString(), StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationQueriesHaveNoValueExpressionsCondition, "QueryResources: '{0}'. Condition evaluated '{1}'.", this.QueryResources, e.Result);
+            }
+        }
 
         /// <summary>
         /// Handles the UntilCondition event of the ForEachIteration ReplicatorActivity.
@@ -1245,6 +1194,82 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationForEachIterationUntilCondition, "Iteration: '{0}' of '{1}'. Condition evaluated '{2}'.", this.iterations, maxIterations, e.Result);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the EmailTemplateIsXPath_Condition condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void EmailTemplateIsXPath_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailTemplateIsXPathCondition, "Condition: '{0}'.", this.EmailTemplate);
+
+            try
+            {
+                e.Result = ExpressionEvaluator.IsXPath(this.EmailTemplate);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailTemplateIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.EmailTemplate, e.Result);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the EmailToIsXPath condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void EmailToIsXPath_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailToIsXPathCondition, "Condition: '{0}'.", this.To);
+
+            try
+            {
+                e.Result = ExpressionEvaluator.IsXPath(this.To);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailToIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.To, e.Result);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the EmailCcIsXPath condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void EmailCcIsXPath_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailCcIsXPathCondition, "Condition: '{0}'.", this.CC);
+
+            try
+            {
+                e.Result = ExpressionEvaluator.IsXPath(this.CC);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailCcIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.CC, e.Result);
+            }
+        }
+
+        /// <summary>
+        /// Handles the Condition event of the EmailBccIsXPath condition.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="ConditionalEventArgs"/> instance containing the event data.</param>
+        private void EmailBccIsXPath_Condition(object sender, ConditionalEventArgs e)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationEmailBccIsXPathCondition, "Condition: '{0}'.", this.Bcc);
+
+            try
+            {
+                e.Result = ExpressionEvaluator.IsXPath(this.Bcc);
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationEmailBccIsXPathCondition, "Condition: '{0}'. Condition evaluated '{1}'.", this.Bcc, e.Result);
             }
         }
 

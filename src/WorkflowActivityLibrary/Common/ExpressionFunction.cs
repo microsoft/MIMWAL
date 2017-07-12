@@ -1252,7 +1252,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1280,7 +1280,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else
@@ -1294,7 +1294,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 CreateRequestParameter createRequestParameter = (CreateRequestParameter)requestParameter;
                                 if (createRequestParameter.PropertyName.Equals(this.parameters[1]))
                                 {
-                                    valueList.Add(createRequestParameter.Value.ToString());
+                                    valueList.Add(createRequestParameter.Value);
                                 }
                             }
                         }
@@ -1358,7 +1358,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1386,7 +1386,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else if (updateRequestParameter.Mode == UpdateMode.Modify)
@@ -1401,7 +1401,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 CreateRequestParameter createRequestParameter = (CreateRequestParameter)requestParameter;
                                 if (createRequestParameter.PropertyName.Equals(this.parameters[1]))
                                 {
-                                    valueList.Add(createRequestParameter.Value.ToString());
+                                    valueList.Add(createRequestParameter.Value);
                                 }
                             }
                         }
@@ -1465,7 +1465,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1493,7 +1493,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else if (updateRequestParameter.Mode == UpdateMode.Modify)
@@ -4987,6 +4987,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// Function Syntax: CreateSqlParameter2(sqlConnectionStringConfigKey:string, parameterName:string, parameterDirection:string, parameterType:string [, parameterSize:integer, parameterValue:object])
         /// </summary>
         /// <returns>The <see cref="DbParameter" /> object.</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private DbParameter CreateSqlParameter2()
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCreateSqlParameter2, "Evaluation Mode: '{0}'.", this.mode);

@@ -42,13 +42,14 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.ComponentModel.ActivityBind activitybind14 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind15 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind16 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind17 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.Activities.CodeCondition codecondition1 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition2 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition3 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.Activities.CodeCondition codecondition4 = new System.Workflow.Activities.CodeCondition();
-            System.Workflow.ComponentModel.ActivityBind activitybind17 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.ComponentModel.ActivityBind activitybind18 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.ComponentModel.ActivityBind activitybind19 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind20 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind21 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind22 = new System.Workflow.ComponentModel.ActivityBind();
@@ -56,11 +57,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             System.Workflow.ComponentModel.ActivityBind activitybind24 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind25 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind26 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Workflow.Activities.CodeCondition codecondition5 = new System.Workflow.Activities.CodeCondition();
             System.Workflow.ComponentModel.ActivityBind activitybind27 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind28 = new System.Workflow.ComponentModel.ActivityBind();
             System.Workflow.ComponentModel.ActivityBind activitybind29 = new System.Workflow.ComponentModel.ActivityBind();
-            System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<System.Guid>> dictionary_21 = new System.Collections.Generic.Dictionary<string, System.Collections.Generic.List<System.Guid>>();
+            System.Workflow.ComponentModel.ActivityBind activitybind30 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind31 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.Activities.CodeCondition codecondition6 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.Activities.CodeCondition codecondition7 = new System.Workflow.Activities.CodeCondition();
+            System.Workflow.ComponentModel.ActivityBind activitybind32 = new System.Workflow.ComponentModel.ActivityBind();
+            System.Workflow.ComponentModel.ActivityBind activitybind33 = new System.Workflow.ComponentModel.ActivityBind();
             this.ResolveEmailBccRecipients = new System.Workflow.Activities.CodeActivity();
             this.CheckEmailBccRecipientResources = new System.Workflow.Activities.CodeActivity();
             this.FindEmailBccRecipients = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources();
@@ -73,6 +78,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ResolveEmailTemplate = new System.Workflow.Activities.CodeActivity();
             this.CheckEmailTemplateResource = new System.Workflow.Activities.CodeActivity();
             this.FindEmailTemplate = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources();
+            this.RunQueriesIterative = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries();
             this.EmailBccIsExpression = new System.Workflow.Activities.IfElseBranchActivity();
             this.EmailBccIsXPathOrExpression = new System.Workflow.Activities.IfElseBranchActivity();
             this.EmailCcIsExpression = new System.Workflow.Activities.IfElseBranchActivity();
@@ -81,8 +87,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.EmailToIsXPath = new System.Workflow.Activities.IfElseBranchActivity();
             this.EmailTemplateIsExpression = new System.Workflow.Activities.IfElseBranchActivity();
             this.EmailTemplateIsXPath = new System.Workflow.Activities.IfElseBranchActivity();
+            this.QueriesDoHaveValueExpressions = new System.Workflow.Activities.IfElseBranchActivity();
+            this.QueriesDoNotHaveValueExpressions = new System.Workflow.Activities.IfElseBranchActivity();
             this.SendMail = new Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity();
-            this.PrepareSendMail = new System.Workflow.Activities.CodeActivity();
+            this.TraceSendMail = new System.Workflow.Activities.CodeActivity();
             this.IfEmailBccIsXPathOrExpression = new System.Workflow.Activities.IfElseActivity();
             this.IfEmailCcIsXPathOrExpression = new System.Workflow.Activities.IfElseActivity();
             this.IfEmailToIsXPathOrExpression = new System.Workflow.Activities.IfElseActivity();
@@ -90,11 +98,14 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.Update = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups();
             this.PrepareUpdate = new System.Workflow.Activities.CodeActivity();
             this.ResolveForValue = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
+            this.IfQueriesHaveValueExpressions = new System.Workflow.Activities.IfElseActivity();
+            this.RunQueriesOnce = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries();
             this.ProcessMail = new System.Workflow.Activities.SequenceActivity();
+            this.QueriesHaveNoValueExpressions = new System.Workflow.Activities.IfElseBranchActivity();
             this.ForEachIteration = new System.Workflow.Activities.ReplicatorActivity();
             this.PrepareIteration = new System.Workflow.Activities.CodeActivity();
             this.Resolve = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups();
-            this.RunQueries = new MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries();
+            this.IfQueriesHaveNoValueExpressions = new System.Workflow.Activities.IfElseActivity();
             this.Prepare = new System.Workflow.Activities.CodeActivity();
             // 
             // ResolveEmailBccRecipients
@@ -115,7 +126,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind1.Path = "EmailBccRecipientsFoundIds";
             this.FindEmailBccRecipients.FoundResources = null;
             this.FindEmailBccRecipients.Name = "FindEmailBccRecipients";
-            activitybind2.Name = "RunQueries";
+            activitybind2.Name = "SendEmailNotification";
             activitybind2.Path = "QueryResults";
             activitybind3.Name = "SendEmailNotification";
             activitybind3.Path = "Value";
@@ -144,7 +155,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind5.Path = "EmailCcRecipientsFoundIds";
             this.FindEmailCcRecipients.FoundResources = null;
             this.FindEmailCcRecipients.Name = "FindEmailCcRecipients";
-            activitybind6.Name = "RunQueries";
+            activitybind6.Name = "SendEmailNotification";
             activitybind6.Path = "QueryResults";
             activitybind7.Name = "SendEmailNotification";
             activitybind7.Path = "Value";
@@ -173,7 +184,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind9.Path = "EmailToRecipientsFoundIds";
             this.FindEmailToRecipients.FoundResources = null;
             this.FindEmailToRecipients.Name = "FindEmailToRecipients";
-            activitybind10.Name = "RunQueries";
+            activitybind10.Name = "SendEmailNotification";
             activitybind10.Path = "QueryResults";
             activitybind11.Name = "SendEmailNotification";
             activitybind11.Path = "Value";
@@ -202,7 +213,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             activitybind13.Path = "EmailTemplateFoundIds";
             this.FindEmailTemplate.FoundResources = null;
             this.FindEmailTemplate.Name = "FindEmailTemplate";
-            activitybind14.Name = "RunQueries";
+            activitybind14.Name = "SendEmailNotification";
             activitybind14.Path = "QueryResults";
             activitybind15.Name = "SendEmailNotification";
             activitybind15.Path = "Value";
@@ -212,6 +223,19 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.FindEmailTemplate.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind14)));
             this.FindEmailTemplate.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind15)));
             this.FindEmailTemplate.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.FindResources.FoundIdsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind13)));
+            // 
+            // RunQueriesIterative
+            // 
+            this.RunQueriesIterative.Name = "RunQueriesIterative";
+            activitybind17.Name = "SendEmailNotification";
+            activitybind17.Path = "Queries";
+            activitybind18.Name = "SendEmailNotification";
+            activitybind18.Path = "QueryResults";
+            activitybind19.Name = "SendEmailNotification";
+            activitybind19.Path = "Value";
+            this.RunQueriesIterative.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
+            this.RunQueriesIterative.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
+            this.RunQueriesIterative.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
             // 
             // EmailBccIsExpression
             // 
@@ -265,27 +289,38 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.EmailTemplateIsXPath.Condition = codecondition4;
             this.EmailTemplateIsXPath.Name = "EmailTemplateIsXPath";
             // 
+            // QueriesDoHaveValueExpressions
+            // 
+            this.QueriesDoHaveValueExpressions.Activities.Add(this.RunQueriesIterative);
+            this.QueriesDoHaveValueExpressions.Name = "QueriesDoHaveValueExpressions";
+            // 
+            // QueriesDoNotHaveValueExpressions
+            // 
+            codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.QueriesHaveNoValueExpressions_Condition);
+            this.QueriesDoNotHaveValueExpressions.Condition = codecondition5;
+            this.QueriesDoNotHaveValueExpressions.Name = "QueriesDoNotHaveValueExpressions";
+            // 
             // SendMail
             // 
-            activitybind17.Name = "SendEmailNotification";
-            activitybind17.Path = "EmailNotificationBccRecipients";
-            activitybind18.Name = "SendEmailNotification";
-            activitybind18.Path = "EmailNotificationCcRecipients";
-            activitybind19.Name = "SendEmailNotification";
-            activitybind19.Path = "EmailTemplateGuid";
+            activitybind20.Name = "SendEmailNotification";
+            activitybind20.Path = "EmailNotificationBccRecipients";
+            activitybind21.Name = "SendEmailNotification";
+            activitybind21.Path = "EmailNotificationCcRecipients";
+            activitybind22.Name = "SendEmailNotification";
+            activitybind22.Path = "EmailTemplateGuid";
             this.SendMail.Name = "SendMail";
             this.SendMail.SuppressException = false;
-            activitybind20.Name = "SendEmailNotification";
-            activitybind20.Path = "EmailNotificationToRecipients";
-            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.BccProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind17)));
-            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.CCProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind18)));
-            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
-            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.EmailTemplateProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind19)));
+            activitybind23.Name = "SendEmailNotification";
+            activitybind23.Path = "EmailNotificationToRecipients";
+            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.BccProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind20)));
+            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.CCProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
+            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.ToProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind23)));
+            this.SendMail.SetBinding(Microsoft.ResourceManagement.Workflow.Activities.EmailNotificationActivity.EmailTemplateProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
             // 
-            // PrepareSendMail
+            // TraceSendMail
             // 
-            this.PrepareSendMail.Name = "PrepareSendMail";
-            this.PrepareSendMail.ExecuteCode += new System.EventHandler(this.PrepareSendMail_ExecuteCode);
+            this.TraceSendMail.Name = "TraceSendMail";
+            this.TraceSendMail.ExecuteCode += new System.EventHandler(this.TraceSendMail_ExecuteCode);
             // 
             // IfEmailBccIsXPathOrExpression
             // 
@@ -316,15 +351,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.Update.Actor = new System.Guid("00000000-0000-0000-0000-000000000000");
             this.Update.ApplyAuthorizationPolicy = false;
             this.Update.Name = "Update";
-            activitybind21.Name = "RunQueries";
-            activitybind21.Path = "QueryResults";
-            activitybind22.Name = "SendEmailNotification";
-            activitybind22.Path = "LookupUpdates";
-            activitybind23.Name = "SendEmailNotification";
-            activitybind23.Path = "Value";
-            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind21)));
-            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.UpdateLookupDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind22)));
-            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind23)));
+            activitybind24.Name = "SendEmailNotification";
+            activitybind24.Path = "QueryResults";
+            activitybind25.Name = "SendEmailNotification";
+            activitybind25.Path = "LookupUpdates";
+            activitybind26.Name = "SendEmailNotification";
+            activitybind26.Path = "Value";
+            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind24)));
+            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.UpdateLookupDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind25)));
+            this.Update.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.UpdateLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind26)));
             // 
             // PrepareUpdate
             // 
@@ -334,19 +369,37 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // ResolveForValue
             // 
             this.ResolveForValue.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind24.Name = "SendEmailNotification";
-            activitybind24.Path = "ValueExpressions";
+            activitybind27.Name = "SendEmailNotification";
+            activitybind27.Path = "ValueExpressions";
             this.ResolveForValue.Name = "ResolveForValue";
-            activitybind25.Name = "RunQueries";
-            activitybind25.Path = "QueryResults";
-            activitybind26.Name = "SendEmailNotification";
-            activitybind26.Path = "Value";
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind24)));
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind25)));
-            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind26)));
+            activitybind28.Name = "SendEmailNotification";
+            activitybind28.Path = "QueryResults";
+            activitybind29.Name = "SendEmailNotification";
+            activitybind29.Path = "Value";
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind27)));
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.ValueProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind29)));
+            this.ResolveForValue.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind28)));
+            // 
+            // IfQueriesHaveValueExpressions
+            // 
+            this.IfQueriesHaveValueExpressions.Activities.Add(this.QueriesDoNotHaveValueExpressions);
+            this.IfQueriesHaveValueExpressions.Activities.Add(this.QueriesDoHaveValueExpressions);
+            this.IfQueriesHaveValueExpressions.Name = "IfQueriesHaveValueExpressions";
+            // 
+            // RunQueriesOnce
+            // 
+            this.RunQueriesOnce.Name = "RunQueriesOnce";
+            activitybind30.Name = "SendEmailNotification";
+            activitybind30.Path = "Queries";
+            activitybind31.Name = "SendEmailNotification";
+            activitybind31.Path = "QueryResults";
+            this.RunQueriesOnce.Value = null;
+            this.RunQueriesOnce.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind30)));
+            this.RunQueriesOnce.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind31)));
             // 
             // ProcessMail
             // 
+            this.ProcessMail.Activities.Add(this.IfQueriesHaveValueExpressions);
             this.ProcessMail.Activities.Add(this.ResolveForValue);
             this.ProcessMail.Activities.Add(this.PrepareUpdate);
             this.ProcessMail.Activities.Add(this.Update);
@@ -354,17 +407,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             this.ProcessMail.Activities.Add(this.IfEmailToIsXPathOrExpression);
             this.ProcessMail.Activities.Add(this.IfEmailCcIsXPathOrExpression);
             this.ProcessMail.Activities.Add(this.IfEmailBccIsXPathOrExpression);
-            this.ProcessMail.Activities.Add(this.PrepareSendMail);
+            this.ProcessMail.Activities.Add(this.TraceSendMail);
             this.ProcessMail.Activities.Add(this.SendMail);
             this.ProcessMail.Name = "ProcessMail";
+            // 
+            // QueriesHaveNoValueExpressions
+            // 
+            this.QueriesHaveNoValueExpressions.Activities.Add(this.RunQueriesOnce);
+            codecondition6.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.QueriesHaveNoValueExpressions_Condition);
+            this.QueriesHaveNoValueExpressions.Condition = codecondition6;
+            this.QueriesHaveNoValueExpressions.Name = "QueriesHaveNoValueExpressions";
             // 
             // ForEachIteration
             // 
             this.ForEachIteration.Activities.Add(this.ProcessMail);
             this.ForEachIteration.ExecutionType = System.Workflow.Activities.ExecutionType.Sequence;
             this.ForEachIteration.Name = "ForEachIteration";
-            codecondition5.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
-            this.ForEachIteration.UntilCondition = codecondition5;
+            codecondition7.Condition += new System.EventHandler<System.Workflow.Activities.ConditionalEventArgs>(this.ForEachIteration_UntilCondition);
+            this.ForEachIteration.UntilCondition = codecondition7;
             this.ForEachIteration.ChildInitialized += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildInitialized);
             this.ForEachIteration.ChildCompleted += new System.EventHandler<System.Workflow.Activities.ReplicatorChildEventArgs>(this.ForEachIteration_ChildCompleted);
             // 
@@ -376,22 +436,19 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // Resolve
             // 
             this.Resolve.ComparedRequestId = new System.Guid("00000000-0000-0000-0000-000000000000");
-            activitybind27.Name = "SendEmailNotification";
-            activitybind27.Path = "ActivityExpressionEvaluator.LookupCache";
+            activitybind32.Name = "SendEmailNotification";
+            activitybind32.Path = "ActivityExpressionEvaluator.LookupCache";
             this.Resolve.Name = "Resolve";
-            activitybind28.Name = "RunQueries";
-            activitybind28.Path = "QueryResults";
+            activitybind33.Name = "SendEmailNotification";
+            activitybind33.Path = "QueryResults";
             this.Resolve.Value = null;
-            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind28)));
-            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind27)));
+            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.LookupsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind32)));
+            this.Resolve.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveLookups.QueryResultsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind33)));
             // 
-            // RunQueries
+            // IfQueriesHaveNoValueExpressions
             // 
-            this.RunQueries.Name = "RunQueries";
-            activitybind29.Name = "SendEmailNotification";
-            activitybind29.Path = "Queries";
-            this.RunQueries.QueryResults = dictionary_21;
-            this.RunQueries.SetBinding(MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.ComponentActivities.ResolveQueries.QueryDefinitionsProperty, ((System.Workflow.ComponentModel.ActivityBind)(activitybind29)));
+            this.IfQueriesHaveNoValueExpressions.Activities.Add(this.QueriesHaveNoValueExpressions);
+            this.IfQueriesHaveNoValueExpressions.Name = "IfQueriesHaveNoValueExpressions";
             // 
             // Prepare
             // 
@@ -401,7 +458,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             // SendEmailNotification
             // 
             this.Activities.Add(this.Prepare);
-            this.Activities.Add(this.RunQueries);
+            this.Activities.Add(this.IfQueriesHaveNoValueExpressions);
             this.Activities.Add(this.Resolve);
             this.Activities.Add(this.PrepareIteration);
             this.Activities.Add(this.ForEachIteration);
@@ -412,10 +469,19 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         #endregion
 
+        private ComponentActivities.ResolveLookups ResolveLookups;
+        private ComponentActivities.ResolveQueries ResolveQueries;
+        private IfElseBranchActivity QueriesDoHaveValueExpressions;
+        private ComponentActivities.ResolveQueries RunQueriesOnce;
+        private IfElseBranchActivity QueriesHaveNoValueExpressions;
+        private IfElseActivity IfQueriesHaveNoValueExpressions;
+        private IfElseBranchActivity QueriesDoNotHaveValueExpressions;
+        private IfElseActivity IfQueriesHaveValueExpressions;
+        private ComponentActivities.ResolveLookups Resolve;
         private ComponentActivities.UpdateLookups Update;
-        private CodeActivity PrepareSendMail;
+        private CodeActivity TraceSendMail;
         private CodeActivity PrepareUpdate;
-        private ComponentActivities.ResolveQueries RunQueries;
+        private ComponentActivities.ResolveQueries RunQueriesIterative;
         private CodeActivity PrepareIteration;
         private ComponentActivities.ResolveLookups ResolveForValue;
         private SequenceActivity ProcessMail;
@@ -439,7 +505,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         private IfElseBranchActivity EmailToIsExpression;
         private IfElseBranchActivity EmailToIsXPath;
         private IfElseActivity IfEmailToIsXPathOrExpression;
-        private ComponentActivities.ResolveLookups Resolve;
         private CodeActivity ResolveEmailTemplate;
         private CodeActivity CheckEmailTemplateResource;
         private IfElseBranchActivity EmailTemplateIsExpression;

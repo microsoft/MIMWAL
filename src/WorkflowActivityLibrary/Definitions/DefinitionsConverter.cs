@@ -45,9 +45,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Definitio
         /// <param name="definitionsTable">The definitions table.</param>
         public DefinitionsConverter(Hashtable definitionsTable)
         {
+            // Do nothing if the hashtable is null. This is to allow backward compatibility of the old Activity UI XOML when a newer version is introduced
+            if (definitionsTable == null)
+            {
+                return;
+            }
+
             // This constructor handles a hash table which is deserialized from an activity definition's XOML
             // Throw an exception if the hashtable is null or missing the Count key which indicates how many definitions it stores
-            if (definitionsTable == null || !definitionsTable.ContainsKey("Count"))
+            if (definitionsTable != null && !definitionsTable.ContainsKey("Count"))
             {
                 throw Logger.Instance.ReportError(new ArgumentException(Messages.DefinitionsConverter_NullOrEmptyDefinitionsTableError, "definitionsTable"));
             }

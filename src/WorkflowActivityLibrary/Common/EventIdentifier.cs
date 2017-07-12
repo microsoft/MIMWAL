@@ -1279,6 +1279,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ResolveQueriesForEachQueryChildCompleted = 11904;
 
         /// <summary>
+        /// The event identifier for ResolveQueries ForEachQuery_Initialized events
+        /// </summary>
+        public const int ResolveQueriesForEachQueryInitialized = 11905;
+
+        /// <summary>
         /// The event identifier for UpdateLookups Constructor events
         /// </summary>
         public const int UpdateLookupsConstructor = 12001;
@@ -1529,7 +1534,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <summary>
         /// The event identifier for SendEmailNotification TraceEmailProperties_ExecuteCode events
         /// </summary>
-        public const int SendEmailNotificationPrepareSendMailExecuteCode = 12620;
+        public const int SendEmailNotificationTraceSendMailExecuteCode = 12620;
 
         /// <summary>
         /// The event identifier for SendEmailNotification IsXPath events
@@ -1575,6 +1580,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for SendEmailNotification PrepareMailTemplate_ExecuteCode events
         /// </summary>
         public const int SendEmailNotificationPrepareUpdateExecuteCode = 12629;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification QueriesHaveNoValueExpressionsCondition events
+        /// </summary>
+        public const int SendEmailNotificationQueriesHaveNoValueExpressionsCondition = 12630;
 
         /// <summary>
         /// The event identifier for RequestApproval Constructor events

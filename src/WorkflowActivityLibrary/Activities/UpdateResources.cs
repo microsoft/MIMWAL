@@ -626,6 +626,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="EventArgs"/> instance containing the event data.</param>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private void PrepareDynamicGrammarResolution_ExecuteCode(object sender, EventArgs e)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.UpdateResourcesForEachDynamicStringForResolutionInitialized);

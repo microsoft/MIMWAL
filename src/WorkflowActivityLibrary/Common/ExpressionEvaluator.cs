@@ -142,7 +142,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 }
                 else if (suppressValidationError)
                 {
-                    Logger.Instance.WriteInfo(EventIdentifier.ExpressionEvaluatorDetermineParameterType, Messages.ExpressionEvaluator_ExpressionParameterTypeValidationError, parameter);
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionEvaluatorDetermineParameterType, Messages.ExpressionEvaluator_ExpressionParameterTypeValidationError, parameter);
                 }
                 else
                 {
