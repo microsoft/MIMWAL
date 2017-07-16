@@ -1234,6 +1234,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionValueByKey = 11681;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromString = 11682;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -3027,6 +3032,31 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction ValueByKey events
         /// </summary>
         public const int ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError = 41681;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFunctionParameterCountError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringNullFunctionParameterError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFirstFunctionParameterTypeError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidSecondFunctionParameterTypeError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFunctionParametersError = 41682;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
