@@ -177,6 +177,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "DATETIMEFROMFILETIMEUTC":
                         return this.DateTimeFromFileTimeUtc();
 
+                    case "DATETIMEFROMSTRING":
+                        return this.DateTimeFromString();
+
                     case "DATETIMENOW":
                         return this.DateTimeNow();
 
@@ -366,7 +369,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 {
                                     try
                                     {
-                                        paramString += Convert.ToString(parameter) + "',";
+                                        paramString += Convert.ToString(parameter, CultureInfo.InvariantCulture) + "',";
                                     }
                                     catch (Exception)
                                     {
@@ -1252,7 +1255,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1280,7 +1283,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else
@@ -1294,7 +1297,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 CreateRequestParameter createRequestParameter = (CreateRequestParameter)requestParameter;
                                 if (createRequestParameter.PropertyName.Equals(this.parameters[1]))
                                 {
-                                    valueList.Add(createRequestParameter.Value.ToString());
+                                    valueList.Add(createRequestParameter.Value);
                                 }
                             }
                         }
@@ -1358,7 +1361,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1386,7 +1389,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else if (updateRequestParameter.Mode == UpdateMode.Modify)
@@ -1401,7 +1404,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 CreateRequestParameter createRequestParameter = (CreateRequestParameter)requestParameter;
                                 if (createRequestParameter.PropertyName.Equals(this.parameters[1]))
                                 {
-                                    valueList.Add(createRequestParameter.Value.ToString());
+                                    valueList.Add(createRequestParameter.Value);
                                 }
                             }
                         }
@@ -1465,7 +1468,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> requestParameters = new List<string>();
-                    List<string> valueList = new List<string>();
+                    List<object> valueList = new List<object>();
 
                     if (this.parameters[0] is string)
                     {
@@ -1493,7 +1496,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                     {
                                         if (updateRequestParameter.Value != null)
                                         {
-                                            valueList.Add(updateRequestParameter.Value.ToString());
+                                            valueList.Add(updateRequestParameter.Value);
                                         }
                                     }
                                     else if (updateRequestParameter.Mode == UpdateMode.Modify)
@@ -2227,6 +2230,81 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionDateTimeFromFileTimeUtc, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to convert string representation of a date and time to its DateTime equivalent.
+        /// If the string does not contain time zone info, it's assumed to be UTC.
+        /// If the optional culture name parameter is not specified, it's assumed to be invariant culture.
+        /// Function Syntax: DateTimeFromString(string:dateTime [, culture:cultureName])
+        /// </summary>
+        /// <returns>A DateTime equivalent to specified string. If the string is null, a null is returned.</returns>
+        private object DateTimeFromString()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionDateTimeFromString, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 1 && this.parameters.Count > 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFromStringInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError2, this.function, 1, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(string);
+                object parameter = this.parameters[0];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFromStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
+                }
+
+                object result = null;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    if (this.parameters[0] == null)
+                    {
+                        result = null;
+                    }
+                    else
+                    {
+                        var cultureInfo = CultureInfo.InvariantCulture;
+                        if (this.parameters.Count == 2)
+                        {
+                            try
+                            {
+                                cultureInfo = new CultureInfo(this.parameters[1] as string);
+                            }
+                            catch (ArgumentException e)
+                            {
+                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFromStringInvalidSecondFunctionParameterTypeError, e);
+                            }
+                        }
+
+                        try
+                        {
+                            result = DateTime.Parse(this.parameters[0] as string, cultureInfo, DateTimeStyles.AdjustToUniversal | DateTimeStyles.AssumeUniversal);
+                        }
+                        catch (FormatException e)
+                        {
+                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFromStringInvalidFunctionParametersError, e);
+                        }
+                    }
+
+                    if (this.parameters.Count == 1)
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeFromString, "DateTimeFromString('{0}') returned '{1}'.", this.parameters[0], result);
+                    }
+                    else
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeFromString, "DateTimeFromString('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                    }
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionDateTimeFromString, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
@@ -4987,6 +5065,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// Function Syntax: CreateSqlParameter2(sqlConnectionStringConfigKey:string, parameterName:string, parameterDirection:string, parameterType:string [, parameterSize:integer, parameterValue:object])
         /// </summary>
         /// <returns>The <see cref="DbParameter" /> object.</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private DbParameter CreateSqlParameter2()
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCreateSqlParameter2, "Evaluation Mode: '{0}'.", this.mode);
@@ -5284,6 +5363,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         using (var dbConnection = factory.CreateConnection())
                         {
                             dbConnection.ConnectionString = connectionString;
+
+                            if (providerName.Equals("System.Data.Odbc", StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (connectionString.IndexOf("CONNECTION TIMEOUT=", StringComparison.OrdinalIgnoreCase) != -1)
+                                {
+                                    try
+                                    {
+                                        var connectionTimeout = Convert.ToInt32(connectionString.ToUpperInvariant().Split(new string[] { "CONNECTION TIMEOUT=" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(';')[0], CultureInfo.InvariantCulture);
+                                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionExecuteSqlScalar, "Provider Name: '{0}'. Connection Timeout: '{1}'.", providerName, connectionTimeout);
+                                        ((OdbcConnection)dbConnection).ConnectionTimeout = connectionTimeout;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, e, this.function, "Connection Timeout"));
+                                    }
+                                }
+                            }
+
                             using (var dbCommand = factory.CreateCommand())
                             {
                                 dbCommand.Connection = dbConnection;
@@ -5419,6 +5516,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         using (var dbConnection = factory.CreateConnection())
                         {
                             dbConnection.ConnectionString = connectionString;
+
+                            if (providerName.Equals("System.Data.Odbc", StringComparison.OrdinalIgnoreCase))
+                            {
+                                if (connectionString.IndexOf("CONNECTION TIMEOUT=", StringComparison.OrdinalIgnoreCase) != -1)
+                                {
+                                    try
+                                    {
+                                        var connectionTimeout = Convert.ToInt32(connectionString.ToUpperInvariant().Split(new string[] { "CONNECTION TIMEOUT=" }, StringSplitOptions.RemoveEmptyEntries)[1].Split(';')[0], CultureInfo.InvariantCulture);
+                                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionExecuteSqlNonQuery, "Provider Name: '{0}'. Connection Timeout: '{1}'.", providerName, connectionTimeout);
+                                        ((OdbcConnection)dbConnection).ConnectionTimeout = connectionTimeout;
+                                    }
+                                    catch (Exception e)
+                                    {
+                                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionExecuteSqlNonQueryNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidConfigKeyConfiguration, e, this.function, "Connection Timeout"));
+                                    }
+                                }
+                            }
+
                             using (var dbCommand = factory.CreateCommand())
                             {
                                 dbCommand.Connection = dbConnection;

@@ -412,7 +412,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The definitions table is null or corrupt.
+        ///   Looks up a localized string similar to The definitions table is corrupt..
         /// </summary>
         internal static string DefinitionsConverter_NullOrEmptyDefinitionsTableError {
             get {
@@ -2136,6 +2136,51 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         internal static string VerifyResourceUniquenessHelpText {
             get {
                 return ResourceManager.GetString("VerifyResourceUniquenessHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Workflow Lookup Variables.
+        /// </summary>
+        internal static string WorkflowDataVariables {
+            get {
+                return ResourceManager.GetString("WorkflowDataVariables", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to One or more workflow lookup variable definitions are incomplete.
+        /// </summary>
+        internal static string WorkflowDataVariablesDefinitionValidationError {
+            get {
+                return ResourceManager.GetString("WorkflowDataVariablesDefinitionValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Specify the Workflow Lookup Variables to be used in the email template..
+        /// </summary>
+        internal static string WorkflowDataVariablesHelpText {
+            get {
+                return ResourceManager.GetString("WorkflowDataVariablesHelpText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value Expression.
+        /// </summary>
+        internal static string WorkflowDataVariablesLeftHeader {
+            get {
+                return ResourceManager.GetString("WorkflowDataVariablesLeftHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Target.
+        /// </summary>
+        internal static string WorkflowDataVariablesRightHeader {
+            get {
+                return ResourceManager.GetString("WorkflowDataVariablesRightHeader", resourceCulture);
             }
         }
     }

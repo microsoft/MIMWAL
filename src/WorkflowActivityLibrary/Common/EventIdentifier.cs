@@ -1234,6 +1234,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionValueByKey = 11681;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromString = 11682;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -1277,6 +1282,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ResolveQueries ForEachQuery_ChildCompleted events
         /// </summary>
         public const int ResolveQueriesForEachQueryChildCompleted = 11904;
+
+        /// <summary>
+        /// The event identifier for ResolveQueries ForEachQuery_Initialized events
+        /// </summary>
+        public const int ResolveQueriesForEachQueryInitialized = 11905;
 
         /// <summary>
         /// The event identifier for UpdateLookups Constructor events
@@ -1529,7 +1539,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <summary>
         /// The event identifier for SendEmailNotification TraceEmailProperties_ExecuteCode events
         /// </summary>
-        public const int SendEmailNotificationPrepareSendMailExecuteCode = 12620;
+        public const int SendEmailNotificationTraceSendMailExecuteCode = 12620;
 
         /// <summary>
         /// The event identifier for SendEmailNotification IsXPath events
@@ -1550,6 +1560,36 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for SendEmailNotification GetEmailTemplateGuid events
         /// </summary>
         public const int SendEmailNotificationGetEmailTemplateGuid = 12624;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification PrepareIterationExecuteCode events
+        /// </summary>
+        public const int SendEmailNotificationPrepareIterationExecuteCode = 12625;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationChildInitialized events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationChildInitialized = 12626;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationChildCompleted events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationChildCompleted = 12627;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification ForEachIterationUntilCondition events
+        /// </summary>
+        public const int SendEmailNotificationForEachIterationUntilCondition = 12628;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification PrepareMailTemplate_ExecuteCode events
+        /// </summary>
+        public const int SendEmailNotificationPrepareUpdateExecuteCode = 12629;
+
+        /// <summary>
+        /// The event identifier for SendEmailNotification QueriesHaveNoValueExpressionsCondition events
+        /// </summary>
+        public const int SendEmailNotificationQueriesHaveNoValueExpressionsCondition = 12630;
 
         /// <summary>
         /// The event identifier for RequestApproval Constructor events
@@ -2992,6 +3032,31 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction ValueByKey events
         /// </summary>
         public const int ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError = 41681;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFunctionParameterCountError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringNullFunctionParameterError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFirstFunctionParameterTypeError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidSecondFunctionParameterTypeError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DataTimeFromString events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFromStringInvalidFunctionParametersError = 41682;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events

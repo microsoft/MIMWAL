@@ -1032,6 +1032,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                     this.ApprovalEmailTemplateGuid, this.EscalationEmailTemplateGuid, this.ApprovalCompleteEmailTemplateGuid,
                     this.ApprovalDeniedEmailTemplateGuid, this.ApprovalTimeoutEmailTemplateGuid
                 };
+
+                Logger.Instance.WriteInfo(
+                    EventIdentifier.RequestApprovalTraceCreateApprovalExecuteCode,
+                    "Approvers: '{0}'. Threshold: '{1}'. Duration: '{2}'. Escalation: '{3}'. ApprovalEmailTemplate: '{4}'. EscalationEmailTemplate: '{5}'. ApprovalCompleteEmailTemplate: '{6}'. ApprovalDeniedEmailTemplate: '{7}'. ApprovalTimeoutEmailTemplate: '{8}'.",
+                    traceData);
             }
             finally
             {
@@ -1047,6 +1052,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="emailTemplate">An email template expression</param>
         /// <returns>The Guid of the specified email template expression</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private Guid GetEmailTemplateGuid(string emailTemplate)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.RequestApprovalGetEmailTemplateGuid, "Email Template: '{0}'.", emailTemplate);
@@ -1091,6 +1097,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         /// </summary>
         /// <param name="recipient">Guid or email address of the recipient</param>
         /// <returns>A string representation of the recipient object</returns>
+        [SuppressMessage("Microsoft.Performance", "CA1800:DoNotCastUnnecessarily", Justification = "Reviewed.")]
         private string FormatRecipient(string recipient)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.RequestApprovalFormatRecipient, "Recipient: '{0}'.", recipient);

@@ -88,7 +88,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The definitions table is null or corrupt.
+        ///   Looks up a localized string similar to The definitions table is corrupt..
         /// </summary>
         internal static string DefinitionsConverter_NullOrEmptyDefinitionsTableError {
             get {

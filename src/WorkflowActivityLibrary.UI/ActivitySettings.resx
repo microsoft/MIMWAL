@@ -610,7 +610,7 @@
     <value>A Search Target XPath must be supplied.</value>
   </data>
   <data name="DefinitionsConverter_NullOrEmptyDefinitionsTableError" xml:space="preserve">
-    <value>The definitions table is null or corrupt</value>
+    <value>The definitions table is corrupt.</value>
   </data>
   <data name="ValueExpressionUniquenessKeyValidationError" xml:space="preserve">
     <value>Only the last value expression in the list can leverage the [//UniquenessKey] lookup.</value>
@@ -809,5 +809,20 @@
   </data>
   <data name="PowerShellUserPasswordValidationError" xml:space="preserve">
     <value>Specify the PowerShell user password.</value>
+  </data>
+  <data name="WorkflowDataVariables" xml:space="preserve">
+    <value>Workflow Lookup Variables</value>
+  </data>
+  <data name="WorkflowDataVariablesHelpText" xml:space="preserve">
+    <value>Specify the Workflow Lookup Variables to be used in the email template.</value>
+  </data>
+  <data name="WorkflowDataVariablesLeftHeader" xml:space="preserve">
+    <value>Value Expression</value>
+  </data>
+  <data name="WorkflowDataVariablesRightHeader" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="WorkflowDataVariablesDefinitionValidationError" xml:space="preserve">
+    <value>One or more workflow lookup variable definitions are incomplete</value>
   </data>
 </root>
