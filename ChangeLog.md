@@ -7,6 +7,13 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 
+### Version 2.17.0927.0
+
+#### Fixed
+
+* Bugfix in SortList function.
+
+
 ### Version 2.17.0414.0
 
 #### Added
