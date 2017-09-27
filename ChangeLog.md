@@ -7,12 +7,29 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 
+------------
+
 ### Version 2.17.0927.0
 
 #### Fixed
 
 * Bugfix in SortList function.
 
+------------
+
+### Version 2.17.0721.0
+
+#### Added
+
+* Support for Query and Iternation in SendEmailNotification activity.
+* [DateTimeFromString][DateTimeFromStringFunction] function.
+
+#### Fixed
+
+* Fixed ParameterValue* functions to return attribute values in the original datatype than as string.
+* Correctly setting connection timeout for ODBC connection in ExecuteSqlNonQuery and ExecuteSqlScalar functions.
+
+------------
 
 ### Version 2.17.0414.0
 
@@ -24,6 +41,8 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 	* New function [ExecuteSqlNonQuery][ExecuteSqlNonQueryFunction]
 	* New function [ExecuteSqlScalar][ExecuteSqlScalarFunction]
 	* New function [ValueByKey][ValueByKeyFunction]
+
+------------
 
 ### Version 2.16.1028.0
 
@@ -151,3 +170,4 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 [ExecuteSqlNonQueryFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlNonQuery-Function
 [ExecuteSqlScalarFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlScalar-Function
 [ValueByKeyFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByKey-Function
+[DateTimeFromStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFromString-Function

@@ -469,8 +469,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
 
         #endregion
 
-        private ComponentActivities.ResolveLookups ResolveLookups;
-        private ComponentActivities.ResolveQueries ResolveQueries;
         private IfElseBranchActivity QueriesDoHaveValueExpressions;
         private ComponentActivities.ResolveQueries RunQueriesOnce;
         private IfElseBranchActivity QueriesHaveNoValueExpressions;
