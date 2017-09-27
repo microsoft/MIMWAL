@@ -2246,7 +2246,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
             try
             {
-                if (this.parameters.Count < 1 && this.parameters.Count > 2)
+                if (this.parameters.Count < 1 || this.parameters.Count > 2)
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFromStringInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError2, this.function, 1, 2, this.parameters.Count));
                 }
@@ -4903,7 +4903,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                             list.Sort();
 
-                            result = this.parameters[0];
+                            result = list;
                         }
                         else
                         {

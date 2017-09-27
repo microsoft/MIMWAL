@@ -9,6 +9,14 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 ------------
 
+### Version 2.17.0927.0
+
+#### Fixed
+
+* Bugfix in SortList function.
+
+------------
+
 ### Version 2.17.0721.0
 
 #### Added
