@@ -4579,10 +4579,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 Type parameterType3 = typeof(Guid);
                 Type parameterType4 = typeof(byte[]);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToStringNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
 
                 if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, parameterType3) && !this.VerifyType(parameter, parameterType4) && !this.VerifyType(parameter, typeof(string)))
                 {
@@ -4593,7 +4589,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = Convert.ToString(parameter, CultureInfo.InvariantCulture);
+                    result = parameter == null ? null : Convert.ToString(parameter, CultureInfo.InvariantCulture);
+
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertToString, "ConvertToString('{0}') returned '{1}'.", this.parameters[0], result);
                 }
                 else
