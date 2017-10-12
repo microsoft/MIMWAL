@@ -25,15 +25,7 @@ You can also submit an issue. Use the [Issues](https://github.com/Microsoft/MIMW
 
 ## Contributing to MIMWAL Wiki
 
-The two ways to contribute to MIMWAL Wiki are again: Fork the Repository or Submit an Issue.
-
-### Fork the MIMWAL Wiki Repository.
-
-Fork a copy of the [MIMWAL Wiki Repo](https://github.com/Microsoft/MIMWAL/wiki) and send a pull request.
-
-### Submit an Issue.
-
-You can also submit an issue. Use the [Issues](https://github.com/Microsoft/MIMWAL/issues) tab to create a new issue.
+To contribute to the MIMWAL wiki, please submit an Issue. Use the [Issues](https://github.com/Microsoft/MIMWAL/issues) tab to create a new issue.
 
 ##### Wiki Acceptance
 
