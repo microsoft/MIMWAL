@@ -36,6 +36,10 @@ For more details and information on utilizing the MIMWAL please refer to the doc
 
 For questions and conversations focused on MIMWAL, please visit the MIMWAL Project TechNet Forum: [http://aka.ms/MIMWAL/Forum](http://aka.ms/MIMWAL/Forum).
 
+# Support
+
+For questions on MIMWAL software / deployment / post-deployment support, please see the FAQ: [How is MIMWAL supported?](https://github.com/Microsoft/MIMWAL/wiki/FAQ#how-is-mimwal-supported)
+
 # Contributing to MIMWAL
 
 For details on how you can contribute, please check [CONTRIBUTING.md](https://github.com/Microsoft/MIMWAL/blob/master/CONTRIBUTING.md)
