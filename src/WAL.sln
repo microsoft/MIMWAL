@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WorkflowActivityLibrary", "WorkflowActivityLibrary\WorkflowActivityLibrary.csproj", "{E2F7C594-3E4A-42DF-B293-7CB418DAB0DA}"
 EndProject
@@ -11,6 +11,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{9B89
 	ProjectSection(SolutionItems) = preProject
 		Scripts\CaptureTrace.cmd = Scripts\CaptureTrace.cmd
 		Scripts\CompileLanguagePack.cmd = Scripts\CompileLanguagePack.cmd
+		Scripts\EncryptConnectionString.ps1 = Scripts\EncryptConnectionString.ps1
 		Scripts\EncryptData.ps1 = Scripts\EncryptData.ps1
 		Scripts\Register.ps1 = Scripts\Register.ps1
 		Scripts\RunPSLoggingSample.ps1 = Scripts\RunPSLoggingSample.ps1

@@ -134,6 +134,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "CONVERTFROMBASE64":
                         return this.ConvertFromBase64();
 
+                    case "CONVERTNUMBERTOLIST":
+                        return this.ConvertNumberToList();
+
                     case "CONVERTSIDTOSTRING":
                         return this.ConvertSidToString();
 
@@ -188,6 +191,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                     case "DATETIMESUBTRACT":
                         return this.DateTimeSubtract();
+
+                    case "DIVIDE":
+                        return this.Divide();
 
                     case "EQ":
                         return this.Eq();
@@ -245,6 +251,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                     case "MID":
                         return this.Mid();
+
+                    case "MOD":
+                        return this.Mod();
+
+                    case "MULTIPLY":
+                        return this.Multiply();
 
                     case "NORMALIZESTRING":
                         return this.NormalizeString();
@@ -691,6 +703,63 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionContains, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to divide the first integer value by the second integer value.
+        /// Function Syntax: Divide(first:integer, second:integer)
+        /// </summary>
+        /// <returns>The integer quotient of the division of the first integer value by the second integer value.</returns>
+        private long Divide()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionDivide, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(long);
+                object parameter = this.parameters[0];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                parameter = this.parameters[1];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                long result;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    long first = Convert.ToInt64(this.parameters[0], CultureInfo.InvariantCulture);
+                    long second = Convert.ToInt64(this.parameters[1], CultureInfo.InvariantCulture);
+
+                    if (second == 0)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError2, this.function, 2));
+                    }
+
+                    result = first / second;
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDivide, "Divide('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                }
+                else
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionDivide, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
@@ -3038,6 +3107,115 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
+        /// This function is used to calculate the remainder after dividing the first integer with the second integer.
+        /// Function Syntax: Mod(first:integer, second:integer)
+        /// </summary>
+        /// <returns>The remainder after dividing the first integer with the second integer.</returns>
+        private long Mod()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionMod, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(long);
+                object parameter = this.parameters[0];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                parameter = this.parameters[1];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                long result;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    long first = Convert.ToInt64(this.parameters[0], CultureInfo.InvariantCulture);
+                    long second = Convert.ToInt64(this.parameters[1], CultureInfo.InvariantCulture);
+
+                    if (second == 0)
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterError2, this.function, 2));
+                    }
+
+                    result = first % second;
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionMod, "Mod('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                }
+                else
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionMod, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to multiply two integer values.
+        /// Function Syntax: Multiply(first:integer, second:integer)
+        /// </summary>
+        /// <returns>The result of the multiplication of the two integer values.</returns>
+        private long Multiply()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionMultiply, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(long);
+                object parameter = this.parameters[0];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                parameter = this.parameters[1];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                long result;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    long first = Convert.ToInt64(this.parameters[0], CultureInfo.InvariantCulture);
+                    long second = Convert.ToInt64(this.parameters[1], CultureInfo.InvariantCulture);
+
+                    result = first * second;
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionMultiply, "Multiply('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                }
+                else
+                {
+                    result = 0;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionMultiply, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
         /// This function is used to normalize the first string, first by replacing the character substitutions specfied in the second string 
         /// and then removing all diacritics using the .NET string normalization function.
         /// The substitution string is ':' and '|' separated in the form oldString1:newString1|oldString2:newString2...
@@ -4369,6 +4547,55 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionConvertFromBase64, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to convert a a number to a list of numbers which can be used to define an Iteration.
+        /// Function Syntax: ConvertNumberToList(count:integer)
+        /// </summary>
+        /// <returns>A list of numbers starting from 1 to the specified input number.</returns>
+        private List<int> ConvertNumberToList()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionConvertNumberToList, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 1)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertNumberToListInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 1, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(int);
+                object parameter = this.parameters[0];
+
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertNumberToListInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                }
+
+                List<int> result = null;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    int count = Convert.ToInt32(parameter, CultureInfo.InvariantCulture);
+                    if (count > 0)
+                    {
+                        result = new List<int>(count);
+                        for (int i = 1; i <= count; ++i)
+                        {
+                            result.Add(i);
+                        }
+                    }
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertNumberToList, "ConvertNumberToList('{0}') returned '{1}'.", this.parameters[0], result);
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionConvertNumberToList, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 

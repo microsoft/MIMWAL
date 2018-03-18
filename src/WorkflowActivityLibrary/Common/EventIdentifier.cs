@@ -1239,6 +1239,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionDateTimeFromString = 11682;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction ConvertNumberToList events
+        /// </summary>
+        public const int ExpressionFunctionConvertNumberToList = 11683;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Multiply events
+        /// </summary>
+        public const int ExpressionFunctionMultiply = 11684;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Divide events
+        /// </summary>
+        public const int ExpressionFunctionDivide = 11685;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Mod events
+        /// </summary>
+        public const int ExpressionFunctionMod = 11686;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -3057,6 +3077,61 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction DataTimeFromString events
         /// </summary>
         public const int ExpressionFunctionDateTimeFromStringInvalidFunctionParametersError = 41682;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ConvertNumberToList events
+        /// </summary>
+        public const int ExpressionFunctionConvertNumberToListInvalidFunctionParameterCountError = 41683;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ConvertNumberToList events
+        /// </summary>
+        public const int ExpressionFunctionConvertNumberToListInvalidFirstFunctionParameterTypeError = 41683;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Multiply events
+        /// </summary>
+        public const int ExpressionFunctionMultiplyInvalidFunctionParameterCountError = 41684;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Multiply events
+        /// </summary>
+        public const int ExpressionFunctionMultiplyInvalidFirstFunctionParameterTypeError = 41684;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Multiply events
+        /// </summary>
+        public const int ExpressionFunctionMultiplyInvalidSecondFunctionParameterTypeError = 41684;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Divide events
+        /// </summary>
+        public const int ExpressionFunctionDivideInvalidFunctionParameterCountError = 41685;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Divide events
+        /// </summary>
+        public const int ExpressionFunctionDivideInvalidFirstFunctionParameterTypeError = 41685;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Divide events
+        /// </summary>
+        public const int ExpressionFunctionDivideInvalidSecondFunctionParameterTypeError = 41685;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Mod events
+        /// </summary>
+        public const int ExpressionFunctionModInvalidFunctionParameterCountError = 41686;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Mod events
+        /// </summary>
+        public const int ExpressionFunctionModInvalidFirstFunctionParameterTypeError = 41686;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction Mod events
+        /// </summary>
+        public const int ExpressionFunctionModInvalidSecondFunctionParameterTypeError = 41686;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
