@@ -6,6 +6,22 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
+* Support for `[//Value]` lookups in Query definitions across rest of the activities.
+
+------------
+
+### Version 2.18.0318.0
+
+#### Added
+
+* [ConvertNumberToList][ConvertNumberToListFunction] function.
+* [Multiply][MultiplyFunction] function.
+* [Divide][DivideFunction] function.
+* [Mod][ModFunction] function.
+
+#### Changed
+
+* [ConvertToString][ConvertToStringFunction] will return null if the input parameter is null instead of throwing an exception.
 
 ------------
 
@@ -171,3 +187,7 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 [ExecuteSqlScalarFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlScalar-Function
 [ValueByKeyFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByKey-Function
 [DateTimeFromStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFromString-Function
+[ConvertNumberToListFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertNumberToList-Function
+[MultiplyFunction]: https://github.com/Microsoft/MIMWAL/wiki/Multiply-Function
+[DivideFunction]: https://github.com/Microsoft/MIMWAL/wiki/Divide-Function
+[ModFunction]: https://github.com/Microsoft/MIMWAL/wiki/Mod-Function

@@ -358,7 +358,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects list at position {1} to be of length &apos;{2}&apos;. It has a length of &apos;{3}&apos;..
+        ///   Looks up a localized string similar to The function &apos;{0}&apos; expects parameter at position {1} to be non-zero..
         /// </summary>
         internal static string ExpressionFunction_InvalidFunctionParameterError2 {
             get {
