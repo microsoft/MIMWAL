@@ -7,6 +7,13 @@
 
 	NOTE: Edit the Version and PublicKeyToken of the WAL AssemblyName to match the one that you have deployed in GAC.
 	Also edit the $encryptionCertThumbprint of cert to be used for certificate based encryption.
+	
+    Finding Assembly verion and PublicKeyToken
+        gacutil.exe -l | findstr WorkflowActivityLibrary
+    Creatinig a self signed certificate for MIMWAL (You need to use "Microsoft Strong Cryptographic Provider")
+        $cert = New-SelfSignedCertificate -DnsName "MIMWAL" -CertStoreLocation "cert:\LocalMachine\My" -Provider "Microsoft Strong Cryptographic Provider"
+        $cert.Thumbprint
+        NOTE: All users that will modify Powershell Workflows need Access to the private key of the MIMWAL certificate.
 #>
 
 $Error.Clear()
