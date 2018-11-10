@@ -5069,7 +5069,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         result = null;
                         Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionRemoveDuplicates, "RemoveDuplicates('{0}') returned null.", this.parameters[0]);
                     }
-
                 }
                 else
                 {
