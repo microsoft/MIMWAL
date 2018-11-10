@@ -792,13 +792,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 try
                 {
-                    bool result;
+                    bool result = false;
 
                     if (this.mode != EvaluationMode.Parse)
                     {
                         if (this.parameters[0] == null || this.parameters[1] == null)
                         {
-                            result = this.parameters[0] == null && this.parameters[1] == null;
+                            if (this.parameters[0] == null && this.parameters[1] == null)
+                            {
+                                result = true;
+                            }
+                            else if (this.parameters[0] == null && this.VerifyType(this.parameters[1], typeof(string)))
+                            {
+                                result = string.IsNullOrEmpty(this.parameters[1] as string);
+                            }
+                            else if (this.parameters[1] == null && this.VerifyType(this.parameters[0], typeof(string)))
+                            {
+                                result = string.IsNullOrEmpty(this.parameters[0] as string);
+                            }
                         }
                         else if (this.VerifyType(this.parameters[0], typeof(string)) && this.VerifyType(this.parameters[1], typeof(string)))
                         {
@@ -821,10 +832,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         }
 
                         Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionEqual, "Eq('{0}', '{1}') evaluated '{2}'.", this.parameters[0], this.parameters[1], result);
-                    }
-                    else
-                    {
-                        result = false;
                     }
 
                     return result;
