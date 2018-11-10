@@ -129,6 +129,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int CreateResourceActorIsNotValueExpressionCondition = 10115;
 
         /// <summary>
+        /// The event identifier for CreateResource OnSequenceComplete events
+        /// </summary>
+        public const int CreateResourceOnSequenceComplete = 10116;
+
+        /// <summary>
         /// The event identifier for DeleteResources Constructor events
         /// </summary>
         public const int DeleteResourcesConstructor = 10201;
@@ -187,6 +192,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for DeleteResources ActorIsNotValueExpression_Condition events
         /// </summary>
         public const int DeleteResourcesActorIsNotValueExpressionCondition = 10212;
+
+        /// <summary>
+        /// The event identifier for DeleteResources OnSequenceComplete events
+        /// </summary>
+        public const int DeleteResourcesOnSequenceComplete = 10213;
 
         /// <summary>
         /// The event identifier for GenerateUniqueValue Constructor events
@@ -264,6 +274,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int GenerateUniqueValueRepositionUniquenessKey = 10315;
 
         /// <summary>
+        /// The event identifier for GenerateUniqueValue OnSequenceComplete events
+        /// </summary>
+        public const int GenerateUniqueValueOnSequenceComplete = 10316;
+
+        /// <summary>
         /// The event identifier for RunPowerShellScript Constructor events
         /// </summary>
         public const int RunPowerShellScriptConstructor = 10401;
@@ -302,6 +317,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for RunPowerShellScript ActivityExecutionConditionSatisfied_Condition events
         /// </summary>
         public const int RunPowerShellScriptActivityExecutionConditionSatisfiedCondition = 10408;
+
+        /// <summary>
+        /// The event identifier for RunPowerShellScript OnSequenceComplete events
+        /// </summary>
+        public const int RunPowerShellScriptOnSequenceComplete = 10409;
 
         /// <summary>
         /// The event identifier for UpdateResources Constructor events
@@ -369,6 +389,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int UpdateResourcesForEachDynamicStringForResolutionChildCompleted = 10513;
 
         /// <summary>
+        /// The event identifier for UpdateResources OnSequenceComplete events
+        /// </summary>
+        public const int UpdateResourcesOnSequenceComplete = 10514;
+
+        /// <summary>
         /// The event identifier for VerifyRequest Constructor events
         /// </summary>
         public const int VerifyRequestConstructor = 10601;
@@ -432,6 +457,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for VerifyRequest ActivityExecutionConditionSatisfied_Condition events
         /// </summary>
         public const int VerifyRequestActivityExecutionConditionSatisfiedCondition = 10613;
+
+        /// <summary>
+        /// The event identifier for VerifyRequest OnSequenceComplete events
+        /// </summary>
+        public const int VerifyRequestOnSequenceComplete = 10614;
 
         /// <summary>
         /// The event identifier for AsynchronousCreateResource Constructor events
@@ -1459,6 +1489,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int AddDelayTraceWakeupExecuteCode = 12506;
 
         /// <summary>
+        /// The event identifier for AddDelay OnSequenceComplete events
+        /// </summary>
+        public const int AddDelayOnSequenceComplete = 12507;
+
+        /// <summary>
         /// The event identifier for SendEmailNotification Constructor events
         /// </summary>
         public const int SendEmailNotificationConstructor = 12601;
@@ -1612,6 +1647,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int SendEmailNotificationQueriesHaveNoValueExpressionsCondition = 12630;
 
         /// <summary>
+        /// The event identifier for SendEmailNotification OnSequenceComplete events
+        /// </summary>
+        public const int SendEmailNotificationOnSequenceComplete = 12631;
+
+        /// <summary>
         /// The event identifier for RequestApproval Constructor events
         /// </summary>
         public const int RequestApprovalConstructor = 12701;
@@ -1760,6 +1800,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for RequestApproval FormatRecipient events
         /// </summary>
         public const int RequestApprovalFormatRecipient = 12729;
+
+        /// <summary>
+        /// The event identifier for RequestApproval OnSequenceComplete events
+        /// </summary>
+        public const int RequestApprovalOnSequenceComplete = 12730;
 
         #endregion
 
