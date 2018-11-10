@@ -526,6 +526,35 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
+        /// Determines the action taken when the activity has completed execution.
+        /// </summary>
+        /// <param name="executionContext">The execution context of the activity.</param>
+        protected override void OnSequenceComplete(ActivityExecutionContext executionContext)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.SendEmailNotificationOnSequenceComplete);
+
+            try
+            {
+                // Clear the variable cache for the expression evaluator
+                // so that any variables, such as SqlParameter, not marked as serializable does not cause dehyration issues.
+                if (this.ActivityExpressionEvaluator != null
+                    && this.ActivityExpressionEvaluator.VariableCache != null
+                    && this.ActivityExpressionEvaluator.VariableCache.Keys != null)
+                {
+                    List<string> variables = this.ActivityExpressionEvaluator.VariableCache.Keys.ToList();
+                    foreach (string variable in variables)
+                    {
+                        this.ActivityExpressionEvaluator.VariableCache[variable] = null;
+                    }
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.SendEmailNotificationOnSequenceComplete);
+            }
+        }
+
+        /// <summary>
         /// Converts the specified email template resolved expression into a Guid object
         /// </summary>
         /// <param name="emailTemplate">An email template resolved expression</param>
