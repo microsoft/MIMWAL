@@ -207,6 +207,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 {
                     this.maxLoopCount = 512;
                 }
+
+                if (!bool.TryParse(ConfigurationManager.AppSettings["GenerateUniqueValueActivity_OptimizeUniquenessKey"], out this.optimizeUniquenessKey))
+                {
+                    this.optimizeUniquenessKey = false;
+                }
             }
             finally
             {
@@ -740,8 +745,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             {
                 // Find the attributes to read on potentially conflicing resources
                 // so that the uniqueness seed can be repositioned instead of simply incremented
-                // when the conflict filter XPath uses a starts-with fuction 
-                this.SetAttributesToReadForConflictResources();
+                // when the conflict filter XPath uses a starts-with fuction
+                if (this.optimizeUniquenessKey)
+                {
+                    this.SetAttributesToReadForConflictResources();
+                }
 
                 // Default the uniqueness key to the specified uniqueness seed,
                 // resolve the first value expression in the list, and use that value to resolve
