@@ -7,8 +7,17 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 * Support for `[//Value]` lookups in Query definitions across rest of the activities.
+------------
+
+### Version 2.19.0111.0
+
+#### Changed
+
+* [Generate Unique Value Activity][GenerateUniqueValueActivity] now has the Conflict Filter search optimisation logic for the *starts-with* XPath function as documented in the [Wiki](https://github.com/Microsoft/MIMWAL/wiki/Generate-Unique-Value-Activity#conflict-filter) turned off by default.
+To get the backward compatible behaviour, define the app setting GenerateUniqueValueActivity_OptimizeUniquenessKey = true in the FIMService app.config.
 
 ------------
+
 ### Version 2.18.1110.0
 
 #### Changed
@@ -278,3 +287,4 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 [WordFunction]: https://github.com/Microsoft/MIMWAL/wiki/Word-Function
 [WrapXPathFilterFunction]: https://github.com/Microsoft/MIMWAL/wiki/WrapXPathFilter-Function
 [MIMWalFunctionsTable]: https://github.com/Microsoft/MIMWAL/wiki/Functions-Table
+[GenerateUniqueValueActivity]: https://github.com/Microsoft/MIMWAL/wiki/Generate-Unique-Value-Activity

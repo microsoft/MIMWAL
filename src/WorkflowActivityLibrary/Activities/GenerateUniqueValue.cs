@@ -538,15 +538,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 while (startIndex != -1)
                 {
                     int endIndex = filter.IndexOf(endToken, startIndex, StringComparison.OrdinalIgnoreCase);
-                    string s = filter.Substring(startIndex + startTokenLength + 1, endIndex - (startIndex + startTokenLength + 1)).Trim(new char[] { ' ', '(', ',' });
-                    attributes.Add(s);
+                    if (endIndex != -1)
+                    {
+                        string s = filter.Substring(startIndex + startTokenLength + 1, endIndex - (startIndex + startTokenLength + 1)).Trim(new char[] { ' ', '(', ',' });
+                        attributes.Add(s);
+                    }
+                    else
+                    {
+                        // just increment - should never be here as now this function should not get called unless this.optimizeUniquenessKey is set true via app.cong. Issue #61
+                        endIndex = startIndex + startTokenLength;
+                    }
+
                     filter = filter.Substring(endIndex);
                     startIndex = filter.IndexOf(startToken, StringComparison.Ordinal);
                 }
 
                 if (attributes.Count > 0)
                 {
-                    this.optimizeUniquenessKey = true;
+                    ////this.optimizeUniquenessKey = true; // Now this flag can only be set by app.config.
                     this.FindConflict.Attributes = attributes.ToArray();
                     Logger.Instance.WriteVerbose(EventIdentifier.GenerateUniqueValueSetAttributesToReadForConflictResources, "Filter: '{0}'. Attributes: '{1}'.", this.ConflictFilter, string.Join(";", attributes.ToArray()));
                 }
