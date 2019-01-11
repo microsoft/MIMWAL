@@ -524,7 +524,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             Logger.Instance.WriteMethodEntry(EventIdentifier.GenerateUniqueValueSetAttributesToReadForConflictResources, "Filter: '{0}'.", this.ConflictFilter);
 
             this.FindConflict.Attributes = null;
-            this.optimizeUniquenessKey = false;
+            ////this.optimizeUniquenessKey = false; // Now this flag can only be set by app.config.
             string filter = this.ConflictFilter;
             try
             {
