@@ -559,6 +559,10 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                     this.FindConflict.Attributes = attributes.ToArray();
                     Logger.Instance.WriteVerbose(EventIdentifier.GenerateUniqueValueSetAttributesToReadForConflictResources, "Filter: '{0}'. Attributes: '{1}'.", this.ConflictFilter, string.Join(";", attributes.ToArray()));
                 }
+                else
+                {
+                    this.optimizeUniquenessKey = false; // Turn the config flag off as the conflict filter does not use starts-with function.
+                }
             }
             finally
             {
