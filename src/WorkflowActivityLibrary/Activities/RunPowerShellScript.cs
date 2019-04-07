@@ -21,6 +21,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Linq;
     using System.Management.Automation;
     using System.Management.Automation.Runspaces;
     using System.Reflection;
@@ -513,6 +514,35 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.RunPowerShellScriptExecute);
+            }
+        }
+
+        /// <summary>
+        /// Determines the action taken when the activity has completed execution.
+        /// </summary>
+        /// <param name="executionContext">The execution context of the activity.</param>
+        protected override void OnSequenceComplete(ActivityExecutionContext executionContext)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.RunPowerShellScriptOnSequenceComplete);
+
+            try
+            {
+                // Clear the variable cache for the expression evaluator
+                // so that any variables, such as SqlParameter, not marked as serializable does not cause dehyration issues.
+                if (this.ActivityExpressionEvaluator != null
+                    && this.ActivityExpressionEvaluator.VariableCache != null
+                    && this.ActivityExpressionEvaluator.VariableCache.Keys != null)
+                {
+                    List<string> variables = this.ActivityExpressionEvaluator.VariableCache.Keys.ToList();
+                    foreach (string variable in variables)
+                    {
+                        this.ActivityExpressionEvaluator.VariableCache[variable] = null;
+                    }
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.RunPowerShellScriptOnSequenceComplete);
             }
         }
 

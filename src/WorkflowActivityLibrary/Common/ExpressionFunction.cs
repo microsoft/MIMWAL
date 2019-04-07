@@ -729,13 +729,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDivideInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -795,13 +795,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 try
                 {
-                    bool result;
+                    bool result = false;
 
                     if (this.mode != EvaluationMode.Parse)
                     {
                         if (this.parameters[0] == null || this.parameters[1] == null)
                         {
-                            result = this.parameters[0] == null && this.parameters[1] == null;
+                            if (this.parameters[0] == null && this.parameters[1] == null)
+                            {
+                                result = true;
+                            }
+                            else if (this.parameters[0] == null && this.VerifyType(this.parameters[1], typeof(string)))
+                            {
+                                result = string.IsNullOrEmpty(this.parameters[1] as string);
+                            }
+                            else if (this.parameters[1] == null && this.VerifyType(this.parameters[0], typeof(string)))
+                            {
+                                result = string.IsNullOrEmpty(this.parameters[0] as string);
+                            }
                         }
                         else if (this.VerifyType(this.parameters[0], typeof(string)) && this.VerifyType(this.parameters[1], typeof(string)))
                         {
@@ -824,10 +835,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         }
 
                         Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionEqual, "Eq('{0}', '{1}') evaluated '{2}'.", this.parameters[0], this.parameters[1], result);
-                    }
-                    else
-                    {
-                        result = false;
                     }
 
                     return result;
@@ -1741,13 +1748,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -1791,13 +1798,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSubtractInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -1917,6 +1924,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
                 }
 
+                // Change to accept nulls
+                /*
                 // At least one argument to format string function should not be null
                 bool allArgsNull = true;
                 for (int i = 1; i < this.parameters.Count; ++i)
@@ -1933,6 +1942,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionFormatMultivaluedListNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError2, this.function, 2));
                 }
+                */
 
                 object result = null;
 
@@ -1941,12 +1951,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     var maxListItemCount = 0;
                     for (int i = 1; i < this.parameters.Count; ++i)
                     {
-                        Type paramType = this.parameters[i].GetType();
-                        if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                        parameter = this.parameters[i];
+                        if (parameter != null)
                         {
-                            var listItemCount = ((IEnumerable)this.parameters[i]).Cast<object>().ToList().Count;
+                            Type paramType = parameter.GetType();
+                            if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                            {
+                                var listItemCount = ((IEnumerable)parameter).Cast<object>().ToList().Count;
 
-                            maxListItemCount = listItemCount > maxListItemCount ? listItemCount : maxListItemCount;
+                                maxListItemCount = listItemCount > maxListItemCount ? listItemCount : maxListItemCount;
+                            }
                         }
                     }
 
@@ -1956,14 +1970,15 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         var args = new object[this.parameters.Count - 1];
                         for (int i = 1; i < this.parameters.Count; ++i)
                         {
-                            Type paramType = this.parameters[i].GetType();
-                            if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                            parameter = this.parameters[i];
+                            args[i - 1] = parameter;
+                            if (parameter != null)
                             {
-                                args[i - 1] = null;
-                            }
-                            else
-                            {
-                                args[i - 1] = this.parameters[i];
+                                Type paramType = parameter.GetType();
+                                if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                                {
+                                    args[i - 1] = null;
+                                }
                             }
                         }
 
@@ -1979,16 +1994,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         {
                             for (int i = 1; i < this.parameters.Count; ++i)
                             {
-                                Type paramType = this.parameters[i].GetType();
-                                if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                                parameter = this.parameters[i];
+                                args[i - 1] = parameter;
+                                if (parameter != null)
                                 {
-                                    List<object> list = ((IEnumerable)this.parameters[i]).Cast<object>().ToList();
+                                    Type paramType = parameter.GetType();
+                                    if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                                    {
+                                        List<object> list = ((IEnumerable)parameter).Cast<object>().ToList();
 
-                                    args[i - 1] = list.Count > n ? list[n] : null;
-                                }
-                                else
-                                {
-                                    args[i - 1] = this.parameters[i];
+                                        args[i - 1] = list.Count > n ? list[n] : null;
+                                    }
                                 }
                             }
 
@@ -2136,11 +2152,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeAddInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
                 }
 
-                if (this.parameters[1] == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeAddNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 2));
-                }
-
                 Type parameterType = typeof(DateTime);
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
@@ -2153,7 +2164,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError3, this.function, parameterType.Name, parameterType2.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError3, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 object result;
@@ -2166,22 +2177,26 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     }
                     else
                     {
-                        if (parameter is TimeSpan)
+                        parameter = this.parameters[1];
+                        if (parameter == null)
                         {
-                            result = ((DateTime)this.parameters[0]).Add((TimeSpan)this.parameters[1]);
+                            result = (DateTime)this.parameters[0];
+                        }
+                        else if (parameter is TimeSpan)
+                        {
+                            result = ((DateTime)this.parameters[0]).Add((TimeSpan)parameter);
                         }
                         else
                         {
                             // do additional parameter validation check during execution as it may be a lookup expression than a design-time value. 
                             parameterType = typeof(TimeSpan);
-                            parameter = this.parameters[1];
                             TimeSpan parseTimeSpan;
                             if (!TimeSpan.TryParse(parameter as string, out parseTimeSpan))
                             {
                                 throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeAddInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError2, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name, parameter));
                             }
 
-                            result = ((DateTime)this.parameters[0]).Add(TimeSpan.Parse(this.parameters[1].ToString()));
+                            result = ((DateTime)this.parameters[0]).Add(TimeSpan.Parse(parameter.ToString()));
                         }
                     }
 
@@ -2881,7 +2896,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionLeftInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionLeftInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -2931,7 +2946,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionLeftPadInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionLeftPadInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[2];
@@ -3120,7 +3135,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMidInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMidInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[2];
@@ -3131,7 +3146,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMidInvalidThirdFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidThirdFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMidInvalidThirdFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidThirdFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -3193,13 +3208,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionModInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -3250,13 +3265,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 object parameter = this.parameters[0];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionMultiplyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -3506,7 +3521,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRandomNumberInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRandomNumberInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
@@ -3517,7 +3532,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRandomNumberInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRandomNumberInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 int result;
@@ -3721,7 +3736,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRightInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRightInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -3782,7 +3797,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRightPadInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRightPadInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[2];
@@ -4025,7 +4040,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByIndexInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByIndexInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 object result;
@@ -4108,7 +4123,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 object result = null;
@@ -4135,7 +4150,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                         }
                         else
                         {
-                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                            throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionValueByKeyInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                         }
                     }
 
@@ -4222,7 +4237,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionWordInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionWordInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[2];
@@ -4234,7 +4249,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 parameterType = typeof(char);
                 if (parameter.ToString().ToCharArray().Length != 1)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionWordInvalidThirdFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidThirdFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionWordInvalidThirdFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidThirdFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -4329,7 +4344,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitAndInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitAndInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
@@ -4340,7 +4355,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitAndInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitAndInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -4432,7 +4447,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitOrInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitOrInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 parameter = this.parameters[1];
@@ -4443,7 +4458,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitOrInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionBitOrInvalidSecondFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidSecondFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
@@ -4537,21 +4552,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(string);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertStringToGuidNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertStringToGuidInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertStringToGuidInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 byte[] result;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = (new Guid((string)parameter)).ToByteArray();
+                    var input = parameter as string;
+                    result = string.IsNullOrEmpty(input) ? Guid.Empty.ToByteArray() : (new Guid(input)).ToByteArray();
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertStringToGuid, "ConvertStringToGuid('{0}') returned '{1}'.", this.parameters[0], result);
                 }
@@ -4586,21 +4597,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(string);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertFromBase64NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertFromBase64InvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertFromBase64InvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 byte[] result;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = Convert.FromBase64String((string)parameter);
+                    var input = parameter as string;
+                    result = string.IsNullOrEmpty(input) ? null : Convert.FromBase64String(input);
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertFromBase64, "ConvertFromBase64('{0}') returned '{1}'.", this.parameters[0], result);
                 }
@@ -4638,7 +4645,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertNumberToListInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertNumberToListInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 List<int> result = null;
@@ -4691,7 +4698,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertSidToStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertSidToStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -4734,21 +4741,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(byte[]);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToBase64NullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToBase64InvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToBase64InvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = Convert.ToBase64String((byte[])parameter);
+                    result = parameter == null ? null : Convert.ToBase64String((byte[])parameter);
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertToBase64, "ConvertToBase64('{0}') returned '{1}'.", this.parameters[0], result);
                 }
@@ -4822,21 +4824,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 Type parameterType = typeof(string);
                 Type parameterType2 = typeof(bool);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToNumberNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType) && !this.VerifyType(parameter, parameterType2) && !this.VerifyType(parameter, typeof(long)))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToNumberInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError2, this.function, parameterType.Name, parameterType2.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionConvertToNumberInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError2, this.function, parameterType.Name, parameterType2.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 long result;
 
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = Convert.ToInt64(parameter, CultureInfo.InvariantCulture);
+                    result = parameter == null ? 0 : Convert.ToInt64(parameter, CultureInfo.InvariantCulture);
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionConvertToNumber, "ConvertToNumber('{0}') returned '{1}'.", this.parameters[0], result);
                 }
                 else
@@ -4962,7 +4959,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionEscapeDNComponentInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionEscapeDNComponentInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 string result;
@@ -5048,11 +5045,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(string);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSplitStringNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
                     throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionSplitStringInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterTypeError, this.function, 1, parameterType.Name, parameter.GetType().Name));
@@ -5089,9 +5081,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 List<string> result;
                 if (this.mode != EvaluationMode.Parse)
                 {
-                    result = !string.IsNullOrEmpty(separator) ? input.Split(new string[] { separator }, count, StringSplitOptions.RemoveEmptyEntries).ToList() : input.Split(default(string[]), count, StringSplitOptions.RemoveEmptyEntries).ToList();
+                    result = string.IsNullOrEmpty(input) ? null : !string.IsNullOrEmpty(separator) ? input.Split(new string[] { separator }, count, StringSplitOptions.RemoveEmptyEntries).ToList() : input.Split(default(string[]), count, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionSplitString, "SplitString('{0}', '{1}', '{2}') returned a list with '{3}' items.", input, separator, count, result.Count);
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionSplitString, "SplitString('{0}', '{1}', '{2}') returned a list with '{3}' items.", input, separator, count, result == null ? 0 : result.Count);
                 }
                 else
                 {
@@ -5124,14 +5116,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                 Type parameterType = typeof(List<string>);
                 object parameter = this.parameters[0];
-                if (parameter == null)
-                {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRemoveDuplicatesNullFunctionParameterError, new InvalidFunctionFormatException(Messages.ExpressionFunction_NullFunctionParameterError, this.function, 1));
-                }
-
                 if (!this.VerifyType(parameter, parameterType))
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRemoveDuplicatesInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter.GetType().Name));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionRemoveDuplicatesInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
                 }
 
                 List<string> result;
@@ -5139,14 +5126,23 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     List<string> input = (List<string>)parameter;
-                    result = new List<string>(input.Count);
 
-                    foreach (string item in input.Where(item => !result.Contains(item, StringComparer.OrdinalIgnoreCase)))
+                    if (input != null)
                     {
-                        result.Add(item);
-                    }
+                        result = new List<string>(input.Count);
 
-                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionRemoveDuplicates, "RemoveDuplicates('{0}') returned a list with '{1}' items removed.", this.parameters[0], input.Count - result.Count);
+                        foreach (string item in input.Where(item => !result.Contains(item, StringComparer.OrdinalIgnoreCase)))
+                        {
+                            result.Add(item);
+                        }
+
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionRemoveDuplicates, "RemoveDuplicates('{0}') returned a list with '{1}' items removed.", this.parameters[0], input.Count - result.Count);
+                    }
+                    else
+                    {
+                        result = null;
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionRemoveDuplicates, "RemoveDuplicates('{0}') returned null.", this.parameters[0]);
+                    }
                 }
                 else
                 {

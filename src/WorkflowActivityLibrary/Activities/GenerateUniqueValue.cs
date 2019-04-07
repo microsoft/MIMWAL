@@ -207,6 +207,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 {
                     this.maxLoopCount = 512;
                 }
+
+                if (!bool.TryParse(ConfigurationManager.AppSettings["GenerateUniqueValueActivity_OptimizeUniquenessKey"], out this.optimizeUniquenessKey))
+                {
+                    this.optimizeUniquenessKey = false;
+                }
             }
             finally
             {
@@ -413,6 +418,35 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
         }
 
         /// <summary>
+        /// Determines the action taken when the activity has completed execution.
+        /// </summary>
+        /// <param name="executionContext">The execution context of the activity.</param>
+        protected override void OnSequenceComplete(ActivityExecutionContext executionContext)
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.GenerateUniqueValueOnSequenceComplete);
+
+            try
+            {
+                // Clear the variable cache for the expression evaluator
+                // so that any variables, such as SqlParameter, not marked as serializable does not cause dehyration issues.
+                if (this.ActivityExpressionEvaluator != null
+                    && this.ActivityExpressionEvaluator.VariableCache != null
+                    && this.ActivityExpressionEvaluator.VariableCache.Keys != null)
+                {
+                    List<string> variables = this.ActivityExpressionEvaluator.VariableCache.Keys.ToList();
+                    foreach (string variable in variables)
+                    {
+                        this.ActivityExpressionEvaluator.VariableCache[variable] = null;
+                    }
+                }
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.GenerateUniqueValueOnSequenceComplete);
+            }
+        }
+
+        /// <summary>
         /// Resolves the value filter.
         /// </summary>
         /// <param name="filter">The filter.</param>
@@ -490,7 +524,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             Logger.Instance.WriteMethodEntry(EventIdentifier.GenerateUniqueValueSetAttributesToReadForConflictResources, "Filter: '{0}'.", this.ConflictFilter);
 
             this.FindConflict.Attributes = null;
-            this.optimizeUniquenessKey = false;
+            ////this.optimizeUniquenessKey = false; // Now this flag can only be set by app.config.
             string filter = this.ConflictFilter;
             try
             {
@@ -504,17 +538,30 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 while (startIndex != -1)
                 {
                     int endIndex = filter.IndexOf(endToken, startIndex, StringComparison.OrdinalIgnoreCase);
-                    string s = filter.Substring(startIndex + startTokenLength + 1, endIndex - (startIndex + startTokenLength + 1)).Trim(new char[] { ' ', '(', ',' });
-                    attributes.Add(s);
+                    if (endIndex != -1)
+                    {
+                        string s = filter.Substring(startIndex + startTokenLength + 1, endIndex - (startIndex + startTokenLength + 1)).Trim(new char[] { ' ', '(', ',' });
+                        attributes.Add(s);
+                    }
+                    else
+                    {
+                        // just increment - should never be here as now this function should not get called unless this.optimizeUniquenessKey is set true via app.cong. Issue #61
+                        endIndex = startIndex + startTokenLength;
+                    }
+
                     filter = filter.Substring(endIndex);
                     startIndex = filter.IndexOf(startToken, StringComparison.Ordinal);
                 }
 
                 if (attributes.Count > 0)
                 {
-                    this.optimizeUniquenessKey = true;
+                    ////this.optimizeUniquenessKey = true; // Now this flag can only be set by app.config.
                     this.FindConflict.Attributes = attributes.ToArray();
                     Logger.Instance.WriteVerbose(EventIdentifier.GenerateUniqueValueSetAttributesToReadForConflictResources, "Filter: '{0}'. Attributes: '{1}'.", this.ConflictFilter, string.Join(";", attributes.ToArray()));
+                }
+                else
+                {
+                    this.optimizeUniquenessKey = false; // Turn the config flag off as the conflict filter does not use starts-with function.
                 }
             }
             finally
@@ -711,8 +758,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
             {
                 // Find the attributes to read on potentially conflicing resources
                 // so that the uniqueness seed can be repositioned instead of simply incremented
-                // when the conflict filter XPath uses a starts-with fuction 
-                this.SetAttributesToReadForConflictResources();
+                // when the conflict filter XPath uses a starts-with fuction
+                if (this.optimizeUniquenessKey)
+                {
+                    this.SetAttributesToReadForConflictResources();
+                }
 
                 // Default the uniqueness key to the specified uniqueness seed,
                 // resolve the first value expression in the list, and use that value to resolve

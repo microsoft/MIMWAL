@@ -7,6 +7,34 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for multi-valued attributes in `[//Effective]` lookup in AuthZ workflows.
 * Implement Approve Request Activity.
 * Support for `[//Value]` lookups in Query definitions across rest of the activities.
+------------
+
+### Version 2.19.0111.0
+
+#### Changed
+
+* [Generate Unique Value Activity][GenerateUniqueValueActivity] now has the Conflict Filter search optimisation logic for the *starts-with* XPath function as documented in the [Wiki](https://github.com/Microsoft/MIMWAL/wiki/Generate-Unique-Value-Activity#conflict-filter) turned off by default.
+To get the backward compatible behaviour, define the app setting GenerateUniqueValueActivity_OptimizeUniquenessKey = true in the FIMService app.config.
+
+------------
+
+### Version 2.18.1110.0
+
+#### Changed
+
+* [FormatMultivaluedList][FormatMultivaluedListFunction] now accepts all null values.
+* [DateTimeAdd][DateTimeAddFunction] now accepts a null value for timespan parameter. 
+* [ConvertStringToGuid][ConvertStringToGuidFunction] returns Empty GUID if the input is a null/empty string.
+* [ConvertFromBase64][ConvertFromBase64Function] returns null if the input is a null/empty string.
+* [ConvertToBase64][ConvertToBase64Function] returns null if the input is a null/empty string.
+* [ConvertToNumber][ConvertToNumberFunction] returns 0 if the input is a null/empty string.
+* [SplitString][SplitStringFunction] returns null if the input is a null/empty string.
+* [RemoveDuplicates][RemoveDuplicatesFunction] returns null if the input is a null list.
+* [Eq][EqFunction] function will return true if one string parameter is null and other string parameter is Empty
+
+#### Removed
+
+* Removed validation check from RunPowerShellScript activity UI from that the PowerShell User Password is Decryptable as the  code runs under the context of submitter instead of FIMService plus the code runs on the Portal Server which may not be co-located with FIMService server.
 
 ------------
 
@@ -174,20 +202,89 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 
 * There are no bug fixes in this release.
 
-[NormalizeStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/NormalizeString-Function
-[RunPowerShellScriptActivity]: https://github.com/Microsoft/MIMWAL/wiki/Run-PowerShell-Script-Activity
-[UpdateResourcesActivity]: https://github.com/Microsoft/MIMWAL/wiki/Update-Resources-Activity
-[EvaluateExpressionFunction]: https://github.com/Microsoft/MIMWAL/wiki/EvaluateExpression-Function
-[FormatMultivaluedListFunction]: https://github.com/Microsoft/MIMWAL/wiki/FormatMultivaluedList-Function
-[ConvertToUniqueIdentifierFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToUniqueIdentifier-Function
+[AddFunction]: https://github.com/Microsoft/MIMWAL/wiki/Add-Function
+[AfterFunction]: https://github.com/Microsoft/MIMWAL/wiki/After-Function
+[AndFunction]: https://github.com/Microsoft/MIMWAL/wiki/And-Function
+[BeforeFunction]: https://github.com/Microsoft/MIMWAL/wiki/Before-Function
+[BitAndFunction]: https://github.com/Microsoft/MIMWAL/wiki/BitAnd-Function
+[BitNotFunction]: https://github.com/Microsoft/MIMWAL/wiki/BitNot-Function
+[BitOrFunction]: https://github.com/Microsoft/MIMWAL/wiki/BitOr-Function
+[ConcatenateFunction]: https://github.com/Microsoft/MIMWAL/wiki/Concatenate-Function
+[ConcatenateMultivaluedStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConcatenateMultivaluedString-Function
+[ContainsFunction]: https://github.com/Microsoft/MIMWAL/wiki/Contains-Function
+[ConvertFromBase64Function]: https://github.com/Microsoft/MIMWAL/wiki/ConvertFromBase64-Function
+[ConvertNumberToListFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertNumberToList-Function
+[ConvertSIDToStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertSIDToString-Function
+[ConvertStringToGUIDFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertStringToGUID-Function
+[ConvertToBase64Function]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToBase64-Function
+[ConvertToBooleanFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToBoolean-Function
+[ConvertToNumberFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToNumber-Function
 [ConvertToStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToString-Function
+[ConvertToUniqueIdentifierFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertToUniqueIdentifier-Function
+[CountFunction]: https://github.com/Microsoft/MIMWAL/wiki/Count-Function
 [CreateSqlParameterFunction]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter-Function
 [CreateSqlParameter2Function]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter2-Function
-[ExecuteSqlNonQueryFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlNonQuery-Function
-[ExecuteSqlScalarFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlScalar-Function
-[ValueByKeyFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByKey-Function
+[CRLFFunction]: https://github.com/Microsoft/MIMWAL/wiki/CRLF-Function
+[DateTimeAddFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeAdd-Function
+[DateTimeFormatFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFormat-Function
+[DateTimeFromFileTimeUTCFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFromFileTimeUTC-Function
 [DateTimeFromStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFromString-Function
-[ConvertNumberToListFunction]: https://github.com/Microsoft/MIMWAL/wiki/ConvertNumberToList-Function
-[MultiplyFunction]: https://github.com/Microsoft/MIMWAL/wiki/Multiply-Function
+[DateTimeNowFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeNow-Function
+[DateTimeSubtractFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeSubtract-Function
+[DateTimeToFileTimeUTCFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeToFileTimeUTC-Function
 [DivideFunction]: https://github.com/Microsoft/MIMWAL/wiki/Divide-Function
+[EqFunction]: https://github.com/Microsoft/MIMWAL/wiki/Eq-Function
+[EscapeDNComponentFunction]: https://github.com/Microsoft/MIMWAL/wiki/EscapeDNComponent-Function
+[EvaluateExpressionFunction]: https://github.com/Microsoft/MIMWAL/wiki/EvaluateExpression-Function
+[ExecuteSqlScalarFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlScalar-Function
+[ExecuteSqlNonQueryFunction]: https://github.com/Microsoft/MIMWAL/wiki/ExecuteSqlNonQuery-Function
+[FirstFunction]: https://github.com/Microsoft/MIMWAL/wiki/First-Function
+[FormatMultivaluedListFunction]: https://github.com/Microsoft/MIMWAL/wiki/FormatMultivaluedList-Function
+[GenerateRandomPasswordFunction]: https://github.com/Microsoft/MIMWAL/wiki/GenerateRandomPassword-Function
+[GreaterThanFunction]: https://github.com/Microsoft/MIMWAL/wiki/GreaterThan-Function
+[IIFFunction]: https://github.com/Microsoft/MIMWAL/wiki/IIF-Function
+[InsertValuesFunction]: https://github.com/Microsoft/MIMWAL/wiki/InsertValues-Function
+[IsPresentFunction]: https://github.com/Microsoft/MIMWAL/wiki/IsPresent-Function
+[LastFunction]: https://github.com/Microsoft/MIMWAL/wiki/Last-Function
+[LeftFunction]: https://github.com/Microsoft/MIMWAL/wiki/Left-Function
+[LeftPadFunction]: https://github.com/Microsoft/MIMWAL/wiki/LeftPad-Function
+[LengthFunction]: https://github.com/Microsoft/MIMWAL/wiki/Length-Function
+[LessThanFunction]: https://github.com/Microsoft/MIMWAL/wiki/LessThan-Function
+[LowerCaseFunction]: https://github.com/Microsoft/MIMWAL/wiki/LowerCase-Function
+[LTrimFunction]: https://github.com/Microsoft/MIMWAL/wiki/LTrim-Function
+[MidFunction]: https://github.com/Microsoft/MIMWAL/wiki/Mid-Function
 [ModFunction]: https://github.com/Microsoft/MIMWAL/wiki/Mod-Function
+[MultiplyFunction]: https://github.com/Microsoft/MIMWAL/wiki/Multiply-Function
+[NormalizeStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/NormalizeString-Function
+[NotFunction]: https://github.com/Microsoft/MIMWAL/wiki/Not-Function
+[NullFunction]: https://github.com/Microsoft/MIMWAL/wiki/Null-Function
+[OrFunction]: https://github.com/Microsoft/MIMWAL/wiki/Or-Function
+[ParametersContainFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParametersContain-Function
+[ParametersListFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParametersList-Function
+[ParametersTableFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParametersTable-Function
+[ParameterValueFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParameterValue-Function
+[ParameterValueAddedFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParameterValueAdded-Function
+[ParameterValueRemovedFunction]: https://github.com/Microsoft/MIMWAL/wiki/ParameterValueRemoved-Function
+[ProperCaseFunction]: https://github.com/Microsoft/MIMWAL/wiki/ProperCase-Function
+[RandomNumFunction]: https://github.com/Microsoft/MIMWAL/wiki/RandomNum-Function
+[RegexMatchFunction]: https://github.com/Microsoft/MIMWAL/wiki/RegexMatch-Function
+[RegexReplaceFunction]: https://github.com/Microsoft/MIMWAL/wiki/RegexReplace-Function
+[RemoveDuplicatesFunction]: https://github.com/Microsoft/MIMWAL/wiki/RemoveDuplicates-Function
+[RemoveValuesFunction]: https://github.com/Microsoft/MIMWAL/wiki/RemoveValues-Function
+[ReplaceStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/ReplaceString-Function
+[RightFunction]: https://github.com/Microsoft/MIMWAL/wiki/Right-Function
+[RightPadFunction]: https://github.com/Microsoft/MIMWAL/wiki/RightPad-Function
+[RTrimFunction]: https://github.com/Microsoft/MIMWAL/wiki/RTrim-Function
+[SortListFunction]: https://github.com/Microsoft/MIMWAL/wiki/SortList-Function
+[SplitStringFunction]: https://github.com/Microsoft/MIMWAL/wiki/SplitString-Function
+[SubtractFunction]: https://github.com/Microsoft/MIMWAL/wiki/Subtract-Function
+[TitleCaseFunction]: https://github.com/Microsoft/MIMWAL/wiki/TitleCase-Function
+[TrimFunction]: https://github.com/Microsoft/MIMWAL/wiki/Trim-Function
+[UpperCaseFunction]: https://github.com/Microsoft/MIMWAL/wiki/UpperCase-Function
+[ValueByIndexFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByIndex-Function
+[ValueByKeyFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueByKey-Function
+[ValueTypeFunction]: https://github.com/Microsoft/MIMWAL/wiki/ValueType-Function
+[WordFunction]: https://github.com/Microsoft/MIMWAL/wiki/Word-Function
+[WrapXPathFilterFunction]: https://github.com/Microsoft/MIMWAL/wiki/WrapXPathFilter-Function
+[MIMWalFunctionsTable]: https://github.com/Microsoft/MIMWAL/wiki/Functions-Table
+[GenerateUniqueValueActivity]: https://github.com/Microsoft/MIMWAL/wiki/Generate-Unique-Value-Activity

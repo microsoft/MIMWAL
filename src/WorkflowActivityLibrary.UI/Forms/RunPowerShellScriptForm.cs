@@ -569,15 +569,17 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
                         return false;
                     }
 
-                    try
-                    {
-                        ProtectedData.DecryptData(this.powerShellUserPassword.Value);
-                    }
-                    catch (WorkflowActivityLibraryException ex)
-                    {
-                        this.controller.ValidationError = ex.Message;
-                        return false;
-                    }
+                    // Limited value in this check as the code runs under the context of submitter instead of FIMService plus
+                    // code run on the Portal Server which may not be co-located with FIMService server.
+                    ////try
+                    ////{
+                    ////    ProtectedData.DecryptData(this.powerShellUserPassword.Value);
+                    ////}
+                    ////catch (WorkflowActivityLibraryException ex)
+                    ////{
+                    ////    this.controller.ValidationError = ex.Message;
+                    ////    return false;
+                    ////}
                 }
 
                 // If no errors were found, clear any validation error and return true
