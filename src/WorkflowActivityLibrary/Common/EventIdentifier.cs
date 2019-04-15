@@ -1289,6 +1289,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionMod = 11686;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction IndexByValue events
+        /// </summary>
+        public const int ExpressionFunctionIndexByValue = 11687;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -3177,6 +3182,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction Mod events
         /// </summary>
         public const int ExpressionFunctionModInvalidSecondFunctionParameterTypeError = 41686;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction ValueByIndex events
+        /// </summary>
+        public const int ExpressionFunctionIndexByValueInvalidFunctionParameterCountError = 41687;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction IndexByValue events
+        /// </summary>
+        public const int ExpressionFunctionIndexByValueNullFunctionParameterError = 41645;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
