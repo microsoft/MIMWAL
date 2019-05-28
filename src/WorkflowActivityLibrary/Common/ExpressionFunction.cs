@@ -168,6 +168,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "CREATESQLPARAMETER2":
                         return this.CreateSqlParameter2();
 
+                    case "CR":
+                        return this.CR();
+
                     case "CRLF":
                         return this.CRLF();
 
@@ -4894,6 +4897,42 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionConvertToString, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to generate a Carriage Return.
+        /// Function Syntax: CR()
+        /// </summary>
+        /// <returns>A CR is the output.</returns>
+        private string CR()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 0)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCrInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 0, this.parameters.Count));
+                }
+
+                string result;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    result = "\n";
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCr, "CR() returned '{0}'.", result);
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
