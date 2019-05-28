@@ -1294,6 +1294,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionIndexByValue = 11687;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction CR events
+        /// </summary>
+        public const int ExpressionFunctionCr = 11688;
+
+        /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
         /// </summary>
         public const int LookupEvaluatorConstructor = 11701;
@@ -2752,6 +2757,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction CRLF events
         /// </summary>
         public const int ExpressionFunctionCrlfInvalidFunctionParameterCountError = 41658;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction CR events
+        /// </summary>
+        public const int ExpressionFunctionCrInvalidFunctionParameterCountError = 41658;
 
         /// <summary>
         /// The event identifier for ExpressionFunction EscapeDNComponent events
