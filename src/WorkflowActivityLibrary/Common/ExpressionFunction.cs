@@ -168,6 +168,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "CREATESQLPARAMETER2":
                         return this.CreateSqlParameter2();
 
+                    case "CR":
+                        return this.CR();
+
                     case "CRLF":
                         return this.CRLF();
 
@@ -221,6 +224,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
                     case "IIF":
                         return this.IIF();
+
+                    case "INDEXBYVALUE":
+                        return this.IndexByValue();
 
                     case "INSERTVALUES":
                         return this.InsertValues();
@@ -2692,6 +2698,70 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
+        /// This function is used to retrieve the index for a specific value within the input list.
+        /// Function Syntax: IndexByValue(values:[list or object], value:object)
+        /// </summary>
+        /// <returns>The index of the specified value in the input list. If the value is not found in the list, null is returned.</returns>
+        private object IndexByValue()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionIndexByValue, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionIndexByValueInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                }
+
+                // default value if no results are found
+                int result = -1;
+
+                if (this.mode != EvaluationMode.Parse)
+                {                    
+                    if (this.parameters[0] != null && this.parameters[1] != null)
+                    {
+                        Type paramType = this.parameters[0].GetType();
+                        if (paramType.IsGenericType && paramType.GetGenericTypeDefinition() == typeof(List<>))
+                        {
+                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') First parameter is a list. Enumerating list items.", this.parameters[0], this.parameters[1]);
+
+                            int index = 0;
+                            foreach (object item in (IEnumerable)this.parameters[0])
+                            {
+                                if (item is string && this.parameters[1] is string)
+                                {
+                                    if (item.ToString().Equals(this.parameters[1].ToString(), StringComparison.InvariantCultureIgnoreCase))
+                                    {
+                                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') Matched string item '{2}' to second param '{3}'. Result: {4}.", this.parameters[0], this.parameters[1], item.ToString(), this.parameters[1].ToString(), index);
+                                        result = index;
+                                        break;
+                                    }
+                                }
+                                else if (item.Equals(this.parameters[1]))
+                                {
+                                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') Matched object item '{2}' to second param '{3}'. Result: {4}.", this.parameters[0], this.parameters[1], item.ToString(), this.parameters[1].ToString(), index);
+                                    result = index;
+                                    break;
+                                }
+
+                                index += 1;
+                            }
+                        }
+
+                    }
+
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionIndexByValue, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
         /// This function is used to create a new InsertedValues collection which contains all values from the specified list.
         /// This InsertedValues collection will be used by the activity so that it can generate update request parameters accordingly.
         /// Function Syntax: InsertValues(value(s):[list or object])
@@ -4827,6 +4897,42 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionConvertToString, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to generate a Carriage Return.
+        /// Function Syntax: CR()
+        /// </summary>
+        /// <returns>A CR is the output.</returns>
+        private string CR()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count != 0)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCrInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 0, this.parameters.Count));
+                }
+
+                string result;
+
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    result = "\n";
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCr, "CR() returned '{0}'.", result);
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
