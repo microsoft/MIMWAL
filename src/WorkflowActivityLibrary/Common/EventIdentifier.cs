@@ -1296,7 +1296,12 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <summary>
         /// The event identifier for ExpressionFunction CR events
         /// </summary>
-        public const int ExpressionFunctionCr = 11688;
+        public const int ExpressionFunctionCR = 11688;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DateTimeUtcToLocalTime events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeUtcToLocalTime = 11689;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events
@@ -2359,6 +2364,11 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionDateTimeFormatInvalidFirstFunctionParameterTypeError = 41621;
 
         /// <summary>
+        /// The event identifier for ExpressionFunction DateTimeFormat events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeFormatInvalidThirdFunctionParameterTypeError = 41621;
+
+        /// <summary>
         /// The event identifier for ExpressionFunction DateTimeNow events
         /// </summary>
         public const int ExpressionFunctionDateTimeNowInvalidFunctionParameterCountError = 41622;
@@ -2757,11 +2767,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// The event identifier for ExpressionFunction CRLF events
         /// </summary>
         public const int ExpressionFunctionCrlfInvalidFunctionParameterCountError = 41658;
-
-        /// <summary>
-        /// The event identifier for ExpressionFunction CR events
-        /// </summary>
-        public const int ExpressionFunctionCrInvalidFunctionParameterCountError = 41658;
 
         /// <summary>
         /// The event identifier for ExpressionFunction EscapeDNComponent events
@@ -3194,14 +3199,24 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         public const int ExpressionFunctionModInvalidSecondFunctionParameterTypeError = 41686;
 
         /// <summary>
-        /// The event identifier for ExpressionFunction ValueByIndex events
+        /// The event identifier for ExpressionFunction IndexByValue events
         /// </summary>
         public const int ExpressionFunctionIndexByValueInvalidFunctionParameterCountError = 41687;
 
         /// <summary>
-        /// The event identifier for ExpressionFunction IndexByValue events
+        /// The event identifier for ExpressionFunction CR events
         /// </summary>
-        public const int ExpressionFunctionIndexByValueNullFunctionParameterError = 41645;
+        public const int ExpressionFunctionCRInvalidFunctionParameterCountError = 41688;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DateTimeUtcToLocalTime events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeUtcToLocalTimeInvalidFunctionParameterCountError = 41689;
+
+        /// <summary>
+        /// The event identifier for ExpressionFunction DateTimeUtcToLocalTime events
+        /// </summary>
+        public const int ExpressionFunctionDateTimeUtcToLocalTimeInvalidSecondFunctionParameterTypeError = 41689;
 
         /// <summary>
         /// The event identifier for LookupEvaluator Constructor events

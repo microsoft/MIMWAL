@@ -653,6 +653,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 // If the activity is configured for conditional execution, parse the associated expression
                 this.ActivityExpressionEvaluator.ParseIfExpression(this.ActivityExecutionCondition);
 
+                if (!string.IsNullOrEmpty(this.PowerShellUser))
+                {
+                    this.ActivityExpressionEvaluator.ParseIfExpression(this.PowerShellUser);
+                }
+
+                if (!string.IsNullOrEmpty(this.PowerShellUserPassword))
+                {
+                    this.ActivityExpressionEvaluator.ParseIfExpression(this.PowerShellUserPassword);
+                }
+
                 if (this.InputType == PowerShellInputType.Arguments &&
                     this.Arguments != null &&
                     this.Arguments.Count > 0)
@@ -1018,18 +1028,54 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Activitie
                 return null;
             }
 
-            if (this.ImpersonatePowerShellUser)
+            var userName = this.PowerShellUser;
+            var userPassword = this.PowerShellUserPassword;
+
+            if (ExpressionEvaluator.IsExpression(userName))
             {
-                string[] userParts = this.PowerShellUser.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
-                if (userParts.Length != 2 && !this.PowerShellUser.Contains("@"))
+                try
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, new WorkflowActivityLibraryException(Messages.RunPowerShellActivity_InvalidUserFormat, this.PowerShellUser));
+                    object resolved = this.ActivityExpressionEvaluator.ResolveExpression(userName);
+                    if (resolved != null)
+                    {
+                        userName = resolved.ToString();
+                    }
+                }
+                catch (WorkflowActivityLibraryException)
+                {
+                    // This may happen if the design time username starts with a $
+                    // Do nothing. Any valid error should already be reported.
                 }
             }
 
-            SecureString password = ProtectedData.DecryptData(this.PowerShellUserPassword);
+            if (ExpressionEvaluator.IsExpression(userPassword))
+            {
+                try
+                {
+                    object resolved = this.ActivityExpressionEvaluator.ResolveExpression(userPassword);
+                    if (resolved != null)
+                    {
+                        userPassword = resolved.ToString();
+                    }
+                }
+                catch (WorkflowActivityLibraryException)
+                {
+                    // Do nothing. Any valid error should already be reported.
+                }
+            }
 
-            return new PSCredential(this.PowerShellUser, password);
+            if (this.ImpersonatePowerShellUser)
+            {
+                string[] userParts = userName.Split(new string[] { @"\" }, StringSplitOptions.RemoveEmptyEntries);
+                if (userParts.Length != 2 && !userName.Contains("@"))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.RunPowerShellScriptRunScriptExecutionFailedError, new WorkflowActivityLibraryException(Messages.RunPowerShellActivity_InvalidUserFormat, userName));
+                }
+            }
+
+            SecureString password = ProtectedData.DecryptData(userPassword);
+
+            return new PSCredential(userName, password);
         }
 
         /// <summary>

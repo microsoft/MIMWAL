@@ -658,19 +658,19 @@
     <value>PowerShell Script User</value>
   </data>
   <data name="PowerShellUserHelpText" xml:space="preserve">
-    <value>Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format.</value>
+    <value>Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format or must be a valid WAL Lookup expression.</value>
   </data>
   <data name="PowerShellUserPassword" xml:space="preserve">
     <value>PowerShell Script User Password</value>
   </data>
   <data name="PowerShellUserPasswordHelpText" xml:space="preserve">
-    <value>Specify the password to be used to construct PowerShell Credential object. The expected format is: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]]</value>
+    <value>Specify the password to be used to construct PowerShell Credential object. The expected format is: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]]. It can also be a valid WAL Lookup expression returing data in any one of these formats.</value>
   </data>
   <data name="PowerShellImpersonationSettingsValidationError" xml:space="preserve">
     <value>Specify UserName and Password of the impersonated user.</value>
   </data>
   <data name="PowerShellUserFormatValidationError" xml:space="preserve">
-    <value>The PowerShell user must be specified in the domain\userName or UPN format when Impersonate PowerShell User option is selected.</value>
+    <value>The PowerShell user must be specified in the domain\userName or UPN format or must be a valid WAL Lookup expression when Impersonate PowerShell User option is selected.</value>
   </data>
   <data name="RequestActorValidationError" xml:space="preserve">
     <value>Authorization Policy cannot be applied when Request Actor is Service Account</value>
