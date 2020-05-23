@@ -19,7 +19,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class ActivitySettings {
@@ -970,7 +970,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The PowerShell user must be specified in the domain\userName or UPN format when Impersonate PowerShell User option is selected..
+        ///   Looks up a localized string similar to The PowerShell user must be specified in the domain\userName or UPN format or must be a valid WAL Lookup expression when Impersonate PowerShell User option is selected..
         /// </summary>
         internal static string PowerShellUserFormatValidationError {
             get {
@@ -979,7 +979,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format..
+        ///   Looks up a localized string similar to Specify the user to be used to construct PowerShell Credential object. When impersonating, the user name must be in the domain\userName or UPN format or must be a valid WAL Lookup expression..
         /// </summary>
         internal static string PowerShellUserHelpText {
             get {
@@ -997,7 +997,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Specify the password to be used to construct PowerShell Credential object. The expected format is: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]].
+        ///   Looks up a localized string similar to Specify the password to be used to construct PowerShell Credential object. The expected format is: [base64EncodedEncryptedData] | [app:\appSettings\[key],[LocalMachine|CurrentUser]] | [cert:\[LocalMachine|CurrentUser]\my\[thumbprint],base64EncodedEncryptedData]]. It can also be a valid WAL Lookup expression returing data in any one of these formats..
         /// </summary>
         internal static string PowerShellUserPasswordHelpText {
             get {

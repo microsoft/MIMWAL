@@ -9,7 +9,19 @@ All notable changes to MIMWAL project will be documented in this file. The "Unre
 * Support for `[//Value]` lookups in Query definitions across rest of the activities.
 ------------
 
-### Version 2.19.0111.0
+### Version 2.20.0523.0
+
+#### Added
+
+* New [IndexByValueFunction][IndexByValue] function
+* New [CRFunction][CR] function
+* New [DateTimeUtcToLocalTimeFunction][DateTimeUtcToLocalTime] function
+* New optional culture name parameter to [DateTimeFormatFunction][DateTimeFormat] function
+* Added support for WAL Lookup resolution for PowerShellUserName and PowerShellUserPassword properties of [Run PowerShell Script][RunPowerShellScript] activity.
+
+------------
+
+### Version 2.19.0112.0
 
 #### Changed
 
@@ -225,6 +237,7 @@ To get the backward compatible behaviour, define the app setting GenerateUniqueV
 [CreateSqlParameterFunction]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter-Function
 [CreateSqlParameter2Function]: https://github.com/Microsoft/MIMWAL/wiki/CreateSqlParameter2-Function
 [CRLFFunction]: https://github.com/Microsoft/MIMWAL/wiki/CRLF-Function
+[CRFunction]: https://github.com/Microsoft/MIMWAL/wiki/CR-Function
 [DateTimeAddFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeAdd-Function
 [DateTimeFormatFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFormat-Function
 [DateTimeFromFileTimeUTCFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeFromFileTimeUTC-Function
@@ -232,6 +245,7 @@ To get the backward compatible behaviour, define the app setting GenerateUniqueV
 [DateTimeNowFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeNow-Function
 [DateTimeSubtractFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeSubtract-Function
 [DateTimeToFileTimeUTCFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeToFileTimeUTC-Function
+[DateTimeUtcToLocalTimeFunction]: https://github.com/Microsoft/MIMWAL/wiki/DateTimeUtcToLocalTime-Function
 [DivideFunction]: https://github.com/Microsoft/MIMWAL/wiki/Divide-Function
 [EqFunction]: https://github.com/Microsoft/MIMWAL/wiki/Eq-Function
 [EscapeDNComponentFunction]: https://github.com/Microsoft/MIMWAL/wiki/EscapeDNComponent-Function
@@ -244,6 +258,7 @@ To get the backward compatible behaviour, define the app setting GenerateUniqueV
 [GreaterThanFunction]: https://github.com/Microsoft/MIMWAL/wiki/GreaterThan-Function
 [IIFFunction]: https://github.com/Microsoft/MIMWAL/wiki/IIF-Function
 [InsertValuesFunction]: https://github.com/Microsoft/MIMWAL/wiki/InsertValues-Function
+[IndexByValueFunction]: https://github.com/Microsoft/MIMWAL/wiki/IndexByValue-Function
 [IsPresentFunction]: https://github.com/Microsoft/MIMWAL/wiki/IsPresent-Function
 [LastFunction]: https://github.com/Microsoft/MIMWAL/wiki/Last-Function
 [LeftFunction]: https://github.com/Microsoft/MIMWAL/wiki/Left-Function
@@ -288,3 +303,4 @@ To get the backward compatible behaviour, define the app setting GenerateUniqueV
 [WrapXPathFilterFunction]: https://github.com/Microsoft/MIMWAL/wiki/WrapXPathFilter-Function
 [MIMWalFunctionsTable]: https://github.com/Microsoft/MIMWAL/wiki/Functions-Table
 [GenerateUniqueValueActivity]: https://github.com/Microsoft/MIMWAL/wiki/Generate-Unique-Value-Activity
+[RunPowerShellScriptActivity]: https://github.com/Microsoft/MIMWAL/wiki/Run-PowerShell-Script-Activity

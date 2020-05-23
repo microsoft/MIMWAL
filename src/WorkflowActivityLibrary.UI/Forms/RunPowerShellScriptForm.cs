@@ -554,7 +554,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.UI.Forms
 
                 if (!string.IsNullOrEmpty(this.powerShellUser.Value))
                 {
-                    if (this.impersonatePowerShellUser.Value)
+                    var powerShellUserIsExpression = evaluator.ParseIfExpression(this.powerShellUser.Value);
+
+                    if (this.impersonatePowerShellUser.Value && !powerShellUserIsExpression)
                     {
                         if (!this.powerShellUser.Value.Contains(@"\") && !this.powerShellUser.Value.Contains("@"))
                         {

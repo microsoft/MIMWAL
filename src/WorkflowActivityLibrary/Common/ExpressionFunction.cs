@@ -195,6 +195,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     case "DATETIMESUBTRACT":
                         return this.DateTimeSubtract();
 
+                    case "DATETIMEUTCTOLOCALTIME":
+                        return this.DateTimeUtcToLocalTime();
+
                     case "DIVIDE":
                         return this.Divide();
 
@@ -2220,7 +2223,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
         /// <summary>
         /// This function is used to format the value of the first DateTime parameter in the format specified in the second string parameter.
-        /// Function Syntax: DateTimeFormat(date:DateTime, format:string)
+        /// Function Syntax: DateTimeFormat(date:DateTime, format:string [, culture:name])
         /// </summary>
         /// <returns>The string representation of the first DateTime parameter in the format specified in the second string parameter.</returns>
         private string DateTimeFormat()
@@ -2229,9 +2232,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
 
             try
             {
-                if (this.parameters.Count != 2)
+                if (this.parameters.Count < 2 || this.parameters.Count > 3)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFormatInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 2, this.parameters.Count));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFormatInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError2, this.function, 2, 3, this.parameters.Count));
                 }
 
                 if (this.parameters[1] == null)
@@ -2255,9 +2258,29 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                     }
                     else
                     {
-                        result = ((DateTime)this.parameters[0]).ToString(this.parameters[1].ToString(), CultureInfo.InvariantCulture);
+                        var cultureInfo = CultureInfo.InvariantCulture;
+                        if (this.parameters.Count == 3)
+                        {
+                            try
+                            {
+                                cultureInfo = new CultureInfo(this.parameters[2] as string);
+                            }
+                            catch (ArgumentException e)
+                            {
+                                throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeFormatInvalidThirdFunctionParameterTypeError, e);
+                            }
+                        }
 
-                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeFormat, "DateTimeFormat('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                        result = ((DateTime)this.parameters[0]).ToString(this.parameters[1].ToString(), cultureInfo);
+
+                        if (this.parameters.Count == 2)
+                        {
+                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeFormat, "DateTimeFormat('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                        }
+                        else
+                        {
+                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeFormat, "DateTimeFormat('{0}', '{1}', '{2}') returned '{3}'.", this.parameters[0], this.parameters[1], this.parameters[2], result);
+                        }
                     }
                 }
                 else
@@ -2473,6 +2496,84 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             finally
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionDateTimeToFileTimeUtc, "Evaluation Mode: '{0}'.", this.mode);
+            }
+        }
+
+        /// <summary>
+        /// This function is used to convert a date to the local time or specifed time zone.
+        /// Function Syntax: DateTimeUtcToLocalTime(date:DateTime [, TimeZoneId])
+        /// </summary>
+        /// <returns>The value of the specified UTC date expressed in the local time or specified time zone.</returns>
+        private object DateTimeUtcToLocalTime()
+        {
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTime, "Evaluation Mode: '{0}'.", this.mode);
+
+            try
+            {
+                if (this.parameters.Count < 1 || this.parameters.Count > 2)
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTimeInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError2, this.function, 1, 2, this.parameters.Count));
+                }
+
+                Type parameterType = typeof(DateTime);
+                object parameter = this.parameters[0];
+                if (!this.VerifyType(parameter, parameterType))
+                {
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeToFileTimeUtcInvalidFirstFunctionParameterTypeError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFirstFunctionParameterTypeError, this.function, parameterType.Name, parameter == null ? "null" : parameter.GetType().Name));
+                }
+
+                object result;
+                if (this.mode != EvaluationMode.Parse)
+                {
+                    if (this.parameters[0] == null)
+                    {
+                        result = null;
+                    }
+                    else
+                    {
+                        if (this.parameters.Count == 2)
+                        {
+                            var timeZoneId = this.parameters[1] as string;
+                            if (string.IsNullOrEmpty(timeZoneId))
+                            {
+                                result = ((DateTime)this.parameters[0]).ToLocalTime();
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    TimeZoneInfo timeZone = TimeZoneInfo.FindSystemTimeZoneById(timeZoneId);
+                                    result = TimeZoneInfo.ConvertTimeFromUtc((DateTime)this.parameters[0], timeZone);
+                                }
+                                catch (TimeZoneNotFoundException e)
+                                {
+                                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTimeInvalidSecondFunctionParameterTypeError, e);
+                                }
+                                catch (InvalidTimeZoneException e)
+                                {
+                                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTimeInvalidSecondFunctionParameterTypeError, e);
+                                }
+                            }
+
+                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTime, "DateTimeUtcToLocalTime('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
+                        }
+                        else
+                        {
+                            result = ((DateTime)this.parameters[0]).ToLocalTime();
+                            Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTime, "DateTimeUtcToLocalTime('{0}') returned '{1}'.", this.parameters[0], result);
+                        }
+                    }
+                }
+                else
+                {
+                    result = null;
+                }
+
+                return result;
+            }
+            finally
+            {
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionDateTimeUtcToLocalTime, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
@@ -2701,8 +2802,8 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// This function is used to retrieve the index for a specific value within the input list.
         /// Function Syntax: IndexByValue(values:[list or object], value:object)
         /// </summary>
-        /// <returns>The index of the specified value in the input list. If the value is not found in the list, null is returned.</returns>
-        private object IndexByValue()
+        /// <returns>The index of the specified value in the input list. If the value is null or not found in the list, -1 is returned.</returns>
+        private int IndexByValue()
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionIndexByValue, "Evaluation Mode: '{0}'.", this.mode);
 
@@ -2730,7 +2831,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                             {
                                 if (item is string && this.parameters[1] is string)
                                 {
-                                    if (item.ToString().Equals(this.parameters[1].ToString(), StringComparison.InvariantCultureIgnoreCase))
+                                    if (item.ToString().Equals(this.parameters[1].ToString(), StringComparison.OrdinalIgnoreCase))
                                     {
                                         Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') Matched string item '{2}' to second param '{3}'. Result: {4}.", this.parameters[0], this.parameters[1], item.ToString(), this.parameters[1].ToString(), index);
                                         result = index;
@@ -4907,13 +5008,13 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// <returns>A CR is the output.</returns>
         private string CR()
         {
-            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
+            Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionFunctionCR, "Evaluation Mode: '{0}'.", this.mode);
 
             try
             {
                 if (this.parameters.Count != 0)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCrInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 0, this.parameters.Count));
+                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionFunctionCRInvalidFunctionParameterCountError, new InvalidFunctionFormatException(Messages.ExpressionFunction_InvalidFunctionParameterCountError, this.function, 0, this.parameters.Count));
                 }
 
                 string result;
@@ -4921,7 +5022,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 if (this.mode != EvaluationMode.Parse)
                 {
                     result = "\n";
-                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCr, "CR() returned '{0}'.", result);
+                    Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionCR, "CR() returned '{0}'.", result);
                 }
                 else
                 {
@@ -4932,7 +5033,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             }
             finally
             {
-                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCr, "Evaluation Mode: '{0}'.", this.mode);
+                Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionFunctionCR, "Evaluation Mode: '{0}'.", this.mode);
             }
         }
 
