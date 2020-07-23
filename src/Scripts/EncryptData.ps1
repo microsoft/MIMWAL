@@ -8,9 +8,10 @@
 	NOTE: Edit the Version and PublicKeyToken of the WAL AssemblyName to match the one that you have deployed in GAC.
 	Also edit the $encryptionCertThumbprint of cert to be used for certificate based encryption.
 	
-    Finding Assembly verion and PublicKeyToken
-        gacutil.exe -l | findstr WorkflowActivityLibrary
-    Creatinig a self signed certificate for MIMWAL (You can use a legacy CSP such as Microsoft Strong Cryptographic Provider as shown in the example below)
+    To find Assembly verion and PublicKeyToken
+        .\gacutil.exe -l | findstr WorkflowActivityLibrary
+    To create a self-signed certificate for MIMWAL, you must use a legacy CSP (as .NET 3.5 only supports legacy CSPs).
+    You can use a legacy CSP such as Microsoft Strong Cryptographic Provider as shown in the example below:
         $cert = New-SelfSignedCertificate -DnsName "MIMWAL Encryption (Do Not Delete)" -CertStoreLocation "cert:\LocalMachine\My" -Provider "Microsoft Strong Cryptographic Provider" -NotAfter (Get-Date).AddYears(20)
         $cert.Thumbprint
         As of version v2.18.1110.0, only FIMService account needs read access to the private key of the MIMWAL certificate created above.
@@ -18,9 +19,9 @@
 
 $Error.Clear()
 
-$walAssemblyVersion = "2.20.0523.0"
-$walAssemblyPublicKeyToken = "31bf3856ad364e35"
-$encryptionCertThumbprint = "9C697919FB2FB2D6324ADE42D5F8CB49E8778C08" # cert to be used for encryption (from the cert:\localmachine\my\ store).
+$walAssemblyVersion = "2.20.0723.0" # edit appropriately
+$walAssemblyPublicKeyToken = "31bf3856ad364e35" # edit appropriately
+$encryptionCertThumbprint = "9C697919FB2FB2D6324ADE42D5F8CB49E8778C08" # cert to be used for encryption (from the cert:\localmachine\my\ store). Edit appropriately
 
 Add-Type -AssemblyName "System.Security"
 # use the full name for WAL assembly to eliminate need to assembly redirects for dependent assemblies.

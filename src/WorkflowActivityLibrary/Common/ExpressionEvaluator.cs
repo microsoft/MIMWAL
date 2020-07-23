@@ -109,9 +109,18 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 // Function: contains ( and ends with )
                 // Lookup: starts with [// and ends with ]
                 // Variable: starts with $ and does not contain invalid characters
-                if (IdentifyExpressionComponents(parameter).Count > 1)
+                ArrayList components = IdentifyExpressionComponents(parameter, suppressValidationError);
+                if (components.Count > 1)
                 {
                     parameterType = ParameterType.Expression;
+                    foreach (string component in components)
+                    {
+                        if (DetermineParameterType(component, suppressValidationError) == ParameterType.Unknown)
+                        {
+                            parameterType = ParameterType.Unknown;
+                            break;
+                        }
+                    }
                 }
                 else if (long.TryParse(parameter, out parseInteger))
                 {
@@ -449,8 +458,9 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         /// Identifies the expression components.
         /// </summary>
         /// <param name="expression">The expression.</param>
+        /// <param name="suppressValidationError">Indicates whether to suppress the validation error or not.</param>
         /// <returns>The ArrayList of expression components.</returns>
-        private static ArrayList IdentifyExpressionComponents(string expression)
+        private static ArrayList IdentifyExpressionComponents(string expression, bool suppressValidationError)
         {
             Logger.Instance.WriteMethodEntry(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponents, "Expression: '{0}'.", expression);
 
@@ -484,12 +494,28 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                 // parentheses characters do not match, throw an exception
                 if (openString)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsQuotesValidationError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionQuotesValidationError, expression));
+                    if (suppressValidationError)
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsQuotesValidationError, Messages.ExpressionEvaluator_ExpressionQuotesValidationError, expression);
+                        return components;
+                    }
+                    else
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsQuotesValidationError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionQuotesValidationError, expression));
+                    }
                 }
 
                 if (openFunctions != 0)
                 {
-                    throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsParenthesisValidationError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionParenthesisValidationError, expression));
+                    if (suppressValidationError)
+                    {
+                        Logger.Instance.WriteVerbose(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsParenthesisValidationError, Messages.ExpressionEvaluator_ExpressionParenthesisValidationError, expression);
+                        return components;
+                    }
+                    else
+                    {
+                        throw Logger.Instance.ReportError(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponentsParenthesisValidationError, new InvalidExpressionException(Messages.ExpressionEvaluator_ExpressionParenthesisValidationError, expression));
+                    }
                 }
 
                 // The function expression could contain + characters which are wrapped in quotations
@@ -544,6 +570,16 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
             {
                 Logger.Instance.WriteMethodExit(EventIdentifier.ExpressionEvaluatorIdentifyExpressionComponents, "The expression '{0}' is identified to have {1} components.", expression, components.Count);
             }
+        }
+
+        /// <summary>
+        /// Identifies the expression components.
+        /// </summary>
+        /// <param name="expression">The expression.</param>
+        /// <returns>The ArrayList of expression components.</returns>
+        private static ArrayList IdentifyExpressionComponents(string expression)
+        {
+            return IdentifyExpressionComponents(expression, false);
         }
 
         /// <summary>
