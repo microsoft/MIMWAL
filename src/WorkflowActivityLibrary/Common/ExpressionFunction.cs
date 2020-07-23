@@ -2500,7 +2500,7 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
         }
 
         /// <summary>
-        /// This function is used to convert a date to the local time or specifed time zone.
+        /// This function is used to convert a date to the local time or specified time zone.
         /// Function Syntax: DateTimeUtcToLocalTime(date:DateTime [, TimeZoneId])
         /// </summary>
         /// <returns>The value of the specified UTC date expressed in the local time or specified time zone.</returns>
@@ -2848,7 +2848,6 @@ namespace MicrosoftServices.IdentityManagement.WorkflowActivityLibrary.Common
                                 index += 1;
                             }
                         }
-
                     }
 
                     Logger.Instance.WriteVerbose(EventIdentifier.ExpressionFunctionIndexByValue, "IndexByValue('{0}', '{1}') returned '{2}'.", this.parameters[0], this.parameters[1], result);
