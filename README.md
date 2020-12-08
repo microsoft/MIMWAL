@@ -34,7 +34,7 @@ For more details and information on utilizing the MIMWAL please refer to the doc
 
 # Discussion
 
-For questions and conversations focused on MIMWAL, please visit the MIMWAL Project TechNet Forum: [http://aka.ms/MIMWAL/Forum](http://aka.ms/MIMWAL/Forum).
+For historic questions and conversations focused on MIMWAL, please visit the MIMWAL Project TechNet Forum: [http://aka.ms/MIMWAL/Forum](http://aka.ms/MIMWAL/Forum). **This TechNet forum is now read only. Microsoft products are moving to the new Microsoft Q&A platform and MIM is listed used [Azure | Identity](https://docs.microsoft.com/en-us/answers/products/azure?product=identity) with the Q&A tag of [microsoft-identity-manager](https://docs.microsoft.com/en-us/answers/topics/microsoft-identity-manager.html).** 
 
 # Support
 
